@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fb247195-4dff-4a47-be90-8d5915be79a3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:61830/CoupangWebService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CoupangWebService.xsd" MetadataType="Schema" ID="2329e949-3db9-4b6b-8409-c9cb9d7a4d85" SourceId="1" SourceUrl="http://localhost:61830/CoupangWebService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CoupangWebService1.xsd" MetadataType="Schema" ID="88e64755-79ae-4898-986e-b6fe903ca1de" SourceId="1" SourceUrl="http://localhost:61830/CoupangWebService.svc?xsd=xsd4" />
+    <MetadataFile FileName="CoupangWebService.disco" MetadataType="Disco" ID="0335405c-c435-4fd3-8d17-8aeed7e5eb70" SourceId="1" SourceUrl="http://localhost:61830/CoupangWebService.svc?disco" />
+    <MetadataFile FileName="CoupangWebService.wsdl" MetadataType="Wsdl" ID="6b89c5d7-a854-4bef-a907-66a27295a246" SourceId="1" SourceUrl="http://localhost:61830/CoupangWebService.svc?wsdl" />
+    <MetadataFile FileName="CoupangWebService3.xsd" MetadataType="Schema" ID="5c914d74-3c8f-452a-9e59-3d81c28208fa" SourceId="1" SourceUrl="http://localhost:61830/CoupangWebService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CoupangWebService4.xsd" MetadataType="Schema" ID="64fafd3b-1618-43fd-a50d-e3da70a5271a" SourceId="1" SourceUrl="http://localhost:61830/CoupangWebService.svc?xsd=xsd3" />
+    <MetadataFile FileName="CoupangWebService5.xsd" MetadataType="Schema" ID="82c1c1b5-99b9-4ad2-b081-920096c40970" SourceId="1" SourceUrl="http://localhost:61830/CoupangWebService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
