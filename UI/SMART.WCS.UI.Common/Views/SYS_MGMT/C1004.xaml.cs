@@ -726,6 +726,7 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
                 var hitInfo                 = view.CalcHitInfo(e.OriginalSource as DependencyObject);
 
                 if (hitInfo.Column == null) { return; }
+                if (hitInfo.InRowCell == false) { return; }
 
                 var strSelectedMenuID       = (this.treeListControl.SelectedItem as MenuMgmt).MENU_ID;              // 메뉴 ID
                 var strSelectedTreeID       = (this.treeListControl.SelectedItem as MenuMgmt).TREE_ID;              // 트리 ID
