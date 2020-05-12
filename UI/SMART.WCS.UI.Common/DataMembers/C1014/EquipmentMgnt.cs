@@ -126,7 +126,7 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1014
         }
         #endregion
 
-        #region + EQP_TYPE_CD - 설비 종류 코드
+        #region + EQP_TYPE_CD - 설비 종류
         private string _EQP_TYPE_CD;
         public string EQP_TYPE_CD
         {

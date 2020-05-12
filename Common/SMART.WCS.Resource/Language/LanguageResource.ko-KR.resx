@@ -1063,10 +1063,10 @@
     <value>(*) 설비 명</value>
   </data>
   <data name="EQP_TYPE_CD" xml:space="preserve">
-    <value>설비 종류 코드</value>
+    <value>설비 종류</value>
   </data>
   <data name="EQP_TYPE_CD_REQ" xml:space="preserve">
-    <value>(*) 설비 종류 코드</value>
+    <value>(*) 설비 종류</value>
   </data>
   <data name="ERR" xml:space="preserve">
     <value>오류</value>

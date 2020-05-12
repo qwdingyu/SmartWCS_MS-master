@@ -168,27 +168,8 @@
                     </Grid>
                     <!--#endregion-->
 
-                    <!--#region 4. LOC_CD-->
-                    <Grid Style="{StaticResource SearchItemStyle}"  Grid.Column="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="10"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock  berhaviors:CommonProperties.LabelCd="LOC_CD"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"/>
-                        <dxe:ComboBoxEdit Grid.Column="2" 
-                                          x:Name="cboLocCd" 
-                                          NullText="SELECT" 
-                                          ValueMember="CODE" 
-                                          DisplayMember="NAME" 
-                                          Width="100"/>
-                    </Grid>
-                    <!--#endregion-->
-
-                    <!--#region 5. 사용 여부-->
-                    <Grid Style="{StaticResource SearchItemStyle}" Grid.Column="4" >
+                    <!--#region 4. 사용 여부-->
+                    <Grid Style="{StaticResource SearchItemStyle}" Grid.Column="3" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="10"/>
@@ -366,7 +347,7 @@
                         </dxg:GridColumn>
                         <!--#endregion-->
 
-                        <!--#region PCL_DTM_CD - Parcel결정-->
+                        <!--#region PCL_DTM_CD - Parcel결정--><!--
                         <dxg:GridColumn     Header="PCL_DTM_CD"       FieldName="PCL_DTM_CD"        Width="100"       Tag="A"
 											HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
 											AllowEditing="True"     Visible="False">
@@ -374,9 +355,9 @@
                                 <localCtrl:CommonCodeEditSetting CommonCode="PCL_DTM_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center" />
                             </dxg:GridColumn.EditSettings>
                         </dxg:GridColumn>
-                        <!--#endregion-->
+                        --><!--#endregion-->
 
-                        <!--#region PCL_DTM_PROR_CD - Parcel 결정 우선순위-->
+                        <!--#region PCL_DTM_PROR_CD - Parcel 결정 우선순위--><!--
                         <dxg:GridColumn     Header="PCL_DTM_PROR_CD"       FieldName="PCL_DTM_PROR_CD"        Width="100"       Tag="A"
 											HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
 											AllowEditing="True"     Visible="False">
@@ -384,9 +365,9 @@
                                 <localCtrl:CommonCodeEditSetting CommonCode="PCL_DTM_PROR_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center" />
                             </dxg:GridColumn.EditSettings>
                         </dxg:GridColumn>
-                        <!--#endregion-->
+                        --><!--#endregion-->
 
-                        <!--#region CHUTE_OPR_CD - 슈트운영코드-->
+                        <!--#region CHUTE_OPR_CD - 슈트운영코드--><!--
                         <dxg:GridColumn     Header="CHUTE_OPR_CD"       FieldName="CHUTE_OPR_CD"        Width="100"       Tag="A"
 											HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
 											AllowEditing="True"     Visible="False">
@@ -394,28 +375,28 @@
                                 <localCtrl:CommonCodeEditSetting CommonCode="CHUTE_OPR_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center" />
                             </dxg:GridColumn.EditSettings>
                         </dxg:GridColumn>
-                        <!--#endregion-->
+                        --><!--#endregion-->
 
-                        <!--#region PC_IP--><!--
+                        <!--#region PC_IP-->
                         <dxg:GridColumn     Header="PC_IP"             FieldName="PC_IP"              Width="100"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
                                             AllowEditing="True">
                         </dxg:GridColumn>
-                        --><!--#endregion-->
+                        <!--#endregion-->
 
-                        <!--#region ECS_COMM_NO--><!--
+                        <!--#region ECS_COMM_NO-->
                         <dxg:GridColumn     Header="ECS_COMM_NO"             FieldName="ECS_COMM_NO"              Width="100"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnDecimal}"
                                             AllowEditing="True">
                         </dxg:GridColumn>
-                        --><!--#endregion-->
+                        <!--#endregion-->
 
-                        <!--#region SER_COMM_NO--><!--
+                        <!--#region SER_COMM_NO-->
                         <dxg:GridColumn     Header="SER_COMM_NO"             FieldName="SER_COMM_NO"              Width="100"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnDecimal}"
                                             AllowEditing="True">
                         </dxg:GridColumn>
-                        --><!--#endregion-->
+                        <!--#endregion-->
 
                         <!--#region RECIRC_CNT-->
                         <dxg:GridColumn     Header="RECIRC_CNT"             FieldName="RECIRC_CNT"              Width="100"
@@ -424,12 +405,12 @@
                         </dxg:GridColumn>
                         <!--#endregion-->
 
-                        <!--#region ZONE_ID--><!--
+                        <!--#region ZONE_ID-->
                         <dxg:GridColumn     Header="ZONE_ID"             FieldName="ZONE_ID"              Width="80"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
                                             AllowEditing="True">
                         </dxg:GridColumn>
-                        --><!--#endregion-->
+                        <!--#endregion-->
 
                     </dxg:GridControl.Columns>
                     <!--#endregion-->
@@ -441,7 +422,7 @@
         </Grid>
         <!--#endregion-->
         <!--#endregion-->
-        <localCtrl:UCConnection x:Name="ucConn1" HorizontalAlignment="Left" Height="0" Margin="0,0,0,0" VerticalAlignment="Top" Width="0" />
+        <!--<localCtrl:UCConnection x:Name="ucConn1" HorizontalAlignment="Left" Height="0" Margin="0,0,0,0" VerticalAlignment="Top" Width="0" />-->
     </Grid>
     <!--#endregion-->
 

@@ -48,29 +48,9 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         private BaseClass BaseClass = new BaseClass();
 
         /// <summary>
-        /// Base Info 선언
-        /// </summary>
-        private BaseInfo BaseInfo = new BaseInfo();
-
-        /// <summary>
         /// 화면 전체권한 부여 (true : 전체권한)
         /// </summary>
         private static bool g_IsAuthAllYN = false;
-
-        /// <summary>
-        /// 화면 언로드 여부
-        /// </summary>
-        private bool g_IsUnLoaded = false;
-
-        /// <summary>
-        /// EzControl과 통신하기위한 Reference를 선언한다. 
-        /// </summary>
-        private CReference _reference = null;
-
-        /// <summary>
-        /// CJ때는 ElementNo를 DB에서 가져왔었는데 어차피 소터 하나인데 DB갔다오는게 안좋을 것 같아서 그냥 선언했음
-        /// </summary>
-        private int ElementNo = 1;
         #endregion
 
         #region ▩ 생성자
@@ -193,23 +173,10 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             // 콤보박스 - 조회 (사용여부, 설비 종류 코드, 위치 코드)
             this.BaseClass.BindingCommonComboBox(this.cboUseYN_First, "USE_YN", null, false);
             this.BaseClass.BindingCommonComboBox(this.cboEqpTypeCd, "EQP_TYPE_CD", null, true);
-            this.BaseClass.BindingCommonComboBox(this.cboLocCd, "LOC_CD", commonParam_LOCCode, true);
 
             // 버튼(행추가/행삭제) 툴팁 처리
             this.btnRowAdd_First.ToolTip = this.BaseClass.GetResourceValue("ROW_ADD");
             this.btnRowDelete_First.ToolTip = this.BaseClass.GetResourceValue("ROW_DEL");
-
-            if (this.BaseClass.CenterCD.Equals("ICN") == true)
-            {
-                //this.gridMaster.Columns["EQP_TYPE_CD"].Visible = true;
-                this.gridMaster.Columns["PCL_DTM_CD"].Visible = false;
-                this.gridMaster.Columns["PCL_DTM_PROR_CD"].Visible = false;
-                this.gridMaster.Columns["CHUTE_OPR_CD"].Visible = false;
-                this.gridMaster.Columns["RECIRC_CNT"].Visible = true;
-
-                //this.lblConnStatus.Visibility = Visibility.Hidden;
-                //this.bdConnStatus.Visibility = Visibility.Hidden;
-            }
         }
         #endregion
 
@@ -219,12 +186,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         /// </summary>
         private void InitEvent()
         {
-            #region + 화면 이벤트
-            this.Loaded += C1014_Loaded;
-            //화면 종료 시 ECS 연결 해제 
-            this.Unloaded += C1014_Unloaded;
-            #endregion
-
             #region + 버튼 클릭 이벤트
             // 조회
             this.btnSEARCH.PreviewMouseLeftButtonUp += BtnSearch_First_PreviewMouseLeftButtonUp;
@@ -354,13 +315,13 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         {            
             try
             {
-                ucConn1.ElementNo = ElementNo;                
-                _reference = CReferenceManager.GetReference(ucConn1.GetFactovaConnection(), "SorterServer", ElementNo);
-                ucConn1.OnPanelUIEvent += uCCommunication_OnPanelUIEvent;
-                ucConn1.LinkedReference = _reference;
+                //ucConn1.ElementNo = ElementNo;                
+                //_reference = CReferenceManager.GetReference(ucConn1.GetFactovaConnection(), "SorterServer", ElementNo);
+                //ucConn1.OnPanelUIEvent += uCCommunication_OnPanelUIEvent;
+                //ucConn1.LinkedReference = _reference;
 
-                if (_reference != null)
-                    ucConn1.LinkedReference.Start();
+                //if (_reference != null)
+                //    ucConn1.LinkedReference.Start();
             }
             catch { throw; }
         }
@@ -371,12 +332,12 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         {
             try
             {
-                if (ucConn1.LinkedReference != null)
-                {
-                    ucConn1.LinkedReference.Stop();
-                    ucConn1.OnPanelUIEvent -= uCCommunication_OnPanelUIEvent;
-                    ucConn1.LinkedReference = null;
-                }
+                //if (ucConn1.LinkedReference != null)
+                //{
+                //    ucConn1.LinkedReference.Stop();
+                //    ucConn1.OnPanelUIEvent -= uCCommunication_OnPanelUIEvent;
+                //    ucConn1.LinkedReference = null;
+                //}
             }
             catch { throw; }
         }
@@ -490,7 +451,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             var strEqpNm = this.txtEqpNm_First.Text.Trim();                                         // 설비 명
             //var strEqpTypeCd = this.BaseClass.ComboBoxSelectedDisplayValue(this.cboEqpTypeCd);
             var strEqpTypeCd = this.BaseClass.ComboBoxSelectedKeyValue(this.cboEqpTypeCd);          // 설비 종류 코드
-            var strLocCd = this.BaseClass.ComboBoxSelectedKeyValue(this.cboLocCd);                  // 위치 코드
             var strUseYn = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN_First);            // 사용 여부
 
             var strErrCode = string.Empty;          // 오류 코드
@@ -502,7 +462,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             dicInputParam.Add("P_EQP_ID", strEqpID);                    // 설비 ID
             dicInputParam.Add("P_EQP_NM", strEqpNm);                    // 설비 명
             dicInputParam.Add("P_EQP_TYPE_CD", strEqpTypeCd);           // 설비 종류 코드
-            dicInputParam.Add("P_LOC_CD", strLocCd);                    // 위치 코드
             dicInputParam.Add("P_USE_YN", strUseYn);                    // 사용 여부
             #endregion
 
@@ -976,21 +935,21 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                             string boxRwrkChuteId = dsRtnCofigValue.Tables[0].Rows[0]["BOX_RJT_CHUTE_ID"].ToString();
                             string sorterMode = dsRtnCofigValue.Tables[0].Rows[0]["AI_MODE"].ToString();
 
-                            if (ucConn1.LinkedReference != null)
-                            {
-                                ucConn1.SendCommand(BaseEnumClass.EnumToCoreEvent.SetConfiguration,
-                                pbRjtChuteId, //PB Reject Chute,
-                                pbRwrkChuteId, //PB Rework Chute,
-                                boxRjtChuteId, //BOX Reject Chute,
-                                boxRwrkChuteId, //BOX Rework Chute,
-                                reCirculationCnt, //Recirculation Count,
-                                sorterMode); //Sorter type (1:AI, 2:Tray, 3:AI우선, 4:Tray우선)
-                            }
-                            else
-                            {
-                                // ECS가 연결되지 않았습니다.
-                                this.BaseClass.MsgError("NO_ECS_CONNECTION");
-                            }
+                            //if (ucConn1.LinkedReference != null)
+                            //{
+                            //    ucConn1.SendCommand(BaseEnumClass.EnumToCoreEvent.SetConfiguration,
+                            //    pbRjtChuteId, //PB Reject Chute,
+                            //    pbRwrkChuteId, //PB Rework Chute,
+                            //    boxRjtChuteId, //BOX Reject Chute,
+                            //    boxRwrkChuteId, //BOX Rework Chute,
+                            //    reCirculationCnt, //Recirculation Count,
+                            //    sorterMode); //Sorter type (1:AI, 2:Tray, 3:AI우선, 4:Tray우선)
+                            //}
+                            //else
+                            //{
+                            //    // ECS가 연결되지 않았습니다.
+                            //    this.BaseClass.MsgError("NO_ECS_CONNECTION");
+                            //}
                         }
                         else
                         {
@@ -1048,19 +1007,19 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                 LINK_EQP_ID     = string.Empty,
                 LOC_CD          = string.Empty,
                 USE_YN          = "Y",
-                /*
-                PC_IP           = string.Empty,
-                ECS_COMM_NO     = string.Empty,
-                SER_COMM_NO     = string.Empty,
-                RECIRC_CNT      = string.Empty,
-                ZONE_ID         = string.Empty,
-                */
 
-                PCL_DTM_CD      = string.Empty,     // Parcel 결정
-                PCL_DTM_PROR_CD = string.Empty,     // parcel 결정 우선순위
-                CHUTE_OPR_CD    = string.Empty,     // 슈트운영코드
-                
-                IsSelected      = true,
+                PC_IP = string.Empty,
+                ECS_COMM_NO = string.Empty,
+                SER_COMM_NO = string.Empty,
+                RECIRC_CNT = string.Empty,
+                ZONE_ID = string.Empty,
+
+
+                //PCL_DTM_CD      = string.Empty,     // Parcel 결정
+                //PCL_DTM_PROR_CD = string.Empty,     // parcel 결정 우선순위
+                //CHUTE_OPR_CD    = string.Empty,     // 슈트운영코드
+
+                IsSelected = true,
                 IsNew           = true,
                 IsSaved         = false
             };
