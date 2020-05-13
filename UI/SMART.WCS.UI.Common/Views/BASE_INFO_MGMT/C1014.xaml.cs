@@ -200,8 +200,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             this.btnRowDelete_First.PreviewMouseLeftButtonUp += BtnRowDelete_First_PreviewMouseLeftButtonUp;
             #endregion
             
-            #region + 그리드 이벤트
-            // 그리드 클릭 이벤트
+            #region + 그리드 이벤트   // 그리드 클릭 이벤트
             this.gridMaster.PreviewMouseLeftButtonUp += GridMaster_PreviewMouseLeftButtonUp;
 
             // Equipment 리스트 그리드 순번 채번을 위한 이벤트
@@ -257,20 +256,33 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         }
         #endregion
 
-        #region >> DeleteGridRowItem - 선택한 그리드의 Row를 삭제한다. (행추가된 항목만 삭제 가능)
+        #region >> DeleteGridRowItem - 선택한 그리드의 Row를 삭제한다
         /// <summary>
-        /// 선택한 그리드의 Row를 삭제한다. (행추가된 항목만 삭제 가능)
+        /// 선택한 그리드의 Row를 삭제한다.
+        /// DB에 데이터가 있는건 USE Flag만 'N'으로 변경
+        /// 저장 되기 전 화면에서 삭제
         /// </summary>
         private void DeleteGridRowItem()
         {
-            var liEquipmentMgnt = this.EquipmentMgntList.Where(p => p.IsSelected == true && p.IsNew == true && p.IsSaved == false).ToList();
+            //var liEquipmentMgnt = this.EquipmentMgntList.Where(p => p.IsSelected == true && p.IsNew == true && p.IsSaved == false).ToList();
+            var liEquipmentMgnt = this.EquipmentMgntList.Where(p => p.IsSelected == true).ToList();
 
             if (liEquipmentMgnt.Count() <= 0)
             {
                 BaseClass.MsgError("ERR_DELETE");
             }
 
-            liEquipmentMgnt.ForEach(p => EquipmentMgntList.Remove(p));
+            //liEquipmentMgnt.ForEach(p => EquipmentMgntList.Remove(p));
+            liEquipmentMgnt.ForEach(p => { 
+                if(p.IsNew == false)
+                {
+                    // Database USE Flag 'N' 변경
+
+                    BaseClass.MsgError("ERR_DELETE");
+                }
+
+                EquipmentMgntList.Remove(p);
+            });
         }
 
         #endregion
@@ -309,128 +321,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             return bRtnValue;
         }
         #endregion
-
-        #region >>Connection Element - ECS 연결
-        private void ConnectElement()
-        {            
-            try
-            {
-                //ucConn1.ElementNo = ElementNo;                
-                //_reference = CReferenceManager.GetReference(ucConn1.GetFactovaConnection(), "SorterServer", ElementNo);
-                //ucConn1.OnPanelUIEvent += uCCommunication_OnPanelUIEvent;
-                //ucConn1.LinkedReference = _reference;
-
-                //if (_reference != null)
-                //    ucConn1.LinkedReference.Start();
-            }
-            catch { throw; }
-        }
-        #endregion
-
-        #region >>Connection Element - ECS 연결 해제
-        private void DisconnectElement()
-        {
-            try
-            {
-                //if (ucConn1.LinkedReference != null)
-                //{
-                //    ucConn1.LinkedReference.Stop();
-                //    ucConn1.OnPanelUIEvent -= uCCommunication_OnPanelUIEvent;
-                //    ucConn1.LinkedReference = null;
-                //}
-            }
-            catch { throw; }
-        }
-        #endregion
-
-        #region >> Core to UI Event  화면에서 ECS 데이터 수신
-        void uCCommunication_OnPanelUIEvent(int iEventID, params object[] args)
-        {
-            try
-            {
-                if (this.BaseClass.CenterCD.Equals("BC")) { return; }
-
-                switch ((BaseEnumClass.EnumToUIEvent)iEventID)
-                {
-                    case BaseEnumClass.EnumToUIEvent.Connected:
-                        {
-                            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
-                            {
-                                SetConnectState(true);
-                            }));
-                        }
-                        break;
-
-                    case BaseEnumClass.EnumToUIEvent.Disconnected:
-                        {
-                            Dispatcher.Invoke(DispatcherPriority.Normal, new Action(delegate
-                            {
-                                SetConnectState(false);
-                            }));
-                        }
-                        break;
-
-                    case BaseEnumClass.EnumToUIEvent.SetConfigurationAck:
-                        {
-                            // 양산센터인 경우만 적용
-                            if (this.BaseClass.CenterCD.ToUpper().Equals("YS"))
-                            {
-                                if (args[0].ToString().Equals("1"))
-                                {
-                                    // 소터가 가동 중입니다.소터 정지 후에 변경하세요.
-                                    this.BaseClass.MsgInfo("INFO_SRT_PROC_STOP_CHG");
-                                }
-                                else if (args[0].ToString().Equals("2"))
-                                {
-                                    // 소터 설정이 변경되었습니다.
-                                    this.BaseClass.MsgInfo("INFO_CMPT_SRT_SETTING");
-                                }
-                                else if (args[0].ToString().Equals("3"))
-                                {
-                                    // SMS와 PLC의 연결이 끊겨 있습니다.|확인 후 다시 시도해주세요.
-                                    this.BaseClass.MsgInfo("INFO_SMS_PLC_NOT_CONNECT_RETRY");
-                                }
-                            }
-                        }
-                        break;
-                        
-                    default:
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                this.BaseClass.Error(ex);
-            }
-        }
-        #endregion
-
-        #region >> ECS 연결 상태 값 변경
-        void SetConnectState(bool state)
-        {
-            try
-            {
-                string strMessage = string.Empty;
-
-                if (state)
-                {
-                    //ECS가 연결 되었습니다. 
-                    this.lblConnStatus.Content      = "Connected";
-                    this.bdConnStatus.Background    = new SolidColorBrush(Colors.Green);
-                    this.BaseClass.Info("ECS가 연결 되었습니다.");
-                }
-                else
-                {
-                    //ECS가 연결 되지 않았습니다. 
-                    this.lblConnStatus.Content      = "Disconnected";
-                    this.bdConnStatus.Background    = new SolidColorBrush(Colors.Red);
-                    this.BaseClass.Info("ECS가 연결 되지 않았습니다.");
-                }
-            }
-            catch { throw; }
-        }
-        #endregion
         #endregion
 
         #region > 데이터 관련
@@ -443,10 +333,10 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         {
             #region 파라메터 변수 선언 및 값 할당
             DataSet dsRtnValue                          = null;
-            var strProcedureName                        = "CSP_C1014_SP_EQP_LIST_INQ";
+            var strProcedureName                        = "UI_EQIP_MST_INS";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
             
-            var strCntrCd = this.BaseClass.CenterCD;                                                // 센터 코드
+            //var strCntrCd = this.BaseClass.CenterCD;                                                // 센터 코드
             var strEqpID = this.txtEqpId_First.Text.Trim();                                         // 설비 ID
             var strEqpNm = this.txtEqpNm_First.Text.Trim();                                         // 설비 명
             //var strEqpTypeCd = this.BaseClass.ComboBoxSelectedDisplayValue(this.cboEqpTypeCd);
@@ -458,11 +348,11 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             #endregion
 
             #region Input 파라메터
-            dicInputParam.Add("P_CNTR_CD", strCntrCd);                  // 센터 코드
-            dicInputParam.Add("P_EQP_ID", strEqpID);                    // 설비 ID
-            dicInputParam.Add("P_EQP_NM", strEqpNm);                    // 설비 명
-            dicInputParam.Add("P_EQP_TYPE_CD", strEqpTypeCd);           // 설비 종류 코드
-            dicInputParam.Add("P_USE_YN", strUseYn);                    // 사용 여부
+            //dicInputParam.Add("P_CNTR_CD", strCntrCd);                // 센터 코드
+            dicInputParam.Add("EQP_ID", strEqpID);                      // 설비 ID
+            dicInputParam.Add("EQP_NM", strEqpNm);                      // 설비 명
+            dicInputParam.Add("EQP_TYPE_CD", strEqpTypeCd);             // 설비 종류 코드
+            dicInputParam.Add("USE_YN", strUseYn);                      // 사용 여부
             #endregion
 
             #region 데이터 조회
@@ -500,9 +390,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             var strLinkEqpId    = _item.LINK_EQP_ID;                    // 연결설비ID
             var strLocCd        = _item.LOC_CD;                         // 위치 코드
             var strUseYN        = _item.Checked == true ? "Y" : "N";    // 사용 여부
-            var strPclDtmCD     = _item.PCL_DTM_CD;                     // Parcel 결정
-            var strPclDtmProrCD = _item.PCL_DTM_PROR_CD;                // Parcel 결정 우선순위
-            var strChuteOprCD   = _item.CHUTE_OPR_CD;                   // 슈트운영코드
             var strUserID       = this.BaseClass.UserID;                // 사용자 ID
             var strErrCode      = string.Empty;                         // 오류 코드
             var strErrMsg       = string.Empty;                         // 오류 메세지
@@ -518,9 +405,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             dicInputParam.Add("P_LOC_CD",           strLocCd);          // 위치 코드
             dicInputParam.Add("P_USE_YN",           strUseYN);          // 사용 여부
             dicInputParam.Add("P_USER_ID",          strUserID);         // 사용자 ID
-            dicInputParam.Add("P_PCL_DTM_CD",       strPclDtmCD);       // Parcel 결정
-            dicInputParam.Add("P_PCL_DTM_PROR_CD",  strPclDtmProrCD);   // parcel 결정 우선순위
-            dicInputParam.Add("P_CHUTE_OPR_CD",     strChuteOprCD);     // 슈트운영코드
             #endregion
 
             dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
@@ -570,17 +454,11 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             var strEqpTypeCd    = _item.EQP_TYPE_CD;        // 설비 종류 코드
             var strLinkEqpId    = _item.LINK_EQP_ID;        // 연결설비ID
             var strLocCd        = _item.LOC_CD;             // 위치 코드
-            /*
             var strPcIp         = _item.PC_IP;              // 설비랑 통신하는 PC IP
             var strEcsCommNo    = _item.ECS_COMM_NO;        // 설비 ECS 통신 번호
             var strSerCommNo    = _item.SER_COMM_NO;        // 시리얼 통신 번호
             var strRecircCnt    = _item.RECIRC_CNT;         // 순환횟수
             var strZoneId       = _item.ZONE_ID;            // ZONE ID                       // 문자속성 10
-            */
-
-            var strPclDtmCD     = _item.PCL_DTM_CD;                     // Parcel 결정
-            var strPclDtmProrCD = _item.PCL_DTM_PROR_CD;                // Parcel 결정 우선순위
-            var strChuteOprCD   = _item.CHUTE_OPR_CD;                   // 슈트운영코드
             var strUseYN        = _item.Checked == true ? "Y" : "N";    // 사용 여부
             var strUserID       = this.BaseClass.UserID;                // 사용자 ID
             var strErrCode      = string.Empty;                         // 오류 코드
@@ -606,9 +484,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 
             dicInputParam.Add("P_USE_YN",               strUseYN);          // 사용 여부
             dicInputParam.Add("P_USER_ID",              strUserID);         // 사용자 ID
-            dicInputParam.Add("P_PCL_DTM_CD",           strPclDtmCD);       // Parcel 결정
-            dicInputParam.Add("P_PCL_DTM_PROR_CD",      strPclDtmProrCD);   // parcel 결정 우선순위
-            dicInputParam.Add("P_CHUTE_OPR_CD",         strChuteOprCD);     // 슈트운영코드
             #endregion
 
             dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
@@ -679,7 +554,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             {
                 this.Loaded -= C1014_Loaded;
 
-                this.ConnectElement();
+                //this.ConnectElement();
             }
             catch (Exception err)
             {
@@ -693,7 +568,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             try
             {
                 this.Unloaded -= C1014_Unloaded;
-                this.DisconnectElement();
+                //this.DisconnectElement();
             }
             catch (Exception err)
             {
@@ -1011,7 +886,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                 PC_IP = string.Empty,
                 ECS_COMM_NO = string.Empty,
                 SER_COMM_NO = string.Empty,
-                RECIRC_CNT = string.Empty,
+                RECIRC_CNT = 0,
                 ZONE_ID = string.Empty,
 
 
@@ -1125,13 +1000,14 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                             e.Cancel = true;
                         }
                         break;
-                    case "PCL_DTM_PROR_CD":
-                        // Parcel결정 (PCL_DTM_CD)값이 AT인 경우만 선택할 수 있다.
-                        if (dataMember.PCL_DTM_CD.Equals("AT") == false)
-                        {
-                            e.Cancel = true;
-                        }
+
+                    // 운영상태, 플랜코드는 수정이 되지 않도록 처리한다.
+                    case "IS_RUN_YN":
+                    case "SORT_PLN _CD":
+                        e.Cancel = true;
+
                         break;
+
                     default: break;
                 }
             }

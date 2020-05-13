@@ -2559,4 +2559,19 @@
   <data name="CHUTE_NO" xml:space="preserve">
     <value>슈트번호</value>
   </data>
+  <data name="IS_USE_YN" xml:space="preserve">
+    <value>운영상태</value>
+  </data>
+  <data name="MAX_READ_CNT" xml:space="preserve">
+    <value>최대 리딩 횟수</value>
+  </data>
+  <data name="MAX_RECIRCULATION" xml:space="preserve">
+    <value>최대 회전 횟수</value>
+  </data>
+  <data name="MAX_SCAN_CNT" xml:space="preserve">
+    <value>최대 바코드 인식 수</value>
+  </data>
+  <data name="SORT_PLN_CD" xml:space="preserve">
+    <value>플랜코드</value>
+  </data>
 </root>

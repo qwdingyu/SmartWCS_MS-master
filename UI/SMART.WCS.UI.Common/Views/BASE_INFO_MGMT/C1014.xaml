@@ -301,13 +301,6 @@
                         </dxg:GridColumn>
                         <!--#endregion-->
 
-                        <!--#region EQP_DESC-->
-                        <dxg:GridColumn     Header="EQP_DESC"             FieldName="EQP_DESC"              Width="150"
-                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
-                                            AllowEditing="True">
-                        </dxg:GridColumn>
-                        <!--#endregion-->
-
                         <!--#region EQP_TYPE_CD (REQ)-->
                         <dxg:GridColumn     Header="EQP_TYPE_CD_REQ"       FieldName="EQP_TYPE_CD"        Width="100"       Tag="A"
 											HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
@@ -335,47 +328,15 @@
                         </dxg:GridColumn>
                         <!--#endregion-->
 
-                        <!--#region USE_YN-->
-                        <dxg:GridColumn     Header="USE_YN"             FieldName="USE_YN"              Width="80"
+                        <!--#region USE_YN (REQ)-->
+                        <dxg:GridColumn     Header="USE_YN_REQ"             FieldName="USE_YN"              Width="80"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
                                             AllowEditing="True">
-                            <dxg:GridColumn.CellTemplate>
-                                <DataTemplate>
-                                    <dxe:CheckEdit  x:Name="PART_Editor"    EditValue="{Binding RowData.Row.Checked, Mode=TwoWay}"  ClickMode="Release" />
-                                </DataTemplate>
-                            </dxg:GridColumn.CellTemplate>
+                            <dxg:GridColumn.EditSettings>
+                                <localCtrl:CommonCodeEditSetting CommonCode="USE_YN"    IsTextEditable="False"    HorizontalContentAlignment="Center" />
+                            </dxg:GridColumn.EditSettings>
                         </dxg:GridColumn>
                         <!--#endregion-->
-
-                        <!--#region PCL_DTM_CD - Parcel결정--><!--
-                        <dxg:GridColumn     Header="PCL_DTM_CD"       FieldName="PCL_DTM_CD"        Width="100"       Tag="A"
-											HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
-											AllowEditing="True"     Visible="False">
-                            <dxg:GridColumn.EditSettings>
-                                <localCtrl:CommonCodeEditSetting CommonCode="PCL_DTM_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center" />
-                            </dxg:GridColumn.EditSettings>
-                        </dxg:GridColumn>
-                        --><!--#endregion-->
-
-                        <!--#region PCL_DTM_PROR_CD - Parcel 결정 우선순위--><!--
-                        <dxg:GridColumn     Header="PCL_DTM_PROR_CD"       FieldName="PCL_DTM_PROR_CD"        Width="100"       Tag="A"
-											HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
-											AllowEditing="True"     Visible="False">
-                            <dxg:GridColumn.EditSettings>
-                                <localCtrl:CommonCodeEditSetting CommonCode="PCL_DTM_PROR_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center" />
-                            </dxg:GridColumn.EditSettings>
-                        </dxg:GridColumn>
-                        --><!--#endregion-->
-
-                        <!--#region CHUTE_OPR_CD - 슈트운영코드--><!--
-                        <dxg:GridColumn     Header="CHUTE_OPR_CD"       FieldName="CHUTE_OPR_CD"        Width="100"       Tag="A"
-											HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
-											AllowEditing="True"     Visible="False">
-                            <dxg:GridColumn.EditSettings>
-                                <localCtrl:CommonCodeEditSetting CommonCode="CHUTE_OPR_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center" />
-                            </dxg:GridColumn.EditSettings>
-                        </dxg:GridColumn>
-                        --><!--#endregion-->
 
                         <!--#region PC_IP-->
                         <dxg:GridColumn     Header="PC_IP"             FieldName="PC_IP"              Width="100"
@@ -408,6 +369,121 @@
                         <!--#region ZONE_ID-->
                         <dxg:GridColumn     Header="ZONE_ID"             FieldName="ZONE_ID"              Width="80"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
+                                            AllowEditing="True">
+                            <dxg:GridColumn.EditSettings>
+                                <localCtrl:CommonCodeEditSetting CommonCode="ZONE_ID"    IsTextEditable="False"    HorizontalContentAlignment="Center" />
+                            </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region EQP_DESC-->
+                        <dxg:GridColumn     Header="EQP_DESC"             FieldName="EQP_DESC"              Width="150"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region MAX_READ_CNT-->
+                        <dxg:GridColumn     Header="MAX_READ_CNT"             FieldName="MAX_READ_CNT"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnDecimal}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region MAX_RECIRCULATION-->
+                        <dxg:GridColumn     Header="MAX_RECIRCULATION"             FieldName="MAX_RECIRCULATION"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnDecimal}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region MAX_RECIRCULATION-->
+                        <dxg:GridColumn     Header="MAX_SCAN_CNT"             FieldName="MAX_SCAN_CNT"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnDecimal}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region IS_RUN_YN-->
+                        <dxg:GridColumn     Header="IS_RUN_YN"             FieldName="IS_RUN_YN"              Width="80"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region SORT_PLN_CD-->
+                        <dxg:GridColumn     Header="SORT_PLN_CD"             FieldName="SORT_PLN_CD"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region ATTR01-->
+                        <dxg:GridColumn     Header="ATTR01"             FieldName="ATTR01"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region ATTR02-->
+                        <dxg:GridColumn     Header="ATTR02"             FieldName="ATTR02"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region ATTR03-->
+                        <dxg:GridColumn     Header="ATTR03"             FieldName="ATTR03"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region ATTR04-->
+                        <dxg:GridColumn     Header="ATTR04"             FieldName="ATTR04"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region ATTR05-->
+                        <dxg:GridColumn     Header="ATTR05"             FieldName="ATTR05"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region ATTR06-->
+                        <dxg:GridColumn     Header="ATTR06"             FieldName="ATTR06"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+                        
+                        <!--#region ATTR07-->
+                        <dxg:GridColumn     Header="ATTR07"             FieldName="ATTR07"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region ATTR08-->
+                        <dxg:GridColumn     Header="ATTR08"             FieldName="ATTR08"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region ATTR09-->
+                        <dxg:GridColumn     Header="ATTR09"             FieldName="ATTR09"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+                        
+                        <!--#region ATTR10-->
+                        <dxg:GridColumn     Header="ATTR10"             FieldName="ATTR10"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
                                             AllowEditing="True">
                         </dxg:GridColumn>
                         <!--#endregion-->

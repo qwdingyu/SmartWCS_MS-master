@@ -78,6 +78,22 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1014
         }
         #endregion
 
+        #region + Checked - 사용여부 변환값
+        private bool _Checked;
+        public bool Checked
+        {
+            get { return this._Checked; }
+            set
+            {
+                if (this._Checked != value)
+                {
+                    this._Checked = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
         #region + EQP_ID - 설비 ID
         private string _EQP_ID;
         public string EQP_ID
@@ -104,22 +120,6 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1014
                 if (this._EQP_NM != value)
                 {
                     this._EQP_NM = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + EQP_DESC - 설비 부가 설명
-        private string _EQP_DESC;
-        public string EQP_DESC
-        {
-            get { return this._EQP_DESC; }
-            set
-            {
-                if (this._EQP_DESC != value)
-                {
-                    this._EQP_DESC = value;
                     RaisePropertyChanged();
                 }
             }
@@ -191,22 +191,6 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1014
         }
         #endregion
 
-        #region + Checked - 사용여부 변환값
-        private bool _Checked;
-        public bool Checked
-        {
-            get { return this._Checked; }
-            set
-            {
-                if (this._Checked != value)
-                {
-                    this._Checked = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
         #region + PC_IP - 설비랑 통신하는 PC IP
         private string _PC_IP;
         public string PC_IP
@@ -256,8 +240,8 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1014
         #endregion
 
         #region + RECIRC_CNT - 순환횟수
-        private string _RECIRC_CNT;
-        public string RECIRC_CNT
+        private int _RECIRC_CNT;
+        public int RECIRC_CNT
         {
             get { return this._RECIRC_CNT; }
             set
@@ -287,53 +271,256 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1014
         }
         #endregion
 
-        #region + PCL_DTM_CD - Parcel결정
-        private string _PCL_DTM_CD;
-        public string PCL_DTM_CD
+        #region + EQP_DESC - 설비 부가 설명
+        private string _EQP_DESC;
+        public string EQP_DESC
         {
-            get { return _PCL_DTM_CD; }
+            get { return this._EQP_DESC; }
             set
             {
-                if (this._PCL_DTM_CD != value)
+                if (this._EQP_DESC != value)
                 {
-                    this._PCL_DTM_CD = value;
-                    if (this._PCL_DTM_CD.Equals("AT") == false)
-                    {
-                        this._PCL_DTM_PROR_CD = string.Empty;
-                    }
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        #endregion
-
-        #region + PCL_DTM_PROR_CD - Parcel 결정 우선순위
-        private string _PCL_DTM_PROR_CD;
-        public string PCL_DTM_PROR_CD
-        {
-            get { return this._PCL_DTM_PROR_CD; }
-            set
-            {
-                if (this._PCL_DTM_PROR_CD != value)
-                {
-                    this._PCL_DTM_PROR_CD = value;
+                    this._EQP_DESC = value;
                     RaisePropertyChanged();
                 }
             }
         }
         #endregion
 
-        #region + CHUTE_OPR_CD - 슈트운영코드
-        private string _CHUTE_OPR_CD;
-        public string CHUTE_OPR_CD
+        #region + MAX_READ_CNT - 최대 리딩 횟수
+        private int _MAX_READ_CNT;
+        public int MAX_READ_CNT
         {
-            get { return this._CHUTE_OPR_CD; }
+            get { return this._MAX_READ_CNT; }
             set
             {
-                if (this._CHUTE_OPR_CD != value)
+                if (this._MAX_READ_CNT != value)
                 {
-                    this._CHUTE_OPR_CD = value;
+                    this._MAX_READ_CNT = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + MAX_RECIRCULATION - 최대 회전 횟수
+        private int _MAX_RECIRCULATION;
+        public int MAX_RECIRCULATION
+        {
+            get { return this._MAX_RECIRCULATION; }
+            set
+            {
+                if (this._MAX_RECIRCULATION != value)
+                {
+                    this._MAX_RECIRCULATION = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + MAX_SCAN_CNT - 최대 바코드 인식 수
+        private int _MAX_SCAN_CNT;
+        public int MAX_SCAN_CNT
+        {
+            get { return this._MAX_SCAN_CNT; }
+            set
+            {
+                if (this._MAX_SCAN_CNT != value)
+                {
+                    this._MAX_SCAN_CNT = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + IS_RUN_YN - 운영 상태
+        private string _IS_RUN_YN;
+        public string IS_RUN_YN
+        {
+            get { return this._IS_RUN_YN; }
+            set
+            {
+                if (this._IS_RUN_YN != value)
+                {
+                    this._IS_RUN_YN = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   SORT_PLN_CD - 플랜 코드
+        private string _SORT_PLN_CD;
+        public string SORT_PLN_CD
+        {
+            get { return this._SORT_PLN_CD; }
+            set
+            {
+                if (this._SORT_PLN_CD != value)
+                {
+                    this._SORT_PLN_CD = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   ATTR01 - 속성 1
+        private string _ATTR01;
+        public string ATTR01
+        {
+            get { return this._ATTR01; }
+            set
+            {
+                if (this._ATTR01 != value)
+                {
+                    this._ATTR01 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   ATTR02 - 속성 02
+        private string _ATTR02;
+        public string ATTR02
+        {
+            get { return this._ATTR02; }
+            set
+            {
+                if (this._ATTR02 != value)
+                {
+                    this._ATTR02 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   ATTR03 - 속성 03
+        private string _ATTR03;
+        public string ATTR03
+        {
+            get { return this._ATTR03; }
+            set
+            {
+                if (this._ATTR03 != value)
+                {
+                    this._ATTR03 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   ATTR04 - 속성 04
+        private string _ATTR04;
+        public string ATTR04
+        {
+            get { return this._ATTR04; }
+            set
+            {
+                if (this._ATTR04 != value)
+                {
+                    this._ATTR04 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   ATTR05 - 속성 05
+        private string _ATTR05;
+        public string ATTR05
+        {
+            get { return this._ATTR05; }
+            set
+            {
+                if (this._ATTR05 != value)
+                {
+                    this._ATTR05 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   ATTR06 - 속성 06
+        private string _ATTR06;
+        public string ATTR06
+        {
+            get { return this._ATTR06; }
+            set
+            {
+                if (this._ATTR06 != value)
+                {
+                    this._ATTR06 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   ATTR07 - 속성 07
+        private string _ATTR07;
+        public string ATTR07
+        {
+            get { return this._ATTR07; }
+            set
+            {
+                if (this._ATTR07 != value)
+                {
+                    this._ATTR07 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   ATTR08 - 속성 08
+        private string _ATTR08;
+        public string ATTR08
+        {
+            get { return this._ATTR08; }
+            set
+            {
+                if (this._ATTR08 != value)
+                {
+                    this._ATTR08 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   ATTR09 - 속성 09
+        private string _ATTR09;
+        public string ATTR09
+        {
+            get { return this._ATTR09; }
+            set
+            {
+                if (this._ATTR09 != value)
+                {
+                    this._ATTR09 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region +   ATTR10 - 속성 10
+        private string _ATTR10;
+        public string ATTR10
+        {
+            get { return this._ATTR10; }
+            set
+            {
+                if (this._ATTR10 != value)
+                {
+                    this._ATTR10 = value;
                     RaisePropertyChanged();
                 }
             }
