@@ -272,13 +272,22 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                 BaseClass.MsgError("ERR_DELETE");
             }
 
+            if(liEquipmentMgnt.Where(w => w.IsNew == false).Count() > 0)
+            {
+                this.BaseClass.MsgQuestion("ASK_DEL_DB");
+                if (this.BaseClass.BUTTON_CONFIRM_YN == false) return;
+            }
+
             //liEquipmentMgnt.ForEach(p => EquipmentMgntList.Remove(p));
             liEquipmentMgnt.ForEach(p => { 
                 if(p.IsNew == false)
                 {
-                    // Database USE Flag 'N' 변경
+                    p.USE_YN = "N";
 
-                    BaseClass.MsgError("ERR_DELETE");
+                    using (BaseDataAccess da = new BaseDataAccess())
+                    {
+                        this.UpdateSP_EQP_UPD(da, p);
+                    }
                 }
 
                 EquipmentMgntList.Remove(p);
@@ -335,11 +344,9 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             DataSet dsRtnValue                          = null;
             var strProcedureName                        = "UI_EQIP_MST_INS";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
-            
-            //var strCntrCd = this.BaseClass.CenterCD;                                                // 센터 코드
+
             var strEqpID = this.txtEqpId_First.Text.Trim();                                         // 설비 ID
             var strEqpNm = this.txtEqpNm_First.Text.Trim();                                         // 설비 명
-            //var strEqpTypeCd = this.BaseClass.ComboBoxSelectedDisplayValue(this.cboEqpTypeCd);
             var strEqpTypeCd = this.BaseClass.ComboBoxSelectedKeyValue(this.cboEqpTypeCd);          // 설비 종류 코드
             var strUseYn = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN_First);            // 사용 여부
 
@@ -348,7 +355,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             #endregion
 
             #region Input 파라메터
-            //dicInputParam.Add("P_CNTR_CD", strCntrCd);                // 센터 코드
             dicInputParam.Add("EQP_ID", strEqpID);                      // 설비 ID
             dicInputParam.Add("EQP_NM", strEqpNm);                      // 설비 명
             dicInputParam.Add("EQP_TYPE_CD", strEqpTypeCd);             // 설비 종류 코드
@@ -443,50 +449,75 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 
             #region 파라메터 변수 선언 및 값 할당
             DataTable dtRtnValue                        = null;
-            var strProcedureName                        = "CSP_C1014_SP_EQP_UPD";
+            var strProcedureName                        = "UI_EQIP_MST_UPD";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
+            string[] arrOutputParam = { "RTN_VAL", "RTN_MSG" };
 
-            var strCoCd         = BaseClass.CompanyCode;    // 회사 코드
-            var strCntrCd       = BaseClass.CenterCD;       // 센터 코드
-            var strEqpID        = _item.EQP_ID;             // 설비 ID
-            var strEqpNm        = _item.EQP_NM;             // 설비 명
-            var strEqpDesc      = _item.EQP_DESC;           // 설비 세부 정보
-            var strEqpTypeCd    = _item.EQP_TYPE_CD;        // 설비 종류 코드
-            var strLinkEqpId    = _item.LINK_EQP_ID;        // 연결설비ID
-            var strLocCd        = _item.LOC_CD;             // 위치 코드
-            var strPcIp         = _item.PC_IP;              // 설비랑 통신하는 PC IP
-            var strEcsCommNo    = _item.ECS_COMM_NO;        // 설비 ECS 통신 번호
-            var strSerCommNo    = _item.SER_COMM_NO;        // 시리얼 통신 번호
-            var strRecircCnt    = _item.RECIRC_CNT;         // 순환횟수
-            var strZoneId       = _item.ZONE_ID;            // ZONE ID                       // 문자속성 10
-            var strUseYN        = _item.Checked == true ? "Y" : "N";    // 사용 여부
-            var strUserID       = this.BaseClass.UserID;                // 사용자 ID
-            var strErrCode      = string.Empty;                         // 오류 코드
-            var strErrMsg       = string.Empty;                         // 오류 메세지
+
+            var strEqpID                = _item.EQP_ID;                         // 설비 ID
+            var strEqpNm                = _item.EQP_NM;                         // 설비 명
+            var strEqpDesc              = _item.EQP_DESC;                       // 설비 세부 정보
+            var strEqpTypeCd            = _item.EQP_TYPE_CD;                    // 설비 종류 코드
+            var strLinkEqpId            = _item.LINK_EQP_ID;                    // 연결설비ID
+            var strLocCd                = _item.LOC_CD;                         // 위치 코드
+            var strPcIp                 = _item.PC_IP;                          // 설비랑 통신하는 PC IP
+            var strEcsCommNo            = _item.ECS_COMM_NO;                    // 설비 ECS 통신 번호
+            var strSerCommNo            = _item.SER_COMM_NO;                    // 시리얼 통신 번호
+            var intRecircCnt            = _item.RECIRC_CNT;                     // 순환횟수
+            var strZoneId               = _item.ZONE_ID;                        // ZONE ID
+            var strUseYN                = _item.USE_YN;                         // 사용 여부
+            var intMaxReadCnt           = _item.MAX_READ_CNT;                   // 최대 리딩 횟수
+            var intMaxRecirculation     = _item.MAX_RECIRCULATION;              // 최대 회전 횟수
+            var intMaxScanCnt           = _item.MAX_SCAN_CNT;                   // 최대 바코드 인식 수
+            var strIsRunYn              = _item.IS_RUN_YN;                      // 운영 상태
+            var strSortPlnCd            = _item.SORT_PLN_CD;                    // 플랜 코드
+            var strAttr01               = _item.ATTR01;                         // 속성 01
+            var strAttr03               = _item.ATTR02;                         // 속성 02
+            var strAttr02               = _item.ATTR03;                         // 속성 03
+            var strAttr04               = _item.ATTR04;                         // 속성 04
+            var strAttr05               = _item.ATTR05;                         // 속성 05
+            var strAttr06               = _item.ATTR06;                         // 속성 06
+            var strAttr07               = _item.ATTR07;                         // 속성 07
+            var strAttr08               = _item.ATTR08;                         // 속성 08
+            var strAttr09               = _item.ATTR09;                         // 속성 09
+            var strAttr10               = _item.ATTR10;                         // 속성 10
+            var strUserID               = this.BaseClass.UserID;                // 사용자 ID
+            var strErrCode              = string.Empty;                         // 오류 코드
+            var strErrMsg               = string.Empty;                         // 오류 메세지
             #endregion
 
             #region Input 파라메터
-            dicInputParam.Add("P_CO_CD",            strCoCd);           // 회사 코드       
-            dicInputParam.Add("P_CNTR_CD",          strCntrCd);         // 센터 코드
-            dicInputParam.Add("P_EQP_ID",           strEqpID);          // 설비 ID
-            dicInputParam.Add("P_EQP_NM",           strEqpNm);          // 설비 명
-            dicInputParam.Add("P_EQP_DESC",         strEqpDesc);        // 설비 세부 정보
-            dicInputParam.Add("P_EQP_TYPE_CD",      strEqpTypeCd);      // 설비 종류 코드
-            dicInputParam.Add("P_LINK_EQP_ID",      strLinkEqpId);      // 연결설비ID
-            dicInputParam.Add("P_LOC_CD",           strLocCd);          // 위치 코드
-            /*
-            dicInputParam.Add("P_ECS_PC_IP", strPcIp);          // 설비랑 통신하는 PC IP
-            dicInputParam.Add("P_ECS_COMM_NO", strEcsCommNo);   // 설비 ECS 통신 번호
-            dicInputParam.Add("P_SER_COMM_NO", strSerCommNo);   // 시리얼 통신 번호
-            dicInputParam.Add("P_RECIRC_CNT", strRecircCnt);    // 순환횟수
-            dicInputParam.Add("P_ZONE", strZoneId);             // ZONE ID
-            */
-
-            dicInputParam.Add("P_USE_YN",               strUseYN);          // 사용 여부
-            dicInputParam.Add("P_USER_ID",              strUserID);         // 사용자 ID
+            dicInputParam.Add("EQP_ID",             strEqpID);                  // 설비 ID
+            dicInputParam.Add("EQP_NM",             strEqpNm);                  // 설비 명
+            dicInputParam.Add("EQP_DESC",           strEqpDesc);                // 설비 세부 정보
+            dicInputParam.Add("EQP_TYPE_CD",        strEqpTypeCd);              // 설비 종류 코드
+            dicInputParam.Add("LINK_EQP_ID",        strLinkEqpId);              // 연결설비ID
+            dicInputParam.Add("LOC_CD",             strLocCd);                  // 위치 코드
+            dicInputParam.Add("PC_IP",              strPcIp);                   // 설비랑 통신하는 PC IP
+            dicInputParam.Add("ECS_COMM_NO",        strEcsCommNo);              // 설비 ECS 통신 번호
+            dicInputParam.Add("SER_COMM_NO",        strSerCommNo);              // 시리얼 통신 번호
+            dicInputParam.Add("RECIRC_CNT",         intRecircCnt);              // 순환횟수
+            dicInputParam.Add("ZONE_ID",            strZoneId);                 // ZONE ID
+            dicInputParam.Add("USE_YN",             strUseYN);                  // 사용 여부
+            dicInputParam.Add("MAX_READ_CNT",       intMaxReadCnt);             // 최대 리딩 횟수
+            dicInputParam.Add("MAX_RECIRCULATION",  intMaxRecirculation);       // 최대 회전 횟수
+            dicInputParam.Add("MAX_SCAN_CNT",       intMaxScanCnt);             // 최대 바코드 인식 수
+            dicInputParam.Add("IS_RUN_YN",          strIsRunYn);                // 운영 상태
+            dicInputParam.Add("SORT_PLN_CD",        strSortPlnCd);              // 플랜 코드
+            dicInputParam.Add("ATTR01",             strAttr01);                 // 속성 01
+            dicInputParam.Add("ATTR02",             strAttr02);                 // 속성 02
+            dicInputParam.Add("ATTR03",             strAttr03);                 // 속성 03
+            dicInputParam.Add("ATTR04",             strAttr04);                 // 속성 04
+            dicInputParam.Add("ATTR05",             strAttr05);                 // 속성 05
+            dicInputParam.Add("ATTR06",             strAttr06);                 // 속성 06
+            dicInputParam.Add("ATTR07",             strAttr07);                 // 속성 07
+            dicInputParam.Add("ATTR08",             strAttr08);                 // 속성 08
+            dicInputParam.Add("ATTR09",             strAttr09);                 // 속성 09
+            dicInputParam.Add("ATTR10",             strAttr10);                 // 속성 10
+            dicInputParam.Add("USER_ID",            strUserID);                 // 사용자 ID
             #endregion
 
-            dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
+            dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, arrOutputParam);
 
             if (dtRtnValue != null)
             {
@@ -732,17 +763,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                             return;
                         }
 
-                        //if (string.IsNullOrEmpty(item.EQP_TYPE_CD) == true)
-                        //{
-                        //    item.CellError("EQP_TYPE_CD", string.Format(strMessage, this.GetLabelDesc("EQP_TYPE_CD")));
-                        //    return;
-                        //}
-
-                        //if (string.IsNullOrEmpty(item.LOC_CD) == true)
-                        //{
-                        //    item.CellError("LOC_CD", string.Format(strMessage, this.GetLabelDesc("LOC_CD")));
-                        //    return;
-                        //}
                     }
                 }
 
@@ -793,38 +813,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                             this.EquipmentMgntList.ToObservableCollection(dsRtnValue.Tables[0]);
 
                             this.gridMaster.ItemsSource = this.EquipmentMgntList;
-
-                            DataSet dsRtnCofigValue = new DataSet();
-
-                            //ECS에 소터 설정 값 전송  
-                            // DB에서 데이터 갖고 오는 프로시져 필요함. 
-                            foreach (var item in liSelectedRowData)
-                            {
-                                dsRtnCofigValue = this.GetSP_COM_SET_CONFIG(item.EQP_ID);
-                            }
-                            
-                            string reCirculationCnt = dsRtnCofigValue.Tables[0].Rows[0]["RECIRC_CNT"].ToString();
-                            string pbRjtChuteId = dsRtnCofigValue.Tables[0].Rows[0]["PB_RJT_CHUTE_ID"].ToString();
-                            string pbRwrkChuteId = dsRtnCofigValue.Tables[0].Rows[0]["PB_RJT_CHUTE_ID"].ToString();
-                            string boxRjtChuteId = dsRtnCofigValue.Tables[0].Rows[0]["BOX_RJT_CHUTE_ID"].ToString();
-                            string boxRwrkChuteId = dsRtnCofigValue.Tables[0].Rows[0]["BOX_RJT_CHUTE_ID"].ToString();
-                            string sorterMode = dsRtnCofigValue.Tables[0].Rows[0]["AI_MODE"].ToString();
-
-                            //if (ucConn1.LinkedReference != null)
-                            //{
-                            //    ucConn1.SendCommand(BaseEnumClass.EnumToCoreEvent.SetConfiguration,
-                            //    pbRjtChuteId, //PB Reject Chute,
-                            //    pbRwrkChuteId, //PB Rework Chute,
-                            //    boxRjtChuteId, //BOX Reject Chute,
-                            //    boxRwrkChuteId, //BOX Rework Chute,
-                            //    reCirculationCnt, //Recirculation Count,
-                            //    sorterMode); //Sorter type (1:AI, 2:Tray, 3:AI우선, 4:Tray우선)
-                            //}
-                            //else
-                            //{
-                            //    // ECS가 연결되지 않았습니다.
-                            //    this.BaseClass.MsgError("NO_ECS_CONNECTION");
-                            //}
                         }
                         else
                         {

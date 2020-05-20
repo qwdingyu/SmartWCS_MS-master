@@ -139,9 +139,9 @@ namespace SMART.WCS.Control
             // 화면 로드 이벤트
             this.Loaded += NavigationBar_Loaded;
             // 즐겨찾기 적용
-            this.imgBookmarkApply.PreviewMouseLeftButtonUp += ImgBookmarkApply_PreviewMouseLeftButtonUp;
+            //this.imgBookmarkApply.PreviewMouseLeftButtonUp += ImgBookmarkApply_PreviewMouseLeftButtonUp;
             // 즐겨찾기 해제
-            this.imgBookmarkCanncellation.PreviewMouseLeftButtonUp += ImgBookmarkCanncellation_PreviewMouseLeftButtonUp;
+            //this.imgBookmarkCanncellation.PreviewMouseLeftButtonUp += ImgBookmarkCanncellation_PreviewMouseLeftButtonUp;
         }
         #endregion
         #endregion
@@ -476,7 +476,7 @@ namespace SMART.WCS.Control
 
                 this.g_isLoaded = false;
 
-                await this.GetSP_MENU_FVRT_INQ();
+                //await this.GetSP_MENU_FVRT_INQ();
             }
             catch (Exception err)
             {

@@ -117,185 +117,62 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="(MENU)A1002" xml:space="preserve">
-    <value>Reject율 현황</value>
+  <data name="(MENU)UMRCM" xml:space="preserve">
+    <value>코드관리</value>
   </data>
-  <data name="(MENU)ANL" xml:space="preserve">
-    <value>Analysis</value>
+  <data name="(MENU)UMRDP" xml:space="preserve">
+    <value>분류계획</value>
   </data>
-  <data name="(MENU)ANL01" xml:space="preserve">
-    <value>Sorter</value>
+  <data name="(MENU)UMRRP" xml:space="preserve">
+    <value>리포트</value>
   </data>
-  <data name="(MENU)C1002" xml:space="preserve">
+  <data name="(MENU)UMRUC" xml:space="preserve">
     <value>사용자 관리</value>
   </data>
+  <data name="(MENU)C1001" xml:space="preserve">
+    <value>사용자 관리</value>
+  </data>
+  <data name="(MENU)C1002" xml:space="preserve">
+    <value>권한별 메뉴관리</value>
+  </data>
   <data name="(MENU)C1003" xml:space="preserve">
-    <value>센터 관리</value>
+    <value>메뉴관리</value>
   </data>
-  <data name="(MENU)C1004" xml:space="preserve">
-    <value>메뉴 관리</value>
+  <data name="(MENU)M1001" xml:space="preserve">
+    <value>공통코드</value>
   </data>
-  <data name="(MENU)C1005" xml:space="preserve">
-    <value>사용자별 권한 관리</value>
+  <data name="(MENU)M1002" xml:space="preserve">
+    <value>설비코드</value>
   </data>
-  <data name="(MENU)C1006" xml:space="preserve">
-    <value>게시판 관리</value>
+  <data name="(MENU)M1003" xml:space="preserve">
+    <value>슈트마스터</value>
   </data>
-  <data name="(MENU)C1007" xml:space="preserve">
-    <value>배포관리</value>
-  </data>
-  <data name="(MENU)C1010" xml:space="preserve">
-    <value>공통코드 관리</value>
-  </data>
-  <data name="(MENU)C1011" xml:space="preserve">
-    <value>고객사관리</value>
-  </data>
-  <data name="(MENU)C1012" xml:space="preserve">
-    <value>SKU관리</value>
-  </data>
-  <data name="(MENU)C1013" xml:space="preserve">
-    <value>거래처관리</value>
-  </data>
-  <data name="(MENU)C1014" xml:space="preserve">
-    <value>설비관리</value>
-  </data>
-  <data name="(MENU)C1015" xml:space="preserve">
-    <value>송장대역대관리</value>
-  </data>
-  <data name="(MENU)C1016" xml:space="preserve">
-    <value>박스유형관리</value>
-  </data>
-  <data name="(MENU)C1017" xml:space="preserve">
-    <value>검수기준관리</value>
-  </data>
-  <data name="(MENU)C1018_SRT" xml:space="preserve">
-    <value>권역관리</value>
-  </data>
-  <data name="(MENU)C1019_SRT" xml:space="preserve">
-    <value>슈트관리</value>
-  </data>
-  <data name="(MENU)C1020_SRT" xml:space="preserve">
-    <value>슈트/권역 매핑관리</value>
-  </data>
-  <data name="(MENU)C1021_QPS" xml:space="preserve">
-    <value>셀관리</value>
-  </data>
-  <data name="(MENU)C1022_GAN" xml:space="preserve">
-    <value>Ground 셀 관리</value>
-  </data>
-  <data name="(MENU)C1023_GAN" xml:space="preserve">
-    <value>토트박스관리</value>
-  </data>
-  <data name="(MENU)COM" xml:space="preserve">
-    <value>공통관리</value>
-  </data>
-  <data name="(MENU)COM01" xml:space="preserve">
-    <value>시스템관리</value>
-  </data>
-  <data name="(MENU)COM02" xml:space="preserve">
-    <value>기준정보관리</value>
-  </data>
-  <data name="(MENU)COM03" xml:space="preserve">
-    <value>Sorter</value>
-  </data>
-  <data name="(MENU)COM04" xml:space="preserve">
-    <value>QPS</value>
-  </data>
-  <data name="(MENU)COM05" xml:space="preserve">
-    <value>Smart Gantry</value>
-  </data>
-  <data name="(MENU)FVRT" xml:space="preserve">
-    <value>즐겨찾기</value>
-  </data>
-  <data name="(MENU)O1001_QPS" xml:space="preserve">
-    <value>기준옵션설정관리</value>
-  </data>
-  <data name="(MENU)O1002_QPS" xml:space="preserve">
-    <value>ROC 최적화 수행 관리</value>
-  </data>
-  <data name="(MENU)O1003_QPS" xml:space="preserve">
-    <value>ROC 최적화 검증 관리</value>
-  </data>
-  <data name="(MENU)O1004_QPS" xml:space="preserve">
-    <value>셀 기준정보 관리</value>
-  </data>
-  <data name="(MENU)O1005_QPS" xml:space="preserve">
-    <value>셀 시뮬레이션 관리</value>
-  </data>
-  <data name="(MENU)O1006_QPS" xml:space="preserve">
-    <value>셀 최적화 수행관리</value>
-  </data>
-  <data name="(MENU)O1007_QPS" xml:space="preserve">
-    <value>최적화 오더 생성</value>
-  </data>
-  <data name="(MENU)OPT" xml:space="preserve">
-    <value>Optimization</value>
-  </data>
-  <data name="(MENU)OPT01" xml:space="preserve">
-    <value>QPS</value>
+  <data name="(MENU)M1004" xml:space="preserve">
+    <value>조직관리</value>
   </data>
   <data name="(MENU)P1001" xml:space="preserve">
-    <value>오더관리</value>
+    <value>분류계획관리</value>
   </data>
   <data name="(MENU)P1002" xml:space="preserve">
-    <value>설비별 오더대비 작업물량 조회</value>
+    <value>계획실행관리</value>
   </data>
   <data name="(MENU)P1003" xml:space="preserve">
-    <value>배치관리</value>
+    <value>REJECT</value>
   </data>
-  <data name="(MENU)P1004" xml:space="preserve">
-    <value>슈트작업계획관리</value>
+  <data name="(MENU)R1001" xml:space="preserve">
+    <value>전체실적</value>
   </data>
-  <data name="(MENU)P1005_GAN" xml:space="preserve">
-    <value>입고 계획관리</value>
+  <data name="(MENU)R1002" xml:space="preserve">
+    <value>소트별 실적</value>
   </data>
-  <data name="(MENU)P1006_GAN" xml:space="preserve">
-    <value>재적치 계획관리</value>
+  <data name="(MENU)R1003" xml:space="preserve">
+    <value>인덕션별 실적</value>
   </data>
-  <data name="(MENU)P1007_GAN" xml:space="preserve">
-    <value>출고 계획관리</value>
+  <data name="(MENU)R1004" xml:space="preserve">
+    <value>대리점별 실적</value>
   </data>
-  <data name="(MENU)PLN" xml:space="preserve">
-    <value>Plan</value>
-  </data>
-  <data name="(MENU)PLN01" xml:space="preserve">
-    <value>Order</value>
-  </data>
-  <data name="(MENU)PLN02" xml:space="preserve">
-    <value>Job Plan</value>
-  </data>
-  <data name="(MENU)PRS" xml:space="preserve">
-    <value>Processing</value>
-  </data>
-  <data name="(MENU)PRS01" xml:space="preserve">
-    <value>Sorter</value>
-  </data>
-  <data name="(MENU)PRS02" xml:space="preserve">
-    <value>Smart Gantry</value>
-  </data>
-  <data name="(MENU)R1001_SRT" xml:space="preserve">
-    <value>Reject 조회 및 처리관리</value>
-  </data>
-  <data name="(MENU)R1002_SRT" xml:space="preserve">
-    <value>스캔현황조회</value>
-  </data>
-  <data name="(MENU)R1003_SRT" xml:space="preserve">
-    <value>분류실적 관리</value>
-  </data>
-  <data name="(MENU)R1004_SRT" xml:space="preserve">
-    <value>현황판 조회</value>
-  </data>
-  <data name="(MENU)R1005_GAN" xml:space="preserve">
-    <value>입고 작업조회</value>
-  </data>
-  <data name="(MENU)R1006_GAN" xml:space="preserve">
-    <value>재적치 작업조회</value>
-  </data>
-  <data name="(MENU)R1007_GAN" xml:space="preserve">
-    <value>출고 작업조회</value>
-  </data>
-  <data name="(MENU)R1008_GAN" xml:space="preserve">
-    <value>재고 현황 조회</value>
+  <data name="(MENU)R1005" xml:space="preserve">
+    <value>송장조회</value>
   </data>
   <data name="(MENU)SCA" xml:space="preserve">
     <value>Monitoring</value>
@@ -509,18 +386,6 @@
   </data>
   <data name="(MSG)INFO_PASSWORD_RESETTING_OPEN_WINDOW" xml:space="preserve">
     <value>비밀번호 재설정이 필요합니다.|창이 오픈되면 비밀번호를 재설정해주세요.</value>
-  </data>
-  <data name="ABC" xml:space="preserve">
-    <value>ABC</value>
-  </data>
-  <data name="ABC_CNT" xml:space="preserve">
-    <value>ABC수</value>
-  </data>
-  <data name="ABC_CODE" xml:space="preserve">
-    <value>ABC 코드</value>
-  </data>
-  <data name="ABC_TYPE" xml:space="preserve">
-    <value>ABC TYPE</value>
   </data>
   <data name="ADDR" xml:space="preserve">
     <value>주소</value>
@@ -1579,7 +1444,7 @@
     <value>비밀번호</value>
   </data>
   <data name="PWD_CHG_SWCS201_02_FIRST" xml:space="preserve">
-    <value>암호는 14자 이상이어야 합니다.</value>
+    <value>암호는 8자 이상 30자 이하로 입력해야 합니다.</value>
   </data>
   <data name="PWD_CHG_SWCS201_02_SECOND" xml:space="preserve">
     <value>최소한 하나의 숫자를 제공해야합니다.</value>
@@ -2229,78 +2094,6 @@
   <data name="(MSG)ERR_NOT_EXIST_PATH" xml:space="preserve">
     <value>경로가 존재하지 않습니다.</value>
   </data>
-  <data name="0000" xml:space="preserve">
-    <value>00</value>
-  </data>
-  <data name="0100" xml:space="preserve">
-    <value>01</value>
-  </data>
-  <data name="0200" xml:space="preserve">
-    <value>02</value>
-  </data>
-  <data name="0300" xml:space="preserve">
-    <value>03</value>
-  </data>
-  <data name="0400" xml:space="preserve">
-    <value>04</value>
-  </data>
-  <data name="0500" xml:space="preserve">
-    <value>05</value>
-  </data>
-  <data name="0600" xml:space="preserve">
-    <value>06</value>
-  </data>
-  <data name="0700" xml:space="preserve">
-    <value>07</value>
-  </data>
-  <data name="0800" xml:space="preserve">
-    <value>08</value>
-  </data>
-  <data name="0900" xml:space="preserve">
-    <value>09</value>
-  </data>
-  <data name="1000" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="1100" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="1200" xml:space="preserve">
-    <value>12</value>
-  </data>
-  <data name="1300" xml:space="preserve">
-    <value>13</value>
-  </data>
-  <data name="1400" xml:space="preserve">
-    <value>14</value>
-  </data>
-  <data name="1500" xml:space="preserve">
-    <value>15</value>
-  </data>
-  <data name="1600" xml:space="preserve">
-    <value>16</value>
-  </data>
-  <data name="1700" xml:space="preserve">
-    <value>17</value>
-  </data>
-  <data name="1800" xml:space="preserve">
-    <value>18</value>
-  </data>
-  <data name="1900" xml:space="preserve">
-    <value>19</value>
-  </data>
-  <data name="2000" xml:space="preserve">
-    <value>20</value>
-  </data>
-  <data name="2100" xml:space="preserve">
-    <value>21</value>
-  </data>
-  <data name="2200" xml:space="preserve">
-    <value>22</value>
-  </data>
-  <data name="2300" xml:space="preserve">
-    <value>23</value>
-  </data>
   <data name="CHUTE_TYPE" xml:space="preserve">
     <value>슈트 타입</value>
   </data>
@@ -2442,9 +2235,6 @@
   <data name="DATE_COND_STAT_VAL" xml:space="preserve">
     <value>일자조건 시작값</value>
   </data>
-  <data name="AAAAAA" xml:space="preserve">
-    <value>테스트</value>
-  </data>
   <data name="BBBBBB" xml:space="preserve">
     <value>테스트2</value>
   </data>
@@ -2508,8 +2298,8 @@
   <data name="INIT" xml:space="preserve">
     <value>초기화</value>
   </data>
-  <data name="(MENU)A1001" xml:space="preserve">
-    <value>설비별 시간대별 처리현황</value>
+  <data name="(MENU)UMR" xml:space="preserve">
+    <value>WCS</value>
   </data>
   <data name="(MSG)NO_ECS_CONNECTION" xml:space="preserve">
     <value>ECS가 연결되지 않았습니다.</value>
@@ -2573,5 +2363,17 @@
   </data>
   <data name="SORT_PLN_CD" xml:space="preserve">
     <value>플랜코드</value>
+  </data>
+  <data name="(MSG)ASK_DEL_DB" xml:space="preserve">
+    <value>등록된 데이타 삭제시 시스템에 영향을 줄 수 있습니다.|선택한 데이터를 삭제하시겠습니까?</value>
+  </data>
+  <data name="PWD_CHG_SWCS201_02_SEVENTH" xml:space="preserve">
+    <value>비밀번호 초기화를 해야 비밀번호를 변경 할 수 있습니다.</value>
+  </data>
+  <data name="PWD_INIT" xml:space="preserve">
+    <value>비밀번호 초기화</value>
+  </data>
+  <data name="_PWD_SET_DATE" xml:space="preserve">
+    <value>비밀번호 설정일</value>
   </data>
 </root>

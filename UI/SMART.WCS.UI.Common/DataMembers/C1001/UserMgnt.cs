@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace SMART.WCS.UI.COMMON.DataMembers.C1002
+namespace SMART.WCS.UI.COMMON.DataMembers.C1001
 {
     public class UserMgnt : PropertyNotifyExtensions, IDXDataErrorInfo
     {
@@ -114,6 +114,38 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1002
         }
         #endregion
 
+        #region + PWD - 비밀번호
+        private string _PWD;
+        public string PWD
+        {
+            get { return this._PWD; }
+            set
+            {
+                if (this._PWD != value)
+                {
+                    this._PWD = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + PWD_SET_DATE - 비밀번호 설정일
+        private string _PWD_SET_DATE;
+        public string PWD_SET_DATE
+        {
+            get { return this._PWD_SET_DATE; }
+            set
+            {
+                if (this._PWD_SET_DATE != value)
+                {
+                    this._PWD_SET_DATE = value;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
         #region + ROLE_CD - 권한코드
         private string _ROLE_CD;
         public string ROLE_CD
@@ -147,22 +179,6 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1002
         }
         #endregion
 
-        #region + USE_YN_CHECKED - 사용 여부 변환값
-        private bool _USE_YN_CHECKED;
-        public bool USE_YN_CHECKED
-        {
-            get { return this._USE_YN_CHECKED; }
-            set
-            {
-                if (this._USE_YN_CHECKED != value)
-                {
-                    this._USE_YN_CHECKED = value;
-                    this.RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
         #region + PWD_INIT_YN - 비밀번호 초기화 여부
         private string _PWD_INIT_YN;
         public string PWD_INIT_YN
@@ -174,6 +190,86 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1002
                 {
                     this._PWD_INIT_YN = value;
                     this.PWD_INIT_YN_CHECKED = this._PWD_INIT_YN.Equals("Y") ? true : false;
+                    this.RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + REG_ID - 등록자
+        private string _REG_ID;
+        public string REG_ID
+        {
+            get { return this._REG_ID; }
+            set
+            {
+                if (this._REG_ID != value)
+                {
+                    this._REG_ID = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + REG_DT - 등록일짜
+        private DateTime _REG_DT;
+        public DateTime REG_DT
+        {
+            get { return this._REG_DT; }
+            set
+            {
+                if (this._REG_DT != value)
+                {
+                    this._REG_DT = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + UPD_ID - 마지막 수정자
+        private string _UPD_ID;
+        public string UPD_ID
+        {
+            get { return this._UPD_ID; }
+            set
+            {
+                if (this._UPD_ID != value)
+                {
+                    this._UPD_ID = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + UPD_DT - 수정날짜
+        private DateTime _UPD_DT;
+        public DateTime UPD_DT
+        {
+            get { return this._UPD_DT; }
+            set
+            {
+                if (this._UPD_DT != value)
+                {
+                    this._UPD_DT = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + USE_YN_CHECKED - 사용 여부 변환값
+        private bool _USE_YN_CHECKED;
+        public bool USE_YN_CHECKED
+        {
+            get { return this._USE_YN_CHECKED; }
+            set
+            {
+                if (this._USE_YN_CHECKED != value)
+                {
+                    this._USE_YN_CHECKED = value;
                     this.RaisePropertyChanged();
                 }
             }

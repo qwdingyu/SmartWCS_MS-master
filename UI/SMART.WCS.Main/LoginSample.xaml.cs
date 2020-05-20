@@ -134,7 +134,7 @@ namespace SMART.WCS.Main
         /// 메인 화면을 호출한다.
         /// </summary>
         /// <param name="_dsLoginInfo">로그인 정보</param>
-        private void CallMainWindow(DataSet _dsLoginInfo, DataSet _dsNoticeInfo)
+        private void CallMainWindow(DataSet _dsLoginInfo)
         {
             try
             {
@@ -143,7 +143,7 @@ namespace SMART.WCS.Main
                     this.BaseClass.UserID = this.txtUserID.Text.Trim();
                 }
 
-                MainWindow frmMain = new MainWindow(_dsLoginInfo, _dsNoticeInfo.Tables[0]);
+                MainWindow frmMain = new MainWindow(_dsLoginInfo);
                 frmMain.Show();
 
                 this.Close();
@@ -281,7 +281,7 @@ namespace SMART.WCS.Main
                 this.BaseClass.CountryCode = this.BaseClass.ComboBoxSelectedKeyValue(this.cboLang);
 
                 var dsLoginInfo = this.GetMenuList();
-                var dsNoticeInfo = this.GetNoticeList();
+                //var dsNoticeInfo = this.GetNoticeList();
                 if (dsLoginInfo.Tables[0].Rows.Count == 0)
                 {
                     MessageBox.Show("메뉴 데이터가 없습니다.");
@@ -305,7 +305,7 @@ namespace SMART.WCS.Main
                     //this.BaseClass.MsgQuestion("ASK_EXCEL_DOWNLOAD", strParam);
                     //bool bRtnVAlue = this.BaseClass.BUTTON_CONFIRM_YN;
 
-                    this.CallMainWindow(dsLoginInfo, dsNoticeInfo);
+                    this.CallMainWindow(dsLoginInfo);
                 }
             }
             catch (Exception err)

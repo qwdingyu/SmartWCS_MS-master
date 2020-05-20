@@ -19,7 +19,7 @@ namespace SMART.WCS.Main
     public partial class App : BaseApp
     {
         private readonly BaseClass BaseClass = new BaseClass();
-        private readonly BaseInfo BaseInfo = new BaseInfo();
+        //private readonly BaseInfo BaseInfo = new BaseInfo();
 
         public App()
         {
@@ -43,7 +43,7 @@ namespace SMART.WCS.Main
 
                 DataSet dsRtnValue = this.GetDatabaseConnectionInfo(strDBConnectionType);
                 if (dsRtnValue == null) { return; }
-                 
+
                 using (Login frmLogin = new Login(dsRtnValue.Tables[0]))
                 {
                     //LoginSample frmLogin = new LoginSample(dtRtnValue);
@@ -69,10 +69,10 @@ namespace SMART.WCS.Main
             try
             {
                 DataSet dsRtnValue                        = null;
-                var strProcedureName                        = "CSP_C1001_SP_CNTR_LIST_INQ";
+                var strProcedureName                        = "UI_CNTR_LIST_INQ";
                 Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
-                var strErrCode                              = string.Empty;
-                var strErrMsg                               = string.Empty;
+                var strErrCode = string.Empty;
+                var strErrMsg = string.Empty;
 
                 using (FirstDataAccess da = new FirstDataAccess())
                 {

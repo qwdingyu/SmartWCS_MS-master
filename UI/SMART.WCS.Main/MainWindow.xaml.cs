@@ -153,21 +153,19 @@ namespace SMART.WCS.Main
         /// 생성자
         /// </summary>
         /// <param name="_dtMenuInfo">메뉴 정보</param>
-        public MainWindow(DataSet _dsMainInfo, DataTable _dtNoticeInfo)
+        public MainWindow(DataSet _dsMainInfo)
         {
             InitializeComponent();
 
             try
             {
-                //this.BaseInfo = ((BaseApp)System.Windows.Application.Current).BASE_INFO;
-
                 // 다른창 오픈 대상 프로그램 정보를 저장하는 테이블 스키마를 복사한다.
-                if (this.g_dtOtherProgOpen == null) { this.g_dtOtherProgOpen = new DataTable(); }
-                var iRowCount = _dsMainInfo.Tables[0].AsEnumerable().Where(p => new[] { "C1006", "R1005_GAN", "R1007_GAN", "R1001_SRT" }.Contains(p.Field<string>("MENU_ID"))).ToList();
-                if (iRowCount.Count() > 0)
-                {
-                    this.g_dtOtherProgOpen = _dsMainInfo.Tables[0].AsEnumerable().Where(p => new[] { "C1006", "R1005_GAN", "R1007_GAN", "R1001_SRT" }.Contains(p.Field<string>("MENU_ID"))).ToList().CopyToDataTable();
-                }
+                //if (this.g_dtOtherProgOpen == null) { this.g_dtOtherProgOpen = new DataTable(); }
+                //var iRowCount = _dsMainInfo.Tables[0].AsEnumerable().Where(p => new[] { "C1006", "R1005_GAN", "R1007_GAN", "R1001_SRT" }.Contains(p.Field<string>("MENU_ID"))).ToList();
+                //if (iRowCount.Count() > 0)
+                //{
+                //    this.g_dtOtherProgOpen = _dsMainInfo.Tables[0].AsEnumerable().Where(p => new[] { "C1006", "R1005_GAN", "R1007_GAN", "R1001_SRT" }.Contains(p.Field<string>("MENU_ID"))).ToList().CopyToDataTable();
+                //}
 
                 // 메인 화면 상단 메뉴 순서가 변경되는 경우 체크해야함.
                 this.g_strTopMenuCtrlTagName = "COM";
@@ -176,7 +174,7 @@ namespace SMART.WCS.Main
                 this.InitControl();
 
                 // 데이터를 초기화한다.
-                this.InitValue(_dsMainInfo, _dtNoticeInfo);
+                this.InitValue(_dsMainInfo);
 
                 // 메뉴 코드와 일치하는 리소스 데이터를 적용한다.
                 this.InitResourceByLanguage();
@@ -188,7 +186,7 @@ namespace SMART.WCS.Main
                 this.BindingMainTopMenu();
 
                 // 메인 화면 오픈 시 새로운 공지사항 조회
-                this.BindingNoticeAlarm(_dtNoticeInfo);
+                //this.BindingNoticeAlarm(_dtNoticeInfo);
 
                 // (최초) 메인 화면 오픈 시 좌측 트리 메뉴 데이터 설정 및 컨트롤 바인딩
                 this.BindingFirstLeftTreeControlList();
@@ -205,7 +203,7 @@ namespace SMART.WCS.Main
             }
         }
         #endregion
-
+        
         #region ▩ 데이터 바인딩 용 객체 선언 및 속성 정의
         #region > 메뉴 리스트 (트리 리스트 컨트롤)
         public static readonly DependencyProperty MenuListProperty
@@ -247,19 +245,19 @@ namespace SMART.WCS.Main
         /// </summary>
         /// <param name="_dsMenuInfo">메뉴 정보 및 사용자 정보</param>
         /// <param name="_dtNoticeInfo">공지 정보</param>
-        private void InitValue(DataSet _dsMenuInfo, DataTable _dtNoticeInfo)
+        private void InitValue(DataSet _dsMenuInfo)
         {
             try
             {
                 this.g_dsMenuInfo       = _dsMenuInfo;          // 메뉴 정보 및 사용자 정보
-                this.g_dtNoticeInfo     = _dtNoticeInfo;        // 공지 정보
+                //this.g_dtNoticeInfo     = _dtNoticeInfo;        // 공지 정보
 
                 if (_dsMenuInfo.Tables.Count == 3)
                 {
                     if (_dsMenuInfo.Tables[1].Rows.Count > 0)
                     {
                         this.lblUserName.Text   = _dsMenuInfo.Tables[1].Rows[0]["USER_NM"].ToString();
-                        this.lblCenterName.Text = _dsMenuInfo.Tables[1].Rows[0]["CNTR_NM"].ToString();
+                        //this.lblCenterName.Text = _dsMenuInfo.Tables[1].Rows[0]["CNTR_NM"].ToString();
 
                         this.BaseClass.UserName = this.lblUserName.Text.Trim();
                     }
@@ -864,19 +862,19 @@ namespace SMART.WCS.Main
             // 공지사항 건수
             var iNoticeRowCount = Convert.ToInt32(_dtNoticeInfo.Rows[0]["CNT"]);
 
-            this.gridAreaNoticeCount.Visibility  = Visibility.Hidden;
+            //this.gridAreaNoticeCount.Visibility  = Visibility.Hidden;
 
             if (iNoticeRowCount > 0)
             {
-                this.eliNotice.Cursor                   = Cursors.Hand;
-                this.lblNotice.Text                     = iNoticeRowCount.ToString();
-                this.gridAreaNoticeCount.Visibility     = Visibility.Visible;
+                //this.eliNotice.Cursor                   = Cursors.Hand;
+                //this.lblNotice.Text                     = iNoticeRowCount.ToString();
+                //this.gridAreaNoticeCount.Visibility     = Visibility.Visible;
 
                 #region 이미지 버튼
                 // 공지 알람 버튼 영역 클릭 이벤트
                 //this.gridAreaNotice.PreviewMouseLeftButtonUp += GridAreaNotice_PreviewMouseLeftButtonUp;
-                this.eliNotice.PreviewMouseLeftButtonUp += GridAreaNotice_PreviewMouseLeftButtonUp;
-                this.lblNotice.PreviewMouseLeftButtonUp += GridAreaNotice_PreviewMouseLeftButtonUp;
+                //this.eliNotice.PreviewMouseLeftButtonUp += GridAreaNotice_PreviewMouseLeftButtonUp;
+                //this.lblNotice.PreviewMouseLeftButtonUp += GridAreaNotice_PreviewMouseLeftButtonUp;
                 #endregion
             }
         }
@@ -911,8 +909,7 @@ namespace SMART.WCS.Main
 
             #region + 좌측 트리 리스트 구성
             var liFilterTreeMenuList = this.g_dsMenuInfo.Tables[0].AsEnumerable().Where(p => p.Field<string>("TREE_ID").StartsWith(strFirstMenuID)
-                                       && p.Field<string>("TREE_ID").Length > 3).Union
-                                        (this.g_dsMenuInfo.Tables[0].AsEnumerable().Where(p => p.Field<string>("TREE_ID").StartsWith("FVRT")));
+                                       && p.Field<string>("TREE_ID").Length > 3);
 
             if (liFilterTreeMenuList != null)
             {
@@ -2267,11 +2264,11 @@ namespace SMART.WCS.Main
 
                 this.MoveNoticeClickMenu(this.MainWinParam.MENU_ID);
 
-                this.gridAreaNoticeCount.Visibility = Visibility.Hidden;
+                //this.gridAreaNoticeCount.Visibility = Visibility.Hidden;
 
                 // 공지 알람 버튼 영역 클릭 이벤트
-                this.gridAreaNotice.PreviewMouseLeftButtonUp -= GridAreaNotice_PreviewMouseLeftButtonUp;
-                this.gridAreaNotice.Cursor      = Cursors.None;
+                //this.gridAreaNotice.PreviewMouseLeftButtonUp -= GridAreaNotice_PreviewMouseLeftButtonUp;
+                //this.gridAreaNotice.Cursor      = Cursors.None;
                 MainWinParam.MENU_ID = null;
             }
             catch (Exception err)

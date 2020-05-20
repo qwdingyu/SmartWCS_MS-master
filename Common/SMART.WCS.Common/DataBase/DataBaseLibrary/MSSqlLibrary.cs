@@ -415,7 +415,7 @@ namespace SMART.WCS.Common.DataBase
                 // Input 파라메터가 있는 경우 회사코드는 아래 foreach 구문에서 추가한다.
                 if (this.InputParams.Count == 0)
                 {
-                    this.g_sqlCommand.Parameters.AddWithValue("P_CO_CD", baseClass.CompanyCode); // 회사코드
+                    //this.g_sqlCommand.Parameters.AddWithValue("P_CO_CD", baseClass.CompanyCode); // 회사코드
                 }
 
                 foreach (System.Collections.Generic.KeyValuePair<string, object> dicEntity in this.InputParams)
@@ -423,10 +423,10 @@ namespace SMART.WCS.Common.DataBase
                     if (iProcessCount == 0)
                     {
                         // 파라메터 Key중 회사코드가 없는 경우 프로시저 파라메터에 회사코드키와 값을 추가한다.
-                        if (this.InputParams.ContainsKey("P_CO_CD") == false)
-                        {
-                            this.g_sqlCommand.Parameters.AddWithValue("P_CO_CD", baseClass.CompanyCode); // 회사코드
-                        }
+                        //if (this.InputParams.ContainsKey("P_CO_CD") == false)
+                        //{
+                        //    this.g_sqlCommand.Parameters.AddWithValue("P_CO_CD", baseClass.CompanyCode); // 회사코드
+                        //}
 
                         iProcessCount++;
                     }

@@ -115,8 +115,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="DataMembers\C1002\UserMgnt.cs" />
-    <Compile Include="DataMembers\C1002\UserPerEqp.cs" />
+    <Compile Include="DataMembers\C1001\UserMgnt.cs" />
     <Compile Include="DataMembers\C1003\CenterMgnt.cs" />
     <Compile Include="DataMembers\C1004\MenuMgmt.cs" />
     <Compile Include="DataMembers\C1005\MenuListByRole.cs" />
@@ -199,58 +198,55 @@
     <Compile Include="Views\SORTER\C1024_SRT.xaml.cs">
       <DependentUpon>C1024_SRT.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1002.xaml.cs">
-      <DependentUpon>C1002.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\BASE_INFO_MGMT\C1014.xaml.cs">
       <DependentUpon>C1014.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1003.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1001.xaml.cs">
+      <DependentUpon>C1001.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\USER_MGMT\C1003.xaml.cs">
       <DependentUpon>C1003.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1004.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1004.xaml.cs">
       <DependentUpon>C1004.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1005.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1005.xaml.cs">
       <DependentUpon>C1005.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SYS_MGMT\C1006.xaml.cs">
-      <DependentUpon>C1006.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BASE_INFO_MGMT\C1010.xaml.cs">
       <DependentUpon>C1010.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1007.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1007.xaml.cs">
       <DependentUpon>C1007.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1008.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1008.xaml.cs">
       <DependentUpon>C1008.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1009.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1009.xaml.cs">
       <DependentUpon>C1009.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1011.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1011.xaml.cs">
       <DependentUpon>C1011.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1025.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1025.xaml.cs">
       <DependentUpon>C1025.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1027.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1027.xaml.cs">
       <DependentUpon>C1027.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1028_01P.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1028_01P.xaml.cs">
       <DependentUpon>C1028_01P.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1098.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1098.xaml.cs">
       <DependentUpon>C1098.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\SortAnalysis.xaml.cs">
+    <Compile Include="Views\USER_MGMT\SortAnalysis.xaml.cs">
       <DependentUpon>SortAnalysis.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\C1099.xaml.cs">
+    <Compile Include="Views\USER_MGMT\C1099.xaml.cs">
       <DependentUpon>C1099.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SYS_MGMT\UserControl1.xaml.cs">
+    <Compile Include="Views\USER_MGMT\UserControl1.xaml.cs">
       <DependentUpon>UserControl1.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -317,9 +313,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\QPS\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\BASE_INFO_MGMT\C1012.xaml">
       <SubType>Designer</SubType>
@@ -365,75 +359,71 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1002.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\BASE_INFO_MGMT\C1014.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1003.xaml">
+    <Page Include="Views\USER_MGMT\C1001.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\USER_MGMT\C1003.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1004.xaml">
+    <Page Include="Views\USER_MGMT\C1004.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1005.xaml">
+    <Page Include="Views\USER_MGMT\C1005.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SYS_MGMT\C1006.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\BASE_INFO_MGMT\C1010.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1007.xaml">
+    <Page Include="Views\USER_MGMT\C1007.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1008.xaml">
+    <Page Include="Views\USER_MGMT\C1008.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1009.xaml">
+    <Page Include="Views\USER_MGMT\C1009.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1011.xaml">
+    <Page Include="Views\USER_MGMT\C1011.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1025.xaml">
+    <Page Include="Views\USER_MGMT\C1025.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1027.xaml">
+    <Page Include="Views\USER_MGMT\C1027.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1028_01P.xaml">
+    <Page Include="Views\USER_MGMT\C1028_01P.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1098.xaml">
+    <Page Include="Views\USER_MGMT\C1098.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\SortAnalysis.xaml">
+    <Page Include="Views\USER_MGMT\SortAnalysis.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SYS_MGMT\C1099.xaml">
+    <Page Include="Views\USER_MGMT\C1099.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SYS_MGMT\UserControl1.xaml">
+    <Page Include="Views\USER_MGMT\UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

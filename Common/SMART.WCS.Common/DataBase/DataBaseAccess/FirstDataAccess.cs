@@ -1,4 +1,5 @@
-﻿using SMART.WCS.Common.Utility;
+﻿using DevExpress.XtraExport;
+using SMART.WCS.Common.Utility;
 
 using System.Collections.Generic;
 using System.Data;
@@ -310,7 +311,7 @@ namespace SMART.WCS.Common.DataBase
 
                 return dsRtnValue;
             }
-            catch { throw; }
+            catch{ throw; }
         }
         #endregion
 

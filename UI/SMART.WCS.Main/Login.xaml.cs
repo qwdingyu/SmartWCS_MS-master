@@ -71,10 +71,6 @@ namespace SMART.WCS.Main
 
                 // App.config에 설정된 DB 접속 타입값
                 this.g_strConfigDBConnectType = this.BaseClass.GetAppSettings("DBConnectType_DEV_REAL").Equals("DEV") == true ? "DEV" : "REAL";
-                //if (this.g_strConfigDBConnectType.ToUpper().Equals("REAL") == true)
-                //{
-                //    this.lbRadio.Visibility = Visibility.Collapsed;
-                //}
 
                 // 로그인 버튼 클릭 시 센터별 데이터베이스 연결 문자열을 가져오기 위해 데이터테이블을 전역변수에 저장한다.
                 this.g_dtDatabaseConnectionInfo = _dtDatabaseConnectionInfo;
@@ -251,47 +247,18 @@ namespace SMART.WCS.Main
                     this.BaseClass.LoginUserID = string.Empty;
                 }
 
-                // 센터코드를 저장한다.
-                this.BaseClass.CenterCD     = this.BaseClass.ComboBoxSelectedKeyValue(this.cboCenter);
-                // 언어코드를 저장한다.
-                this.BaseClass.CountryCode  = this.BaseClass.ComboBoxSelectedKeyValue(this.cboLang);
-
                 var dsLoginInfo         = this.GetMenuList();
-                var dsNoticeInfo        = this.GetNoticeList();
                 if (dsLoginInfo.Tables[0].Rows.Count == 0)
                 {
-                    // ERR_NOT_MENU_DATA - 메뉴 데이터가 없습니다.
                     this.BaseClass.MsgError("ERR_NOT_MENU_DATA");
                     return;
                 }
-                else if (dsLoginInfo.Tables[0].Rows.Count == 1)
-                {
-                    if (dsLoginInfo.Tables[0].Rows[0][0].ToString().Equals("FVRT") == true)
-                    {
-                        // ERR_NOT_MENU_DATA - 메뉴 데이터가 없습니다.
-                        this.BaseClass.MsgError("ERR_NOT_MENU_DATA");
-                        return;
-                    }
-                }
                 else
                 {
-                    //this.BaseClass.MsgQuestion("ASK_EXCEL_DOWNLOAD");
-                    //var aaa = this.BaseClass.BUTTON_CONFIRM_YN;
-
-                    //var strParam = "CST_CD|SKU_CD";
-                    //// {0}는 {1}의 ㅁㅁㅁㅁ
-                    //this.BaseClass.MsgQuestion("ASK_EXCEL_DOWNLOAD", strParam);
-                    //bool bRtnVAlue = this.BaseClass.BUTTON_CONFIRM_YN;
-
                     this.BaseClass.RememberChecked = this.chkRememberID.IsChecked == true ? true : false;
-                    
-                    // 날짜 조회조건 기준값을 저장한다.
-                    // Processing
-                    this.BaseClass.ProcInqTerm      = Convert.ToInt32(dsLoginInfo.Tables[1].Rows[0]["PROC_INQ_TERM"]);
-                    // Analysis
-                    this.BaseClass.AnlInqTerm       = Convert.ToInt32(dsLoginInfo.Tables[1].Rows[0]["ANL_INQ_TERM"]);
 
-                    this.CallMainWindow(dsLoginInfo, dsNoticeInfo);
+                    this.CallMainWindow(dsLoginInfo);
+
                 }
                 #endregion
             }
@@ -304,7 +271,7 @@ namespace SMART.WCS.Main
         /// 메인 화면을 호출한다.
         /// </summary>
         /// <param name="_dsLoginInfo">로그인 정보</param>
-        private void CallMainWindow(DataSet _dsLoginInfo, DataSet _dsNoticeInfo)
+        private void CallMainWindow(DataSet _dsLoginInfo)
         {
             try
             {
@@ -324,7 +291,7 @@ namespace SMART.WCS.Main
                 // 선택한 센터코드를 사용자 정보에 저장한다.
                 this.BaseClass.LoginCenterCD   = this.BaseClass.ComboBoxSelectedKeyValue(this.cboCenter);
 
-                MainWindow frmMain = new MainWindow(_dsLoginInfo, _dsNoticeInfo.Tables[0]);
+                MainWindow frmMain = new MainWindow(_dsLoginInfo);
                 frmMain.Show();
 
                 this.Close();
@@ -345,16 +312,15 @@ namespace SMART.WCS.Main
             {
                 #region 파라메터 변수 선언 및 값 할당
                 DataSet dsRtnValue                          = null;
-                var strProcedureName                        = "CSP_C1000_SP_MENU_LIST_INQ";
+                var strProcedureName                        = "UI_MENU_LIST_INQ";
                 Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
                 #endregion
 
                 #region Input 파라메터
-                var strCenterCD     = this.BaseClass.ComboBoxSelectedKeyValue(this.cboCenter);
+                //var strCenterCD     = this.BaseClass.ComboBoxSelectedKeyValue(this.cboCenter);
                 var strUserID       = this.txtUserID.Text.Trim();
 
-                dicInputParam.Add("P_CNTR_CD",      strCenterCD);       // 센터 코드
-                dicInputParam.Add("P_USER_ID",      strUserID);         // 사용자 ID
+                dicInputParam.Add("USER_ID",      strUserID);         // 사용자 ID
                 #endregion
 
                 using (BaseDataAccess dataAccess = new BaseDataAccess())
@@ -420,19 +386,14 @@ namespace SMART.WCS.Main
 
                 #region 파라메터 변수 선언 및 값 할당
                 DataSet dsRtnValue                          = null;
-                var strProcedureName                        = "CSP_C1001_SP_LOGIN_LIST_INQ";
+                var strProcedureName                        = "UI_LOGIN_LIST_INQ";
                 Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
-                string[] arrOutputParam                     = { "O_RSLT" };
+                string[] arrOutputParam                     = { "RTN_VAL", "RTN_MSG" };
                 #endregion
 
                 #region Input 파라메터
-                var strCenterCD             = this.BaseClass.ComboBoxSelectedKeyValue(this.cboCenter);      // 센터코드
-                var strIpAddess             = this.BaseClass.GetIPAddress();
-                
-                dicInputParam.Add("P_CNTR_CD",          strCenterCD);                               // 센터코드
-                dicInputParam.Add("P_USER_ID",          _strUserID);                                // 사용자 ID
-                dicInputParam.Add("P_PWD",              this.BaseClass.EncryptSHA256(_strPwd));     // 비밀번호
-                dicInputParam.Add("P_IP_NO",            strIpAddess);                               // 로컬 IP
+                dicInputParam.Add("USER_ID",          _strUserID);                                // 사용자 ID
+                dicInputParam.Add("PWD",              _strPwd);                                   // 비밀번호
                 #endregion
 
                 var strErrCode          = string.Empty;
@@ -524,27 +485,6 @@ namespace SMART.WCS.Main
 
             try
             {
-                var strKey = "Data Source=(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.27.239.15)(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=ORCL)));USER ID=smartwcs;Password=smartwcs1234;Persist Security Info=True;";
-                //string straaa = this.BaseClass.DecryptAES256("uek71ZUcb8hyNitrMk0/kLo0kXJr4ARgIx0mM7pZi5AuOB8jJXN3Vl+x5oAxgzf6w/v+//s89Kd2oTEcRuO6uDLp7Iq6HabZQxZU6TDAiNJbQqkBsIQmZKCr/lfrQH2IBZnQkIoBhlVZlQJ8KNqAU8suewrWb+S/NrLuMhbHCFt4iwzoQu4TIACackd4LhTDgV+x9RNFtXhxi3AB/VN0xN6RZeq9r786tN1225yJdDnii/OD+6AS2GRwbmIXLEXM");
-                var strKey2 = this.BaseClass.EncryptAES256(strKey);
-                var strDecryptValue = this.BaseClass.EncryptAES256("https://api-gateway.coupang.net/v2/providers/hub_api/apis/api/v1/sorters/BCSMS-2/sorting");
-                //var strDecryptValue2 = this.BaseClass.EncryptAES256("https://api-gateway.coupang.net/v2/providers/hub_api/apis/api/v1/sorters/BCSMS-2/barcode/definition");
-                //var strHeaderKey = this.BaseClass.EncryptAES256("X-CAG-Authorization");
-                //var strHeaderValue = this.BaseClass.EncryptAES256("AG_CONSUMER_TOKEN access-key=9f9e65fb-4933-45e8-8765-75d947d6a9e7");
-
-
-                //    /// 데이터 복호화 변경용
-                //    var strDecryptValue = this.BaseClass.DecryptAES256("h3SN5X/ey/U/FmX7/+a1gT/fmLbc0b74oC9+8ZPmen4=");
-
-                //    string strEncryptValue = this.BaseClass.EncryptAES256("http://13.209.79.88:7102/");
-                //    string strEncryptValue2 = this.BaseClass.EncryptAES256("http://13.209.79.88:7102/SMART.WCS/Coupang/WCS/File/");
-                //    string strEncryptValue3 = this.BaseClass.EncryptAES256("http://13.209.79.88:7102/SMART.WCS/Coupang/WCS/Version/");
-
-                //// 데이터 암호화 변경용
-                //string strEncryptValue = this.BaseClass.EncryptAES256("http://localhost:7002/");
-                //string strEncryptValue2 = this.BaseClass.EncryptAES256("http://localhost:7002/LiveUpdate/WCS/File/");
-                //string strEncryptValue3 = this.BaseClass.EncryptAES256("http://localhost:7002/LiveUpdate/WCS/Version/");
-
                 var strUserID           = this.txtUserID.Text.Trim();   // 사용자 ID
                 var strPwd              = this.txtPwd.Text.Trim();      // 비밀번호
 
@@ -561,18 +501,6 @@ namespace SMART.WCS.Main
                     this.txtPwd.Focus();
                     return;
                 }
-                //string strSelectedDBConnectType = string.Empty;
-
-                //if (this.g_strConfigDBConnectType.ToUpper().Equals("DEV") == true)
-                //{
-                //    // 개발/운영 선택 RadioButton이 활성화 된 경우 선택값에 따라 값을 설정한다.
-                //    strSelectedDBConnectType = this.rdoDEV.IsSelected == true ? "DEV" : "REAL";
-                //}
-                //else
-                //{
-                //    // 개발/운영 선택 RadioButton이 비활성화 된 경우 운영("REAL")으로 설정한다.
-                //    strSelectedDBConnectType = this.g_strConfigDBConnectType;
-                //}
 
                 var query = this.g_dtDatabaseConnectionInfo.AsEnumerable().Where(p => p.Field<string>("DB_CONN_TYPE").Equals(this.g_strConfigDBConnectType) && p.Field<string>("CNTR_CD").Equals(this.BaseClass.ComboBoxSelectedKeyValue(this.cboCenter))).FirstOrDefault();
 
@@ -588,7 +516,6 @@ namespace SMART.WCS.Main
                     this.BaseClass.DatabaseConnectionString_MSSQL = query.Field<string>("MS_CONN_STR");    // MS-SQL 연결 문자열
                     this.BaseClass.DatabaseConnectionString_MariaDB = query.Field<string>("MR_CONN_STR");    // MariaDB 연결 문자열
                 }
-
 
                 // 로그인 처리
                 var iResult = this.GetSP_LOGIN_LIST_INQ(strUserID, strPwd);

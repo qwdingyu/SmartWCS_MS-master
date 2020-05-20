@@ -431,15 +431,15 @@
                         --><!--#endregion-->
 
                         <!--#region 알림 (공지사항)-->
-                        <Grid   x:Name="gridAreaNotice" Grid.Column="2"     Margin="0,0,10,0"   Background="{x:Null}">
+                        <!--<Grid   x:Name="gridAreaNotice" Grid.Column="2"     Margin="0,0,10,0"   Background="{x:Null}">
                             <Image  x:Name="imgNotice"  Source="/SMART.WCS.Resource;component/Image/alarm_Icon.png"
                                         Width="22"  Height="22"/>
-                            <!--<Button x:Name="btnNotice"  Background="{x:Null}"   BorderThickness="0"
+                            --><!--<Button x:Name="btnNotice"  Background="{x:Null}"   BorderThickness="0"
                                     Style="{StaticResource TransparentStyle}">
                                 <Image  x:Name="imgNotice"  Source="/SMART.WCS.Resource;component/Image/alarm_Icon.png"
                                         Width="22"  Height="22"/>
                             </Button>-->
-                            <Grid   x:Name="gridAreaNoticeCount">
+                            <!--<Grid   x:Name="gridAreaNoticeCount">
                                 <Ellipse    x:Name="eliNotice"   Height="20" Width="20"  Fill="Red">
                                     <Ellipse.RenderTransform>
                                         <TranslateTransform X="-10"  Y="-8"/>
@@ -447,10 +447,9 @@
                                 </Ellipse>
                                 <TextBlock  x:Name="lblNotice"  FontSize="12px" Text=""    FontWeight="Bold"
                                             Margin="-17,3,0,20" Cursor="Hand"/>
-                            </Grid>
-                        </Grid>
+                            </Grid>--><!--
+                        </Grid>-->
 
-                        <!--#endregion-->
 
                         <!--#region 로그아웃-->
                         <!--<Image  Grid.Column="8"
