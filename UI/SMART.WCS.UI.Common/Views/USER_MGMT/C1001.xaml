@@ -19,17 +19,35 @@
                 mc:Ignorable="d"
                 d:DesignHeight="800">
 
+    <!--#region 그리드 라벨 Behavior-->
+    <e:Interaction.Behaviors>
+        <commonMapping:ControlBaseBehavior />
+    </e:Interaction.Behaviors>
+    <!--#endregion-->
+
+    <!--#region 리소스-->
+    <UserControl.Resources>
+        <Converters:RowHandleToIndexConverter x:Key="RowHandleToIndexConverter"/>
+
+        <DataTemplate x:Key="SummaryTemplateTotal">
+            <TextBlock Text="Total"    HorizontalAlignment="Center"    VerticalAlignment="Center"     FontWeight="Bold" />
+        </DataTemplate>
+    </UserControl.Resources>
+    <!--#endregion-->
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
             <RowDefinition  Height="Auto" />
             <RowDefinition  Height="5" />
             <RowDefinition  Height="*" />
         </Grid.RowDefinitions>
         <uButton:NavigationBar x:Name="NavigationBar"   Grid.Row="0" Grid.ColumnSpan="2"/>
+        
         <Grid HorizontalAlignment="Left"    Grid.Row="2" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="3"/>
@@ -42,26 +60,25 @@
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
 
-            <Grid   Grid.Row="1">
+            <Grid Grid.Row="1">
                 <StackPanel     x:Name="stackUserButton_First" Style="{StaticResource CommonPanelStyle}">
                     <!--#region 비밀번호 초기화 버튼-->
                     <uButton:uSimpleButton  x:Name="btnPwdInit" Grid.Column="1"
-								Style="{StaticResource CommButtonStyle}"
-								ButtonType="PWD_INIT"     IsIconVisibleYN="True" />
+                                            Style="{StaticResource CommButtonStyle}"
+								ButtonType="PWD_INIT"     IsIconVisibleYN="False" />
                     <!--#endregion-->
 
                     <!--#region 엑셀 다운로드 버튼-->
                     <uButton:uSimpleButton  x:Name="btnExcelDownload" Grid.Column="1"
-								Style="{StaticResource CommButtonStyle}"
-								ButtonType="EXCEL_DOWNLOAD"     IsIconVisibleYN="True" />
+                                            Style="{StaticResource CommButtonStyle}"
+								ButtonType="EXCEL_DOWNLOAD"     IsIconVisibleYN="False" />
                     <!--#endregion-->
-
+                    
                     <!--#region 저장 버튼-->
                     <uButton:uSimpleButton  x:Name="btnSave" Grid.Column="1"
-								Style="{StaticResource CommButtonStyle}"
-								ButtonType="SAVE"     IsIconVisibleYN="True" />
+                                            Style="{StaticResource CommButtonStyle}"
+								ButtonType="SAVE"     IsIconVisibleYN="False" />
                     <!--#endregion-->
-
 
                     <!--#region 조회 버튼-->
                     <uButton1:uSimpleButtonSearch  x:Name="btnSearch" Grid.Column="1" />
@@ -116,26 +133,25 @@
 
                     <!--#endregion-->
 
-                    <!--#region  3. DB 접속 타입 (조회 조건)-->
-
-                    <!--<Grid Style="{StaticResource SearchItemStyle}"  Grid.Row="0"    Grid.Column="3">
+                    <!--#region  USE_YN - 사용 여부 (조회 조건)-->
+                    <Grid Style="{StaticResource SearchItemStyle}"  Grid.Row="0"    Grid.Column="2">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  berhaviors:CommonProperties.LabelCd="DB_CONN_TYPE"
+                        <TextBlock  berhaviors:CommonProperties.LabelCd="USE_YN"
 									HorizontalAlignment="Right"
 									VerticalAlignment="Center"/>
-                        <dxe:ComboBoxEdit Grid.Column="2"
-							  x:Name="CboDbConnType" 
-							  NullText="SELECT" 
-							  ValueMember="CODE" 
-							  DisplayMember="NAME" 
-							  Width="100"/>
-                    </Grid>-->
-
+                        <dxe:ComboBoxEdit Grid.Column="2" 
+							                          x:Name="cboUseYN" 
+							                          NullText="SELECT" 
+							                          ValueMember="CODE" 
+							                          DisplayMember="NAME"
+							                          Width="80"/>
+                    </Grid>
                     <!--#endregion-->
+
 
                 </Grid>
             </Border>
@@ -245,8 +261,8 @@
 
                         <!--#region (*) 사용자명 -->
                         <dxg:GridColumn     Header="USER_NM_REQ"             FieldName="USER_NM"              Width="120"
-                                            HorizontalHeaderContentAlignment="Center"   
-                                            Style="{StaticResource GridColumnStyle}"     AllowEditing="True" SortOrder="Ascending" SortIndex="0">
+                                            HorizontalHeaderContentAlignment="Center"    
+                                            Style="{StaticResource GridColumnStringCenter}"     AllowEditing="True" SortOrder="Ascending" SortIndex="0">
                             <dxg:GridColumn.CellStyle>
                                 <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
                                     <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
@@ -258,7 +274,7 @@
                         <!--#region (*) 비밀번호 -->
                         <dxg:GridColumn     Header="PWD"             FieldName="PWD"              Width="120"
                                             HorizontalHeaderContentAlignment="Center"   
-                                            Style="{StaticResource GridColumnStyle}"     AllowEditing="false">
+                                            Style="{StaticResource GridColumnStringCenter}"     AllowEditing="false">
                             <dxg:GridColumn.CellStyle>
                                 <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
                                     <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
@@ -269,10 +285,10 @@
 
                         <!--#region ROLE_CD - 권한 코드-->
                         <dxg:GridColumn     Header="ROLE_CD"       FieldName="ROLE_CD"    Width="130"
-											HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+											HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
 											AllowEditing="True">
                             <dxg:GridColumn.EditSettings>
-                                <uButton:CommonCodeEditSetting  CommonCode="ROLE_CD_GRID" />
+                                <uButton:CommonCodeEditSetting  CommonCode="ROLE_CD" />
                             </dxg:GridColumn.EditSettings>
                             <dxg:GridColumn.CellStyle>
                                 <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
@@ -300,12 +316,8 @@
 
                         <!--#region INIT_YN - 초기화 여부-->
                         <dxg:GridColumn     Header="INIT_YN"       FieldName="PWD_INIT_YN"      Width="100"
-											                    HorizontalHeaderContentAlignment="Center"       AllowEditing="false">
-                            <!--<dxg:GridColumn.CellTemplate>
-                                <DataTemplate>
-                                    <dxe:CheckEdit  x:Name="PART_Editor"    EditValue="{Binding RowData.Row.PWD_INIT_YN_CHECKED, Mode=TwoWay}"  ClickMode="Release" />
-                                </DataTemplate>
-                            </dxg:GridColumn.CellTemplate>-->
+											HorizontalHeaderContentAlignment="Center"       
+                                            Style="{StaticResource GridColumnStringCenter}"     AllowEditing="false">
                             <dxg:GridColumn.CellStyle>
                                 <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
                                     <Setter Property="Background" Value="{Binding RowData.Row.BaseBackgroundBrush}"/>
@@ -314,27 +326,51 @@
                         </dxg:GridColumn>
                         <!--#endregion-->
 
-                        <!--#region REG_DT - 등록일-->
-                        <dxg:GridColumn     Header="REG_DT"       FieldName="REG_DT"      Width="180"
-											                    HorizontalHeaderContentAlignment="Center"       AllowEditing="false">
+                        <!--#region (*) REG_DT - 등록일-->
+                        <dxg:GridColumn     Header="REG_DT"             FieldName="REG_DT"              Width="180"
+                                            HorizontalHeaderContentAlignment="Center" 
+                                            Style="{StaticResource GridColumnStringCenter}"     AllowEditing="false">
+                            <dxg:GridColumn.CellStyle>
+                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
+                                </Style>
+                            </dxg:GridColumn.CellStyle>
                         </dxg:GridColumn>
                         <!--#endregion-->
 
-                        <!--#region REG_ID - 등록자-->
-                        <dxg:GridColumn     Header="REG_ID"       FieldName="REG_ID"      Width="120"
-											                    HorizontalHeaderContentAlignment="Center"       AllowEditing="false">
+                        <!--#region (*) REG_ID - 등록자-->
+                        <dxg:GridColumn     Header="REG_ID"             FieldName="REG_ID"              Width="120"
+                                            HorizontalHeaderContentAlignment="Center" 
+                                            Style="{StaticResource GridColumnStringCenter}"     AllowEditing="false">
+                            <dxg:GridColumn.CellStyle>
+                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
+                                </Style>
+                            </dxg:GridColumn.CellStyle>
                         </dxg:GridColumn>
                         <!--#endregion-->
 
-                        <!--#region UDP_DT - 수정일-->
-                        <dxg:GridColumn     Header="UDP_DT"       FieldName="UDP_DT"      Width="180"
-											                    HorizontalHeaderContentAlignment="Center"       AllowEditing="false">
+                        <!--#region (*) UDP_DT - 수정일-->
+                        <dxg:GridColumn     Header="UPD_DT"             FieldName="UPD_DT"              Width="180"
+                                            HorizontalHeaderContentAlignment="Center" 
+                                            Style="{StaticResource GridColumnStringCenter}"     AllowEditing="false">
+                            <dxg:GridColumn.CellStyle>
+                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
+                                </Style>
+                            </dxg:GridColumn.CellStyle>
                         </dxg:GridColumn>
                         <!--#endregion-->
 
-                        <!--#region UDP_ID - 등록자-->
-                        <dxg:GridColumn     Header="UDP_ID"       FieldName="UDP_ID"      Width="120"
-											                    HorizontalHeaderContentAlignment="Center"       AllowEditing="false">
+                        <!--#region (*) UDP_ID - 수정자-->
+                        <dxg:GridColumn     Header="UPD_ID"             FieldName="UPD_ID"              Width="120"
+                                            HorizontalHeaderContentAlignment="Center" 
+                                            Style="{StaticResource GridColumnStringCenter}"     AllowEditing="false">
+                            <dxg:GridColumn.CellStyle>
+                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
+                                </Style>
+                            </dxg:GridColumn.CellStyle>
                         </dxg:GridColumn>
                         <!--#endregion-->
 

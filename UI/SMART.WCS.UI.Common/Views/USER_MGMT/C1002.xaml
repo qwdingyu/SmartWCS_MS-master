@@ -1,4 +1,4 @@
-﻿<UserControl    x:Class="SMART.WCS.UI.COMMON.Views.SYS_MGMT.C1005"
+﻿<UserControl    x:Class="SMART.WCS.UI.COMMON.Views.SYS_MGMT.C1002"
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -201,7 +201,7 @@
                                         <!--local:C1002.IsEnabled="True"-->
                                         <dxg:GridControl.View>
                                             <dxg:TableView  x:Name="tvLeftGrid_RoleList"
-                                                            local:C1005.IsEnabled="True"
+                                                            local:C1002.IsEnabled="True"
 										MultiSelectMode="Cell"
 										AutoWidth="True"
 										HeaderHorizontalAlignment="Center"

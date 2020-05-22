@@ -2373,7 +2373,7 @@
   <data name="PWD_INIT" xml:space="preserve">
     <value>비밀번호 초기화</value>
   </data>
-  <data name="_PWD_SET_DATE" xml:space="preserve">
+  <data name="PWD_SET_DATE" xml:space="preserve">
     <value>비밀번호 설정일</value>
   </data>
 </root>

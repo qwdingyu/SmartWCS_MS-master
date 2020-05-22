@@ -347,7 +347,7 @@ namespace SMART.WCS.Control
             {
                 if (this.BaseInfo == null) { return string.Empty; }
                 //if (this.BaseInfo.COUNTRY_CD.Length == 0) { return string.Empty; }
-                if (BaseClass.CountryCode.Length == 0) { return string.Empty; }
+                //if (BaseClass.CountryCode.Length == 0) { return string.Empty; }
 
                 var strCountryCode  = string.Empty;
 

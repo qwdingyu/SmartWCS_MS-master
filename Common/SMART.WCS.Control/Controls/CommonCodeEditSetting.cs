@@ -170,7 +170,7 @@ namespace SMART.WCS.Control
             {
                 case "ROLE_CD_GRID":
                     strConvertComboBoxCommonCode        = "ROLE_CD";
-                    this.Attr1_InputParam               = this.BaseClass.CenterCD;
+                    //this.Attr1_InputParam               = this.BaseClass.CenterCD;
                     break;
             }
 

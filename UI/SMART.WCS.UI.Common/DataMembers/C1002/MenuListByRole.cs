@@ -8,23 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace SMART.WCS.UI.COMMON.DataMembers.C1004
+namespace SMART.WCS.UI.COMMON.DataMembers.C1002
 {
-    public class MenuMgmt : PropertyNotifyExtensions, IDXDataErrorInfo
+    public class MenuListByRole : PropertyNotifyExtensions, IDXDataErrorInfo
     {
         BaseClass BaseClass = new BaseClass();
         private bool g_isValidation = false;
 
+        #region * 그리드 색상 설정
+        public MenuListByRole()
+        {
+            // this.BackgroundBrush = this.BaseClass.ConvertStringToSolidColorBrush("#F9F9F9");
+        }
         public Brush BaseBackgroundBrush { get; set; }
-
         public Brush BackgroundBrush { get; set; }
+        #endregion
 
         #region * Validation - 그리드 데이터 유효성 체크
-        public MenuMgmt()
-        {
-            this.BackgroundBrush = this.BaseClass.ConvertStringToSolidColorBrush("#F9F9F9");
-        }
-
         public void ClearError()
         {
             this.Error = null;
@@ -37,6 +37,7 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1004
             this.Error = errorText;
             //RaisePropertyChanged(ErrorProperty);
         }
+
         public void CellError(string _ErrorProperty, string _Error)
         {
             g_isValidation = true;
@@ -81,9 +82,8 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1004
         }
         #endregion
 
-        #region + MENU_ID - 메뉴 ID
+        #region + MENU_ID - 메뉴ID
         private string _MENU_ID;
-
         public string MENU_ID
         {
             get { return this._MENU_ID; }
@@ -92,7 +92,7 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1004
                 if (this._MENU_ID != value)
                 {
                     this._MENU_ID = value;
-                    RaisePropertyChanged();
+                    this.RaisePropertyChanged();
                 }
             }
         }
@@ -100,7 +100,6 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1004
 
         #region + MENU_NM - 메뉴명
         private string _MENU_NM;
-
         public string MENU_NM
         {
             get { return this._MENU_NM; }
@@ -109,33 +108,15 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1004
                 if (this._MENU_NM != value)
                 {
                     this._MENU_NM = value;
-                    RaisePropertyChanged();
+                    this.RaisePropertyChanged();
                 }
             }
         }
         #endregion
 
-        #region + MENU_DESC - 메뉴 상세
-        private string _MENU_DESC;
-
-        public string MENU_DESC
-        {
-            get { return this._MENU_DESC; }
-            set
-            {
-                if (this._MENU_DESC != value)
-                {
-                    this._MENU_DESC = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + MENU_LVL - 메뉴 레벨
-        private int _MENU_LVL;
-
-        public int MENU_LVL
+        #region + MENU_LVL - 메뉴 권한
+        private string _MENU_LVL;
+        public string MENU_LVL
         {
             get { return this._MENU_LVL; }
             set
@@ -143,58 +124,23 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1004
                 if (this._MENU_LVL != value)
                 {
                     this._MENU_LVL = value;
-                    RaisePropertyChanged();
+                    this.RaisePropertyChanged();
                 }
             }
         }
         #endregion
 
-        #region + MENU_TYPE - 메뉴 타입
-        private string _MENU_TYPE;
-
-        public string MENU_TYPE
+        #region + ROLE_MENU_CD - 권한 타입
+        private string _ROLE_MENU_CD;
+        public string ROLE_MENU_CD
         {
-            get { return this._MENU_TYPE; }
+            get { return this._ROLE_MENU_CD; }
             set
             {
-                if (this._MENU_TYPE != value)
+                if (this._ROLE_MENU_CD != value)
                 {
-                    this._MENU_TYPE = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + MENU_URL - 메뉴 URL
-        private string _MENU_URL;
-
-        public string MENU_URL
-        {
-            get { return this._MENU_URL; }
-            set
-            {
-                if (this._MENU_URL != value)
-                {
-                    this._MENU_URL = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + MENU_ICON - 메뉴 아이콘
-        private string _MENU_ICON;
-
-        public string MENU_ICON
-        {
-            get { return this._MENU_ICON; }
-            set
-            {
-                if (this._MENU_ICON != value)
-                {
-                    this._MENU_ICON = value;
-                    RaisePropertyChanged();
+                    this._ROLE_MENU_CD = value;
+                    this.RaisePropertyChanged();
                 }
             }
         }
@@ -202,7 +148,6 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1004
 
         #region + TREE_ID - 트리 ID
         private string _TREE_ID;
-
         public string TREE_ID
         {
             get { return this._TREE_ID; }
@@ -211,15 +156,14 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1004
                 if (this._TREE_ID != value)
                 {
                     this._TREE_ID = value;
-                    RaisePropertyChanged();
+                    this.RaisePropertyChanged();
                 }
             }
         }
         #endregion
 
-        #region + PARENT_ID - 부모 ID
+        #region + PARENT_ID - 상위 메뉴 ID
         private string _PARENT_ID;
-
         public string PARENT_ID
         {
             get { return this._PARENT_ID; }
@@ -228,60 +172,7 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1004
                 if (this._PARENT_ID != value)
                 {
                     this._PARENT_ID = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + USE_YN - 사용 여부
-        private string _USE_YN;
-
-        public string USE_YN
-        {
-            get { return this._USE_YN; }
-            set
-            {
-                if (this._USE_YN != value)
-                {
-                    this._USE_YN = value;
-                    this.USE_YN_CHECKED = this.USE_YN.Equals("Y") == true ? true : false;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + USE_YN_CHECKED - 정렬 순서
-        private bool _USE_YN_CHECKED;
-
-        public bool USE_YN_CHECKED
-        {
-            get { return this._USE_YN_CHECKED; }
-            set
-            {
-                if (this._USE_YN_CHECKED != value)
-                {
-                    this._USE_YN_CHECKED = value;
-                    this._USE_YN_CHECKED = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + SORT_SEQ - 정렬 순서
-        private int _SORT_SEQ;
-
-        public int SORT_SEQ
-        {
-            get { return this._SORT_SEQ; }
-            set
-            {
-                if (this._SORT_SEQ != value)
-                {
-                    this._SORT_SEQ = value;
-                    RaisePropertyChanged();
+                    this.RaisePropertyChanged();
                 }
             }
         }

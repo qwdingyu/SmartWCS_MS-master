@@ -3,6 +3,7 @@ using DevExpress.Xpf.Grid;
 using SMART.WCS.Common;
 using SMART.WCS.Common.Data;
 using SMART.WCS.Common.DataBase;
+using SMART.WCS.Control.Modules.Interface;
 using SMART.WCS.UI.COMMON.DataMembers.C1001;
 using System;
 using System.Collections;
@@ -24,7 +25,7 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
     /// <summary>
     /// 사용자 관리 및 사용자 별 담당 설비 관리
     /// </summary>
-    public partial class C1001 : UserControl
+    public partial class C1001 : UserControl, TabCloseInterface
     {
         #region ▩ Detegate 선언
         #region > 메인화면 하단 좌측 상태바 값 반영
@@ -155,7 +156,7 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
         private void InitControl()
         {
             // 콤보박스 설정
-            //this.BaseClass.BindingCommonComboBox(this.cboUseYN, "USE_YN", null, true);
+            this.BaseClass.BindingCommonComboBox(this.cboUseYN, "USE_YN", null, true);
         }
         #endregion
 
@@ -174,7 +175,7 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
             this.btnSave.PreviewMouseLeftButtonUp += BtnSave_PreviewMouseLeftButtonUp;
             // 비밀번호 초기화 클릭 이벤트
             this.btnPwdInit.PreviewMouseLeftButtonUp += BtnPwdInit_PreviewMouseLeftButtonUp;
-            
+
             // 그리드 Row추가 버튼 클릭 이벤트
             this.btnRowAdd.PreviewMouseLeftButtonUp += BtnRowAdd_PreviewMouseLeftButtonUp;
             // 그리드 추가Row 삭제 버튼 클릭 이벤트
@@ -278,9 +279,37 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
         /// </summary>
         private void DeleteGridRowItem()
         {
-            this.UserMgntList.Where(p => p.IsSelected == true && p.IsNew == true).ToList().ForEach(p =>
+            //this.UserMgntList.Where(p => p.IsSelected == true && p.IsNew == true).ToList().ForEach(p =>
+            //{
+            //    this.UserMgntList.Remove(p);
+            //});
+
+            var liUserMgnt = this.UserMgntList.Where(p => p.IsSelected == true).ToList();
+
+            if (liUserMgnt.Count() <= 0)
             {
-                this.UserMgntList.Remove(p);
+                BaseClass.MsgError("ERR_DELETE");
+            }
+
+            if (liUserMgnt.Where(w => w.IsNew == false).Count() > 0)
+            {
+                this.BaseClass.MsgQuestion("ASK_DEL_DB");
+                if (this.BaseClass.BUTTON_CONFIRM_YN == false) return;
+            }
+
+            //liEquipmentMgnt.ForEach(p => EquipmentMgntList.Remove(p));
+            liUserMgnt.ForEach(p => {
+                if (p.IsNew == false)
+                {
+                    p.USE_YN_CHECKED = false;
+
+                    using (BaseDataAccess da = new BaseDataAccess())
+                    {
+                        this.InsertSP_USER_INS2(da, p);
+                    }
+                }
+
+                UserMgntList.Remove(p);
             });
         }
         #endregion
@@ -328,11 +357,13 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
 
             var strMgmtUserID   = this.txtUserID.Text.Trim();                               // 사용자 ID
             var strUserNM       = this.txtUserNM.Text.Trim();                               // 사용자명
+            var strUseYN        = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN);   // 사용여부
             #endregion
 
             #region + Input 파라메터
             dicInputParam.Add("USER_ID",     strMgmtUserID);     // 사용자 ID
             dicInputParam.Add("USER_NM",     strUserNM);         // 사용자명
+            dicInputParam.Add("USE_YN",      strUseYN);         // 사용여부
             #endregion
 
             #region + 데이터 조회
@@ -393,9 +424,6 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
             var strUseYN            = _item.USE_YN_CHECKED == true ? "Y" : "N";         // 사용여부
             var strUserID           = this.BaseClass.UserID;                            // 사용자 ID
             var strInsType          = _item.IsNew ? "I" : _item.IsUpdate ? "U" : "";
-
-            var intRtnVal           = 0;                                                // Out Code
-            var strRtnMsg           = string.Empty;                                     // Out Msg
             #endregion
 
             #region + Input 파라메터
@@ -416,28 +444,9 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
             dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, dicOutPutParam, ref dicRtnValue);
             #endregion
 
-            //if (dtRtnValue != null)
-            //{
-            //    if (dtRtnValue.Rows.Count > 0)
-            //    {
-            //        if (dtRtnValue.Rows[0]["CODE"].ToString().Equals("0") == false)
-            //        {
-            //            var strMessage = dtRtnValue.Rows[0]["MSG"].ToString();
-            //            this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
-            //            isRtnValue = false;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        // ERR_SAVE - 저장 중 오류가 발생했습니다.
-            //        this.BaseClass.MsgError("ERR_SAVE");
-            //        isRtnValue = false;
-            //    }
-            //}
-
-            if(dicRtnValue["RTN_VAL"].Equals("0") == false)
+            if(dicRtnValue["RTN_VAL"].ToString().Equals("0") == false)
             {
-                var strMessage = dtRtnValue.Rows[0]["MSG"].ToString();
+                var strMessage = dicRtnValue["RTN_MSG"].ToString();
                 this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
                 isRtnValue = false;
             }
@@ -474,9 +483,9 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
             dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, dicOutPutParam, ref dicRtnValue);
             #endregion
 
-            if (dicRtnValue["RTN_VAL"].Equals("0") == false)
+            if (dicRtnValue["RTN_VAL"].ToString().Equals("0") == false)
             {
-                var strMessage = dtRtnValue.Rows[0]["MSG"].ToString();
+                var strMessage = dicRtnValue["RTN_MSG"].ToString();
                 this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
                 isRtnValue = false;
             }
@@ -880,7 +889,6 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
                 switch (e.Column.FieldName)
                 {
                     case "USER_ID":
-                    case "USER_NM":
                         if (dataMember.IsNew == false)
                         {
                             if (dataMember.IsSelected == true) { dataMember.IsSelected = false; }

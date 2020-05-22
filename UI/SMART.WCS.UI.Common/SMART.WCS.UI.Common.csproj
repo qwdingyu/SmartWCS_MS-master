@@ -116,10 +116,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="DataMembers\C1001\UserMgnt.cs" />
-    <Compile Include="DataMembers\C1003\CenterMgnt.cs" />
-    <Compile Include="DataMembers\C1004\MenuMgmt.cs" />
-    <Compile Include="DataMembers\C1005\MenuListByRole.cs" />
-    <Compile Include="DataMembers\C1005\RoleMgnt.cs" />
+    <Compile Include="DataMembers\C1003\MenuMgmt.cs" />
+    <Compile Include="DataMembers\C1002\MenuListByRole.cs" />
+    <Compile Include="DataMembers\C1002\RoleMgnt.cs" />
     <Compile Include="DataMembers\C1006\NoticeDetail.cs" />
     <Compile Include="DataMembers\C1006\NoticeInfoMgnt.cs" />
     <Compile Include="DataMembers\C1007\DeployLocalFileList.cs" />
@@ -207,11 +206,8 @@
     <Compile Include="Views\USER_MGMT\C1003.xaml.cs">
       <DependentUpon>C1003.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\USER_MGMT\C1004.xaml.cs">
-      <DependentUpon>C1004.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\USER_MGMT\C1005.xaml.cs">
-      <DependentUpon>C1005.xaml</DependentUpon>
+    <Compile Include="Views\USER_MGMT\C1002.xaml.cs">
+      <DependentUpon>C1002.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BASE_INFO_MGMT\C1010.xaml.cs">
       <DependentUpon>C1010.xaml</DependentUpon>
@@ -371,11 +367,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\USER_MGMT\C1004.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\USER_MGMT\C1005.xaml">
+    <Page Include="Views\USER_MGMT\C1002.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -3,7 +3,7 @@ using DevExpress.Xpf.Grid;
 using SMART.WCS.Common;
 using SMART.WCS.Common.Data;
 using SMART.WCS.Common.DataBase;
-using SMART.WCS.UI.COMMON.DataMembers.C1005;
+using SMART.WCS.UI.COMMON.DataMembers.C1002;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,17 +23,12 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
     /// <summary>
     /// 권한관리 및 권한별 메뉴 리스트 관리
     /// </summary>
-    public partial class C1005 : UserControl
+    public partial class C1002 : UserControl
     {
         #region ▩ Detegate 선언
         #region > 메인화면 하단 좌측 상태바 값 반영
         public delegate void ToolStripStatusEventHandler(string value);
         public event ToolStripStatusEventHandler ToolStripChangeStatusLabelEvent;
-        #endregion
-
-        #region > 즐겨찾기 변경후 메인화면 트리 컨트롤 Refresh 및 포커스 이동
-        public delegate void TreeControlRefreshEventHandler();
-        public event TreeControlRefreshEventHandler TreeControlRefreshEvent;
         #endregion
         #endregion
 
@@ -55,7 +50,7 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
         #endregion
 
         #region ▩ 생성자 
-        public C1005()
+        public C1002()
         {
             InitializeComponent();
         }
@@ -64,7 +59,7 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
         /// 생성자
         /// </summary>
         /// <param name="_liMenuNavigation"></param>
-        public C1005(List<string> _liMenuNavigation)
+        public C1002(List<string> _liMenuNavigation)
         {
             InitializeComponent();
 
@@ -96,7 +91,7 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
         #region ▩ 데이터 바인딩 용 객체 선언 및 속성 정의
         #region > IsEnabled 정의
         #region >> 그리드 컨트롤
-        public new static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached("IsEnabled", typeof(bool), typeof(C1005), new FrameworkPropertyMetadata(IsEnabledPropertyChanged));
+        public new static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached("IsEnabled", typeof(bool), typeof(C1002), new FrameworkPropertyMetadata(IsEnabledPropertyChanged));
 
         public static void SetIsEnabled(UIElement element, bool value)
         {
@@ -117,34 +112,11 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
             }
         }
         #endregion
-
-        //#region 트리 리스트 컨트롤
-        //public new static readonly DependencyProperty IsTreeEnabledProperty = DependencyProperty.RegisterAttached("IsTreeEnabled", typeof(bool), typeof(C1004), new FrameworkPropertyMetadata(IsTreeEnabledPropertyChanged));
-
-        //public static void SetIsTreeEnabled(UIElement element, bool value)
-        //{
-        //    element.SetValue(IsTreeEnabledProperty, value);
-        //}
-
-        //public static bool GetIsTreeEnabled(UIElement element)
-        //{
-        //    return (bool)element.GetValue(IsTreeEnabledProperty);
-        //}
-
-        //private static void IsTreeEnabledPropertyChanged(DependencyObject source, DependencyPropertyChangedEventArgs e)
-        //{
-        //    if ((bool)e.NewValue)
-        //    {
-        //        TreeListView view = source as TreeListView;
-        //        view.ShowingEditor += View_ShowingEditorTree;
-        //    }
-        //}
-        //#endregion
         #endregion
 
         #region > 권한 관리
         public static readonly DependencyProperty RoleMgntListProperty
-            = DependencyProperty.Register("RoleMgntList", typeof(ObservableCollection<RoleMgnt>), typeof(C1005)
+            = DependencyProperty.Register("RoleMgntList", typeof(ObservableCollection<RoleMgnt>), typeof(C1002)
                 , new PropertyMetadata(new ObservableCollection<RoleMgnt>()));
 
         public ObservableCollection<RoleMgnt> RoleMgntList
@@ -156,7 +128,7 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
 
         #region > 권한별 메뉴 리스트
         public static readonly DependencyProperty MenuListByRoleListProperty
-            = DependencyProperty.Register("MenuListByRoleList", typeof(ObservableCollection<MenuListByRole>), typeof(C1005)
+            = DependencyProperty.Register("MenuListByRoleList", typeof(ObservableCollection<MenuListByRole>), typeof(C1002)
                 , new PropertyMetadata(new ObservableCollection<MenuListByRole>()));
 
         public ObservableCollection<MenuListByRole> MenuListByRoleList
@@ -171,7 +143,7 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
         /// Grid Row수
         /// </summary>
         public static readonly DependencyProperty GridRowCountProperty
-            = DependencyProperty.Register("GridRowCount", typeof(string), typeof(C1005), new PropertyMetadata(string.Empty));
+            = DependencyProperty.Register("GridRowCount", typeof(string), typeof(C1002), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// Grid Row수
@@ -201,7 +173,7 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
         private void InitEvent()
         {
             #region + 화면 이벤트
-            this.Loaded += C1005_Loaded;
+            this.Loaded += C1002_Loaded;
             #endregion
 
             #region + 버튼 클릭 이벤트
@@ -265,7 +237,7 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
             }
         }
 
-        private void C1005_Loaded(object sender, RoutedEventArgs e)
+        private void C1002_Loaded(object sender, RoutedEventArgs e)
         {
             if (this.g_isLoaded == true) { return; }
 
@@ -396,14 +368,36 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
         //}
         //#endregion
 
-        #region >> DeleteGridRowItem - 선택한 그리드의 Row를 삭제한다. (행추가된 항목만 삭제 가능)
+        #region >> DeleteGridRowItem - 선택한 그리드의 Row를 삭제한다.
         /// <summary>
         /// 선택한 그리드의 Row를 삭제한다. (행추가된 항목만 삭제 가능)
         /// </summary>
         private void DeleteGridRowItem()
         {
-            this.RoleMgntList.Where(p => p.IsSelected == true && p.IsNew == true).ToList().ForEach(p =>
+            //this.RoleMgntList.Where(p => p.IsSelected == true && p.IsNew == true).ToList().ForEach(p =>
+            //{
+            //    this.RoleMgntList.Remove(p);
+            //});
+
+            if (this.RoleMgntList.Where(p => p.IsSelected == true && p.IsNew == false).Count() > 0 )
             {
+                this.BaseClass.MsgQuestion("ASK_DEL_DB");
+                if (this.BaseClass.BUTTON_CONFIRM_YN == false) { return; }
+            }
+
+            this.RoleMgntList.Where(p => p.IsSelected == true).ToList().ForEach(p =>
+            {
+                if(p.IsNew !=  true)
+                {
+                    p.USE_YN_CHECKED = false;
+
+                    using (BaseDataAccess da = new BaseDataAccess())
+                    {
+                        this.SaveSP_ROLE_HDR_INS(da, p);
+                    }
+
+                }
+
                 this.RoleMgntList.Remove(p);
             });
         }
@@ -422,20 +416,18 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
             {
                 #region + 파라메터 변수 선언 및 값 할당
                 DataSet dsRtnValue                          = null;
-                var strProcedureName                        = "CSP_C1005_SP_ROLE_HDR_LIST_INQ";
+                var strProcedureName                        = "UI_ROLE_MST_INQ";
                 Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
 
-                var strCenterCD     = this.BaseClass.CenterCD;                                  // 센터코드
                 var strRoleCD       = this.txtRoleCD.Text.Trim();                               // 권한코드
                 var strRoleNM       = this.txtRoleNM.Text.Trim();                               // 권한명
                 var strUseYN        = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN);   // 사용여부
                 #endregion
 
                 #region + Input 파라메터
-                dicInputParam.Add("P_CNTR_CD",          strCenterCD);       // 센터코드
-                dicInputParam.Add("P_ROLE_CD",          strRoleCD);         // 권한코드
-                dicInputParam.Add("P_ROLE_NM",          strRoleNM);         // 권한명
-                dicInputParam.Add("P_USE_YN",           strUseYN);          // 사용여부
+                dicInputParam.Add("ROLE_CD",          strRoleCD);         // 권한코드
+                dicInputParam.Add("ROLE_NM",          strRoleNM);         // 권한명
+                dicInputParam.Add("USE_YN",           strUseYN);          // 사용여부
                 #endregion
 
                 #region + 데이터 조회
@@ -485,16 +477,14 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
             {
                 #region + 파라메터 변수 선언 및 값 할당
                 DataSet dsRtnValue                          = null;
-                var strProcedureName                        = "CSP_C1005_SP_ROLE_DTL_LIST_INQ";
+                var strProcedureName                        = "UI_ROLE_DTL_INQ";
                 Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
 
-                var strCenterCD     = this.BaseClass.CenterCD;          // 센터코드
                 var strRoleCD       = _strRoleCD;                       // 권한코드
                 #endregion
 
                 #region + Input 파라메터
-                dicInputParam.Add("P_CNTR_CD",      strCenterCD);       // 센터코드
-                dicInputParam.Add("P_ROLE_CD",      strRoleCD);         // 권한코드
+                dicInputParam.Add("ROLE_CD",      strRoleCD);         // 권한코드
                 #endregion
 
                 #region + 데이터 조회
@@ -539,115 +529,49 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
         /// <param name="_da">데이터베이스 엑세스 객체</param>
         /// <param name="_item">신규 저장 대상 데이터</param>
         /// <returns></returns>
-        private async Task<bool> InsertSP_ROLE_HDR_INS(BaseDataAccess _da, RoleMgnt _item)
+        private async Task<bool> SaveSP_ROLE_HDR_INS(BaseDataAccess _da, RoleMgnt _item)
         {
             bool isRtnValue     = true;
 
             #region + 파라메터 변수 선언 및 값 할당
             DataTable dtRtnValue                        = null;
-            var strProcedureName                        = "CSP_C1005_SP_ROLE_HDR_INS";
+            var strProcedureName                        = "UI_ROLE_MST_INS";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
+            Dictionary<object, BaseEnumClass.MSSqlOutputDataType> dicOutPutParam = new Dictionary<object, BaseEnumClass.MSSqlOutputDataType>();
+            Dictionary<object, object> dicRtnValue = new Dictionary<object, object>();
 
-            var strCenterCD         = this.BaseClass.CenterCD;                      // 센터코드
             var strRoleCD           = _item.ROLE_CD;                                // 권한코드
             var strRoleNM           = _item.ROLE_NM;                                // 권한명
             var strUseYN            = _item.USE_YN_CHECKED == true ? "Y" : "N";     // 사용여부
             var strUserID           = this.BaseClass.UserID;                        // 사용자 ID
+            var strInsType          = _item.IsNew == true ? "I" : "U";              // Ins Type
             #endregion
 
             #region + Input 파라메터
-            dicInputParam.Add("P_CNTR_CD",      strCenterCD);   // 센터코드   
-            dicInputParam.Add("P_ROLE_CD",      strRoleCD);     // 권한코드
-            dicInputParam.Add("P_ROLE_NM",      strRoleNM);     // 권한명
-            dicInputParam.Add("P_USE_YN",       strUseYN);      // 사용여부
-            dicInputParam.Add("P_USER_ID",      strUserID);     // 사용자 ID
+            dicInputParam.Add("ROLE_CD",      strRoleCD);     // 권한코드
+            dicInputParam.Add("ROLE_NM",      strRoleNM);     // 권한명
+            dicInputParam.Add("USE_YN",       strUseYN);      // 사용여부
+            dicInputParam.Add("L_USER_ID",    strUserID);     // 사용자 ID
+            dicInputParam.Add("INS_TYPE",     strInsType);    // Ins Type
+            #endregion
+
+            #region + Output 파라메터
+            dicOutPutParam.Add("RTN_VAL", BaseEnumClass.MSSqlOutputDataType.INT32);
+            dicOutPutParam.Add("RTN_MSG", BaseEnumClass.MSSqlOutputDataType.VARCHAR);
             #endregion
 
             #region + 데이터 조회
             await System.Threading.Tasks.Task.Run(() =>
             {
-                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
+                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, dicOutPutParam, ref dicRtnValue);
             }).ConfigureAwait(true);
             #endregion
 
-            if (dtRtnValue != null)
+            if (dicRtnValue["RTN_VAL"].ToString().Equals("0") == false)
             {
-                if (dtRtnValue.Rows.Count > 0)
-                {
-                    if (dtRtnValue.Rows[0]["CODE"].ToString().Equals("0") == false)
-                    {
-                        var strMessage = dtRtnValue.Rows[0]["MSG"].ToString();
-                        this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
-                        isRtnValue = false;
-                    }
-                }
-                else
-                {
-                    // ERR_SAVE - 저장 중 오류가 발생했습니다.
-                    this.BaseClass.MsgError("ERR_SAVE");
-                    isRtnValue = false;
-                }
-            }
-
-            return isRtnValue;
-        }
-        #endregion
-
-        #region >> InsertSP_ROLE_HDR_INS - 권한 마스터 수정 데이터 저장
-        /// <summary>
-        /// 권한 마스터 수정 데이터 저장
-        /// </summary>
-        /// <param name="_da">데이터베이스 엑세스 객체</param>
-        /// <param name="_item">수정 저장 대상 데이터</param>
-        /// <returns></returns>
-        private async Task<bool> UpdateSP_ROLE_HRD_UPD(BaseDataAccess _da, RoleMgnt _item)
-        {
-            bool isRtnValue     = true;
-
-            #region + 파라메터 변수 선언 및 값 할당
-            DataTable dtRtnValue                        = null;
-            var strProcedureName                        = "CSP_C1005_SP_ROLE_HDR_UPD";
-            Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
-
-            var strCenterCD         = this.BaseClass.CenterCD;                      // 센터코드
-            var strRoleCD           = _item.ROLE_CD;                                // 권한코드
-            var strRoleNM           = _item.ROLE_NM;                                // 권한명
-            var strUseYN            = _item.USE_YN_CHECKED == true ? "Y" : "N";     // 사용여부
-            var strUserID           = this.BaseClass.UserID;                        // 사용자 ID
-            #endregion
-
-            #region + Input 파라메터
-            dicInputParam.Add("@P_CNTR_CD",              strCenterCD);           // 센터코드   
-            dicInputParam.Add("@P_ROLE_CD",              strRoleCD);             // 권한코드
-            dicInputParam.Add("@P_ROLE_NM",              strRoleNM);             // 권한명
-            dicInputParam.Add("@P_USE_YN",               strUseYN);              // 사용여부
-            dicInputParam.Add("@P_USER_ID",              strUserID);             // 사용자 ID
-            #endregion
-
-            #region + 데이터 조회
-            await System.Threading.Tasks.Task.Run(() =>
-            {
-                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
-            }).ConfigureAwait(true);
-            #endregion
-
-            if (dtRtnValue != null)
-            {
-                if (dtRtnValue.Rows.Count > 0)
-                {
-                    if (dtRtnValue.Rows[0]["CODE"].ToString().Equals("0") == false)
-                    {
-                        var strMessage = dtRtnValue.Rows[0]["MSG"].ToString();
-                        this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
-                        isRtnValue = false;
-                    }
-                }
-                else
-                {
-                    // ERR_SAVE - 저장 중 오류가 발생했습니다.
-                    this.BaseClass.MsgError("ERR_SAVE");
-                    isRtnValue = false;
-                }
+                var strMessage = dicRtnValue["RTN_MSG"].ToString();
+                this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
+                isRtnValue = false;
             }
 
             return isRtnValue;
@@ -660,10 +584,11 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
 
             #region + 파라메터 변수 선언 및 값 할당
             DataTable dtRtnValue                        = null;
-            var strProcedureName                        = "CSP_C1005_SP_ROLE_DTL_SAVE";
+            var strProcedureName                        = "UI_ROLE_DTL_INS";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
+            Dictionary<object, BaseEnumClass.MSSqlOutputDataType> dicOutPutParam = new Dictionary<object, BaseEnumClass.MSSqlOutputDataType>();
+            Dictionary<object, object> dicRtnValue = new Dictionary<object, object>();
 
-            var strCenterCD         = this.BaseClass.CenterCD;                                      // 센터코드
             var strRoleCD           = (this.gridLeft_RoleList.SelectedItem as RoleMgnt).ROLE_CD;    // 권한코드
             var strMenuID           = _item.MENU_ID;                                                // 메뉴 ID
             var strRoleMenuCD       = _item.ROLE_MENU_CD;                                           // 권한 타입
@@ -671,37 +596,29 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
             #endregion
 
             #region + Input 파라메터
-            dicInputParam.Add("P_CNTR_CD",              strCenterCD);           // 센터코드   
-            dicInputParam.Add("P_ROLE_CD",              strRoleCD);             // 권한코드
-            dicInputParam.Add("P_MENU_ID",              strMenuID);             // 메뉴 ID
-            dicInputParam.Add("P_ROLE_MENU_CD",         strRoleMenuCD);         // 권한 타입
-            dicInputParam.Add("P_USER_ID",              strUserID);             // 사용자 ID
+            dicInputParam.Add("ROLE_CD",                strRoleCD);             // 권한코드
+            dicInputParam.Add("MENU_ID",                strMenuID);             // 메뉴 ID
+            dicInputParam.Add("ROLE_MENU_CD",           strRoleMenuCD);         // 권한 타입
+            dicInputParam.Add("L_USER_ID",              strUserID);             // 사용자 ID
+            #endregion
+
+            #region + Output 파라메터
+            dicOutPutParam.Add("RTN_VAL", BaseEnumClass.MSSqlOutputDataType.INT32);
+            dicOutPutParam.Add("RTN_MSG", BaseEnumClass.MSSqlOutputDataType.VARCHAR);
             #endregion
 
             #region + 데이터 조회
             await System.Threading.Tasks.Task.Run(() =>
             {
-                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
+                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, dicOutPutParam, ref dicRtnValue);
             }).ConfigureAwait(true);
             #endregion
 
-            if (dtRtnValue != null)
+            if (dicRtnValue["RTN_VAL"].ToString().Equals("0") == false)
             {
-                if (dtRtnValue.Rows.Count > 0)
-                {
-                    if (dtRtnValue.Rows[0]["CODE"].ToString().Equals("0") == false)
-                    {
-                        var strMessage = dtRtnValue.Rows[0]["MSG"].ToString();
-                        this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
-                        isRtnValue = false;
-                    }
-                }
-                else
-                {
-                    // ERR_SAVE - 저장 중 오류가 발생했습니다.
-                    this.BaseClass.MsgError("ERR_SAVE");
-                    isRtnValue = false;
-                }
+                var strMessage = dicRtnValue["RTN_MSG"].ToString();
+                this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
+                isRtnValue = false;
             }
 
             return isRtnValue;
@@ -870,16 +787,8 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
                         #region 권한관리 마스터 데이터 저장
                         foreach (var item in liSelectedHrdData)
                         {
-                            if (item.IsNew == true)
-                            {
-                                isRtnValue = await this.InsertSP_ROLE_HDR_INS(da, item);
-                                if (isRtnValue == false) { break; }
-                            }
-                            else if (item.IsUpdate == true)
-                            {
-                                isRtnValue = await this.UpdateSP_ROLE_HRD_UPD(da, item);
-                                if (isRtnValue == false) { break; }
-                            }      
+                            isRtnValue = await this.SaveSP_ROLE_HDR_INS(da, item);
+                            if (isRtnValue == false) { break; }
                         }
                         #endregion
 
@@ -1024,7 +933,8 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
                                 view.ShowEditor();
 
                                 if (view.ActiveEditor == null) { return; }
-                                Dispatcher.BeginInvoke(new Action(() => {
+                                Dispatcher.BeginInvoke(new Action(() =>
+                                {
                                     view.ActiveEditor.EditValue = !(bool)view.ActiveEditor.EditValue;
                                 }), DispatcherPriority.Render);
                             }
@@ -1032,26 +942,26 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
                     }
                 }
 
-                // 권한 리스트 수정 여부를 확인한다.
-                int iUpdateRowCount = this.RoleMgntList.Where(p => p.IsSelected == true && p.IsUpdate == true).ToList().Count();
-                if (iUpdateRowCount > 0)
-                {
-                    if (this.CheckModifyRoleMstData() == true)
+                    // 권한 리스트 수정 여부를 확인한다.
+                    int iUpdateRowCount = this.RoleMgntList.Where(p => p.IsSelected == true && p.IsUpdate == true).ToList().Count();
+                    //if (iUpdateRowCount > 0)
+                    //{
+                    //    if (this.CheckModifyRoleMstData() == true)
+                    //    {
+                    //        this.GetSP_ROLE_HDR_LIST_INQ();
+                    //    }
+                    //}
+
+                    iUpdateRowCount = 0;
+                    // 권한별 메뉴 리스트 권한 정보 (콤보박스)의 수정 여부를 확인한다.
+                    iUpdateRowCount = this.MenuListByRoleList.Where(p => p.IsUpdate == true).ToList().Count();
+                    if (iUpdateRowCount > 0)
                     {
-                        this.GetSP_ROLE_HDR_LIST_INQ();
+                        if (this.CheckModifyMenuListByRoleData() == false) { return; }
                     }
-                }
 
-                iUpdateRowCount = 0;
-                // 권한별 메뉴 리스트 권한 정보 (콤보박스)의 수정 여부를 확인한다.
-                iUpdateRowCount = this.MenuListByRoleList.Where(p => p.IsUpdate == true).ToList().Count();
-                if (iUpdateRowCount > 0)
-                {
-                    if (this.CheckModifyMenuListByRoleData() == false) { return; }
-                }
-
-                var strSelectedItemRoleCD = (this.gridLeft_RoleList.SelectedItem as RoleMgnt).ROLE_CD;  // 권한 코드
-                this.GetSP_ROLE_DTL_LIST_INQ(strSelectedItemRoleCD);
+                    var strSelectedItemRoleCD = (this.gridLeft_RoleList.SelectedItem as RoleMgnt).ROLE_CD;  // 권한 코드
+                    this.GetSP_ROLE_DTL_LIST_INQ(strSelectedItemRoleCD);
             }
             catch (Exception err)
             {
@@ -1191,7 +1101,7 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
         {
             try
             {
-                this.TreeControlRefreshEvent();
+                //this.TreeControlRefreshEvent();
             }
             catch (Exception err)
             {

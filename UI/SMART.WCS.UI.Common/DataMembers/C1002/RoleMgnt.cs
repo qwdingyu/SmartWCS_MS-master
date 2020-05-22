@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace SMART.WCS.UI.COMMON.DataMembers.C1005
+namespace SMART.WCS.UI.COMMON.DataMembers.C1002
 {
     public class RoleMgnt : PropertyNotifyExtensions, IDXDataErrorInfo
     {
