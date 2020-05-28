@@ -1727,12 +1727,12 @@ namespace SMART.WCS.Main
 
                             //}
 
-                            if (strMenuID == "C1028_01P")
-                            {
-                                C1028_01P frmPopup                  = new C1028_01P();
-                                frmPopup.WindowStartupLocation      = WindowStartupLocation.CenterOwner;
-                                frmPopup.ShowDialog();
-                            }
+                            //if (strMenuID == "C1028_01P")
+                            //{
+                            //    C1028_01P frmPopup                  = new C1028_01P();
+                            //    frmPopup.WindowStartupLocation      = WindowStartupLocation.CenterOwner;
+                            //    frmPopup.ShowDialog();
+                            //}
 
                             break;
                         case "TAB":

@@ -502,7 +502,7 @@ namespace SMART.WCS.Main
                     return;
                 }
 
-                var query = this.g_dtDatabaseConnectionInfo.AsEnumerable().Where(p => p.Field<string>("DB_CONN_TYPE").Equals(this.g_strConfigDBConnectType) && p.Field<string>("CNTR_CD").Equals(this.BaseClass.ComboBoxSelectedKeyValue(this.cboCenter))).FirstOrDefault();
+                var query = this.g_dtDatabaseConnectionInfo.AsEnumerable().Where(p => p.Field<string>("DB_CONN_TYPE").Equals(this.g_strConfigDBConnectType)).FirstOrDefault();
 
                 if (query == null)
                 {

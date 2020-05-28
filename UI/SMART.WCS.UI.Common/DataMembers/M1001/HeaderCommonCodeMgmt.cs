@@ -8,15 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace SMART.WCS.UI.COMMON.DataMembers.C1013
+namespace SMART.WCS.UI.COMMON.DataMembers.M1001
 {
-    public class ShipToMgnt : PropertyNotifyExtensions, IDXDataErrorInfo
+    class HeaderCommonCodeMgmt : PropertyNotifyExtensions, IDXDataErrorInfo
     {
         BaseClass BaseClass = new BaseClass();
         private bool g_isValidation = false;
 
         #region * 그리드 색상 설정
-        public ShipToMgnt()
+        public HeaderCommonCodeMgmt()
         {
             this.BackgroundBrush = this.BaseClass.ConvertStringToSolidColorBrush("#F9F9F9");
         }
@@ -39,6 +39,7 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1013
             this.Error = errorText;
             //RaisePropertyChanged(ErrorProperty);
         }
+
         public void CellError(string _ErrorProperty, string _Error)
         {
             g_isValidation = true;
@@ -83,144 +84,32 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1013
         }
         #endregion
 
-        #region + CST_CD - 고객사 코드
-        private string _CST_CD;
-        public string CST_CD
+        #region + COM_HDL_CD - CODE 대분류
+        private string _COM_HDL_CD;
+        public string COM_HDL_CD
         {
-            get { return this._CST_CD; }
+            get { return this._COM_HDL_CD; }
             set
             {
-                if (this._CST_CD != value)
+                if (this._COM_HDL_CD != value)
                 {
-                    this._CST_CD = value;
+                    this._COM_HDL_CD = value;
                     RaisePropertyChanged();
                 }
             }
         }
         #endregion
 
-        #region + SHIP_TO_CD - 출고처코드
-        private string _SHIP_TO_CD;
-        public string SHIP_TO_CD
+        #region + COM_HDL_NM - CODE 대분류 이름
+        private string _COM_HDL_NM;
+        public string COM_HDL_NM
         {
-            get { return this._SHIP_TO_CD; }
+            get { return this._COM_HDL_NM; }
             set
             {
-                if (this._SHIP_TO_CD != value)
+                if (this._COM_HDL_NM != value)
                 {
-                    this._SHIP_TO_CD = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + SHIP_TO_NM - 출고처 명
-        private string _SHIP_TO_NM;
-        public string SHIP_TO_NM
-        {
-            get { return this._SHIP_TO_NM; }
-            set
-            {
-                if (this._SHIP_TO_NM != value)
-                {
-                    this._SHIP_TO_NM = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + ADDR - 주소
-        private string _ADDR;
-        public string ADDR
-        {
-            get { return this._ADDR; }
-            set
-            {
-                if (this._ADDR != value)
-                {
-                    this._ADDR = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + ZIP_CD - 우편코드
-        private string _ZIP_CD;
-        public string ZIP_CD
-        {
-            get { return this._ZIP_CD; }
-            set
-            {
-                if (this._ZIP_CD != value)
-                {
-                    this._ZIP_CD = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + TEL_NO - 연락처
-        private string _TEL_NO;
-        public string TEL_NO
-        {
-            get { return this._TEL_NO; }
-            set
-            {
-                if (this._TEL_NO != value)
-                {
-                    this._TEL_NO = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + RGN_CD - 지역코드
-        private string _RGN_CD;
-        public string RGN_CD
-        {
-            get { return this._RGN_CD; }
-            set
-            {
-                if (this._RGN_CD != value)
-                {
-                    this._RGN_CD = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + RGN_NM - 지역명
-        private string _RGN_NM;
-        public string RGN_NM
-        {
-            get { return this._RGN_NM; }
-            set
-            {
-                if (this._RGN_NM != value)
-                {
-                    this._RGN_NM = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + CRT_SPR_CD - 시스템 코드
-        private string _CRT_SPR_CD;
-        public string CRT_SPR_CD
-        {
-            get { return this._CRT_SPR_CD; }
-            set
-            {
-                if (this._CRT_SPR_CD != value)
-                {
-                    this._CRT_SPR_CD = value;
+                    this._COM_HDL_NM = value;
                     RaisePropertyChanged();
                 }
             }
@@ -260,16 +149,176 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1013
         }
         #endregion
 
-        #region + IsWMS - true : 컬럼수정불가
-        private bool _IsWMS;
-        public bool IsWMS
+        #region + SORT_SEQ - 정렬순서
+        private int _SORT_SEQ;
+        public int SORT_SEQ
         {
-            get { return this._IsWMS; }
+            get { return this._SORT_SEQ; }
             set
             {
-                if (this._IsWMS != value)
+                if (this._SORT_SEQ != value)
                 {
-                    this._IsWMS = value;
+                    this._SORT_SEQ = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ATTR01 - 문자속성 01
+        private string _ATTR01;
+        public string ATTR01
+        {
+            get { return this._ATTR01; }
+            set
+            {
+                if (this._ATTR01 != value)
+                {
+                    this._ATTR01 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ATTR02 - 문자속성 02
+        private string _ATTR02;
+        public string ATTR02
+        {
+            get { return this._ATTR02; }
+            set
+            {
+                if (this._ATTR02 != value)
+                {
+                    this._ATTR02 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ATTR03 - 문자속성 03
+        private string _ATTR03;
+        public string ATTR03
+        {
+            get { return this._ATTR03; }
+            set
+            {
+                if (this._ATTR03 != value)
+                {
+                    this._ATTR03 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ATTR04 - 문자속성 04
+        private string _ATTR04;
+        public string ATTR04
+        {
+            get { return this._ATTR04; }
+            set
+            {
+                if (this._ATTR04 != value)
+                {
+                    this._ATTR04 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ATTR05 - 문자속성 05
+        private string _ATTR05;
+        public string ATTR05
+        {
+            get { return this._ATTR05; }
+            set
+            {
+                if (this._ATTR05 != value)
+                {
+                    this._ATTR05 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ATTR06 - 문자속성 06
+        private string _ATTR06;
+        public string ATTR06
+        {
+            get { return this._ATTR06; }
+            set
+            {
+                if (this._ATTR06 != value)
+                {
+                    this._ATTR06 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ATTR07 - 문자속성 07
+        private string _ATTR07;
+        public string ATTR07
+        {
+            get { return this._ATTR07; }
+            set
+            {
+                if (this._ATTR07 != value)
+                {
+                    this._ATTR07 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ATTR08 - 문자속성 08
+        private string _ATTR08;
+        public string ATTR08
+        {
+            get { return this._ATTR08; }
+            set
+            {
+                if (this._ATTR08 != value)
+                {
+                    this._ATTR08 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ATTR09 - 문자속성 09
+        private string _ATTR09;
+        public string ATTR09
+        {
+            get { return this._ATTR09; }
+            set
+            {
+                if (this._ATTR09 != value)
+                {
+                    this._ATTR09 = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ATTR10 - 문자속성 10
+        private string _ATTR10;
+        public string ATTR10
+        {
+            get { return this._ATTR10; }
+            set
+            {
+                if (this._ATTR10 != value)
+                {
+                    this._ATTR10 = value;
                     RaisePropertyChanged();
                 }
             }
@@ -291,6 +340,5 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1013
             }
         }
         #endregion
-
     }
 }

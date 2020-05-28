@@ -336,18 +336,18 @@ namespace SMART.WCS.UI.COMMON.Views.SYS_MGMT
             #endregion
 
             #region + Input 파라메터
-            dicInputParam.Add("@MENU_ID",               strMenuID);             // 메뉴 ID
-            dicInputParam.Add("@MENU_NM",               strMenuNM);             // 메뉴명
-            dicInputParam.Add("@MENU_DESC",             strMenuDesc);           // 메뉴 상세
-            dicInputParam.Add("@MENU_LVL",              strMenuLevel);          // 메뉴 레벨
-            dicInputParam.Add("@MENU_TYPE",             strMenuType);           // 메뉴 타입
-            dicInputParam.Add("@MENU_URL",              strMenuUrl);            // 메뉴 URL
-            dicInputParam.Add("@MENU_ICON",             strMenuIcon);           // 메뉴 아이콘
-            dicInputParam.Add("@TREE_ID",               strTreeID);             // 트리 ID
-            dicInputParam.Add("@PARENT_ID",             strParentID);           // 상위 메뉴 ID
-            dicInputParam.Add("@USE_YN",                strUseYN);              // 사용여부
-            dicInputParam.Add("@SORT_SEQ",              iSortSeq);              // 정렬 순서
-            dicInputParam.Add("@L_USER_ID",             strUserID);             // 사용자 ID
+            dicInputParam.Add("MENU_ID",               strMenuID);             // 메뉴 ID
+            dicInputParam.Add("MENU_NM",               strMenuNM);             // 메뉴명
+            dicInputParam.Add("MENU_DESC",             strMenuDesc);           // 메뉴 상세
+            dicInputParam.Add("MENU_LVL",              strMenuLevel);          // 메뉴 레벨
+            dicInputParam.Add("MENU_TYPE",             strMenuType);           // 메뉴 타입
+            dicInputParam.Add("MENU_URL",              strMenuUrl);            // 메뉴 URL
+            dicInputParam.Add("MENU_ICON",             strMenuIcon);           // 메뉴 아이콘
+            dicInputParam.Add("TREE_ID",               strTreeID);             // 트리 ID
+            dicInputParam.Add("PARENT_ID",             strParentID);           // 상위 메뉴 ID
+            dicInputParam.Add("USE_YN",                strUseYN);              // 사용여부
+            dicInputParam.Add("SORT_SEQ",              iSortSeq);              // 정렬 순서
+            dicInputParam.Add("L_USER_ID",             strUserID);             // 사용자 ID
             #endregion
 
             #region + Output 파라메터

@@ -281,10 +281,6 @@
       <Project>{e6d6daee-5637-4f39-9549-2166aac6a74a}</Project>
       <Name>SMART.WCS.Resource</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SMART.WCS.UI.Analysis\SMART.WCS.UI.Analysis.csproj">
-      <Project>{549aa517-56a1-46a1-bec4-032b440107fc}</Project>
-      <Name>SMART.WCS.UI.Analysis</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SMART.WCS.UI.Common\SMART.WCS.UI.Common.csproj">
       <Project>{27fb7187-b771-4cda-a4cf-7071755359bf}</Project>
       <Name>SMART.WCS.UI.Common</Name>

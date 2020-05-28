@@ -768,16 +768,16 @@
   <data name="COM_DTL_NM_REQ" xml:space="preserve">
     <value>(*) 상세 코드 이름</value>
   </data>
-  <data name="COM_HDR_CD" xml:space="preserve">
+  <data name="COM_HDL_CD" xml:space="preserve">
     <value>코드 대분류</value>
   </data>
-  <data name="COM_HDR_CD_REQ" xml:space="preserve">
+  <data name="COM_HDL_CD_REQ" xml:space="preserve">
     <value>(*) 코드 대분류</value>
   </data>
-  <data name="COM_HDR_NM" xml:space="preserve">
+  <data name="COM_HDL_NM" xml:space="preserve">
     <value>코드 대분류 이름</value>
   </data>
-  <data name="COM_HDR_NM_REQ" xml:space="preserve">
+  <data name="COM_HDL_NM_REQ" xml:space="preserve">
     <value>(*) 코드 대분류 이름</value>
   </data>
   <data name="CONFR" xml:space="preserve">

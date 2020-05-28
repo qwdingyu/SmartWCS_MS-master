@@ -6,7 +6,7 @@ using SMART.WCS.Common.DataBase;
 using SMART.WCS.Control;
 using SMART.WCS.Control.Modules.Interface;
 using SMART.WCS.Modules.Extensions;
-using SMART.WCS.UI.COMMON.DataMembers.C1010;
+using SMART.WCS.UI.COMMON.DataMembers.M1001;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,9 +29,9 @@ using System.Windows.Threading;
 namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 {
     /// <summary>
-    /// C1010.xaml에 대한 상호 작용 논리
+    /// M1001.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class C1010 : UserControl, TabCloseInterface
+    public partial class M1001 : UserControl, TabCloseInterface
     {
         #region ▩ Detegate 선언
         #region > 메인화면 하단 좌측 상태바 값 반영
@@ -69,7 +69,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         #endregion
 
         #region ▩ 생성자
-        public C1010()
+        public M1001()
         {
             InitializeComponent();
         }
@@ -78,7 +78,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         /// 생성자
         /// </summary>
         /// <param name="_liMenuNavigation">화면에 표현할 Navigator 정보</param>
-        public C1010(List<string> _liMenuNavigation)
+        public M1001(List<string> _liMenuNavigation)
         {
             try
             {
@@ -113,7 +113,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 
         #region ▩ 데이터 바인딩 용 객체 선언 및 속성 정의
         #region > IsEnabled 정의
-        public new static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached("IsEnabled", typeof(bool), typeof(C1010), new FrameworkPropertyMetadata(IsEnabledPropertyChanged));
+        public new static readonly DependencyProperty IsEnabledProperty = DependencyProperty.RegisterAttached("IsEnabled", typeof(bool), typeof(M1001), new FrameworkPropertyMetadata(IsEnabledPropertyChanged));
 
         public static void SetIsEnabled(UIElement element, bool value)
         {
@@ -137,7 +137,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 
         #region > 그리드 - 공통코드관리 헤더 리스트
         public static readonly DependencyProperty HeaderCommonCodeMgmtListProperty
-            = DependencyProperty.Register("HeaderCommonCodeMgmtList", typeof(ObservableCollection<HeaderCommonCodeMgmt>), typeof(C1010)
+            = DependencyProperty.Register("HeaderCommonCodeMgmtList", typeof(ObservableCollection<HeaderCommonCodeMgmt>), typeof(M1001)
                 , new PropertyMetadata(new ObservableCollection<HeaderCommonCodeMgmt>()));
 
         private ObservableCollection<HeaderCommonCodeMgmt> HeaderCommonCodeMgmtList
@@ -151,7 +151,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         /// Grid Row수
         /// </summary>
         public static readonly DependencyProperty HeaderGridRowCountProperty
-            = DependencyProperty.Register("HeaderGridRowCount", typeof(string), typeof(C1010), new PropertyMetadata(string.Empty));
+            = DependencyProperty.Register("HeaderGridRowCount", typeof(string), typeof(M1001), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// Grid Row수
@@ -166,7 +166,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 
         #region > 그리드 - 공통코드관리 디테일 리스트
         public static readonly DependencyProperty DetailCommonCodeMgmtListProperty
-            = DependencyProperty.Register("DetailCommonCodeMgmtList", typeof(ObservableCollection<DetailCommonCodeMgmt>), typeof(C1010)
+            = DependencyProperty.Register("DetailCommonCodeMgmtList", typeof(ObservableCollection<DetailCommonCodeMgmt>), typeof(M1001)
                 , new PropertyMetadata(new ObservableCollection<DetailCommonCodeMgmt>()));
 
         private ObservableCollection<DetailCommonCodeMgmt> DetailCommonCodeMgmtList
@@ -180,7 +180,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         /// Grid Row수
         /// </summary>
         public static readonly DependencyProperty DetailGridRowCountProperty
-            = DependencyProperty.Register("DetailGridRowCount", typeof(string), typeof(C1010), new PropertyMetadata(string.Empty));
+            = DependencyProperty.Register("DetailGridRowCount", typeof(string), typeof(M1001), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// Grid Row수
@@ -204,7 +204,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         {
             // 콤보박스 - 조회 (사용여부)
             this.BaseClass.BindingCommonComboBox(this.cboUseYN_First, "USE_YN", null, false);
-            this.BaseClass.BindingCommonComboBox(this.cboUseYN_Second, "USE_YN", null, false);
 
             // 버튼(행추가/행삭제) 툴팁 처리
             this.btnRowAdd_First.ToolTip = this.BaseClass.GetResourceValue("ROW_ADD");
@@ -216,7 +215,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         private void InitEvent()
         {
             #region + Loaded 이벤트
-            //this.Loaded += C1010_Loaded;
+            //this.Loaded += M1001_Loaded;
             #endregion
 
             #region + 버튼 클릭 이벤트
@@ -403,7 +402,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         {
             #region 파라메터 변수 선언 및 값 할당
             DataSet dsRtnValue                          = null;
-            var strProcedureName                        = "CSP_C1010_SP_COM_HDR_LIST_INQ";
+            var strProcedureName                        = "UI_CODE_MST_HEAD_INQ_NEW";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
 
             var strHdrCd    = this.txtComHdrCd_First.Text.Trim();                               // CODE 대분류
@@ -411,19 +410,17 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             var strUseYn    = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN_First);     // 사용 여부
             var strDtlCd    = this.txtComDtlCd_First.Text.Trim();                               // 상세코드
             var strDtlNm    = this.txtComDtlNm_First.Text.Trim();                               // 상세코드 명
-            var strUseYn2   = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN_Second);    // 사용 여부
 
             var strErrCode  = string.Empty;          // 오류 코드
             var strErrMsg   = string.Empty;           // 오류 메세지
             #endregion
 
             #region Input 파라메터
-            dicInputParam.Add("P_COM_HDR_CD",   strHdrCd);      // CODE 대분류
-            dicInputParam.Add("P_COM_HDR_NM",   strHdrNm);      // CODE 대분류 이름
-            dicInputParam.Add("P_USE_YN",       strUseYn);      // 사용 여부
-            dicInputParam.Add("P_COM_DTL_CD",   strDtlCd);      // 상세코드
-            dicInputParam.Add("P_COM_DTL_NM",   strDtlNm);      // 상세코드 명
-            dicInputParam.Add("P_DTL_USE_YN",   strUseYn2);     // 사용여부 - 상세
+            dicInputParam.Add("HEADER_CD",  strHdrCd);              // CODE 대분류
+            dicInputParam.Add("HEADER_NM",  strHdrNm);              // CODE 대분류 이름
+            dicInputParam.Add("DETAIL_CD",  strDtlCd);              // 상세코드
+            dicInputParam.Add("DETAIL_NM",  strDtlNm);              // 상세코드 명
+            dicInputParam.Add("USE_YN",     strUseYn);              // 사용 여부
             #endregion
 
             #region 데이터 조회
@@ -444,17 +441,19 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         /// <param name="_da">DataAccess 객체</param>
         /// <param name="_item">저장 대상 아이템 (Row 데이터)</param>
         /// <returns></returns>
-        private bool InsertSP_COM_HDR_INS(BaseDataAccess _da, HeaderCommonCodeMgmt _item)
+        private async Task<bool> InsertSP_COM_HDR_INS(BaseDataAccess _da, HeaderCommonCodeMgmt _item)
         {
             bool isRtnValue = true;
 
             #region 파라메터 변수 선언 및 값 할당
             DataTable dtRtnValue                        = null;
-            var strProcedureName                        = "CSP_C1010_SP_COM_HDR_INS";
+            var strProcedureName                        = "UI_CODE_MST_HEAD_INS";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
+            Dictionary<object, BaseEnumClass.MSSqlOutputDataType> dicOutPutParam = new Dictionary<object, BaseEnumClass.MSSqlOutputDataType>();
+            Dictionary<object, object> dicRtnValue = new Dictionary<object, object>();
 
-            var strHdrCd        = _item.COM_HDR_CD;                     // CODE 대분류
-            var strHdrNm        = _item.COM_HDR_NM;                     // CODE 대분류 이름
+            var strHdrCd        = _item.COM_HDL_CD;                     // CODE 대분류
+            var strHdrNm        = _item.COM_HDL_NM;                     // CODE 대분류 이름
             var strAttr01       = _item.ATTR01;                         // 문자속성 01
             var strAttr02       = _item.ATTR02;                         // 문자속성 02
             var strAttr03       = _item.ATTR03;                         // 문자속성 03
@@ -468,46 +467,44 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             var strSortSeq      = _item.SORT_SEQ;                       // 정렬순서
             var strUseYN        = _item.Checked == true ? "Y" : "N";    // 사용 여부
             var strUserID       = this.BaseClass.UserID;                // 사용자 ID
-            var strErrCode      = string.Empty;                         // 오류 코드
-            var strErrMsg       = string.Empty;                         // 오류 메세지
             #endregion
 
             #region Input 파라메터
-            dicInputParam.Add("P_COM_HDR_CD",   strHdrCd);          // CODE 대분류
-            dicInputParam.Add("P_COM_HDR_NM",   strHdrNm);          // CODE 대분류 이름
-            dicInputParam.Add("P_USE_YN",       strUseYN);          // 사용 여부
-            dicInputParam.Add("P_ATTR01",       strAttr01);         // 문자속성 01
-            dicInputParam.Add("P_ATTR02",       strAttr02);         // 문자속성 02
-            dicInputParam.Add("P_ATTR03",       strAttr03);         // 문자속성 03
-            dicInputParam.Add("P_ATTR04",       strAttr04);         // 문자속성 04
-            dicInputParam.Add("P_ATTR05",       strAttr05);         // 문자속성 05
-            dicInputParam.Add("P_ATTR06",       strAttr06);         // 문자속성 06
-            dicInputParam.Add("P_ATTR07",       strAttr07);         // 문자속성 07
-            dicInputParam.Add("P_ATTR08",       strAttr08);         // 문자속성 08
-            dicInputParam.Add("P_ATTR09",       strAttr09);         // 문자속성 09
-            dicInputParam.Add("P_ATTR10",       strAttr10);         // 문자속성 10
-            dicInputParam.Add("P_SORT_SEQ",     strSortSeq);        // 정렬순서
-            dicInputParam.Add("P_USER_ID",      strUserID);         // 사용자 ID
+            dicInputParam.Add("HEADER_CD",      strHdrCd);          // CODE 대분류
+            dicInputParam.Add("HEADER_NM",      strHdrNm);          // CODE 대분류 이름
+            dicInputParam.Add("USE_YN",         strUseYN);          // 사용 여부
+            dicInputParam.Add("SORT_SEQ",       strSortSeq);        // 정렬순서
+            dicInputParam.Add("ATTR01",         strAttr01);         // 문자속성 01
+            dicInputParam.Add("ATTR02",         strAttr02);         // 문자속성 02
+            dicInputParam.Add("ATTR03",         strAttr03);         // 문자속성 03
+            dicInputParam.Add("ATTR04",         strAttr04);         // 문자속성 04
+            dicInputParam.Add("ATTR05",         strAttr05);         // 문자속성 05
+            dicInputParam.Add("ATTR06",         strAttr06);         // 문자속성 06
+            dicInputParam.Add("ATTR07",         strAttr07);         // 문자속성 07
+            dicInputParam.Add("ATTR08",         strAttr08);         // 문자속성 08
+            dicInputParam.Add("ATTR09",         strAttr09);         // 문자속성 09
+            dicInputParam.Add("ATTR10",         strAttr10);         // 문자속성 10
+            dicInputParam.Add("USER_ID",        strUserID);         // 사용자 ID
             #endregion
 
-            dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
+            #region + Output 파라메터
+            dicOutPutParam.Add("RTN_VAL", BaseEnumClass.MSSqlOutputDataType.VARCHAR);
+            #endregion
 
-            if (dtRtnValue != null)
+            #region + 데이터 조회
+            await System.Threading.Tasks.Task.Run(() =>
             {
-                if (dtRtnValue.Rows.Count > 0)
-                {
-                    if (this.BaseClass.CheckResultDataProcess(dtRtnValue, ref strErrCode, ref strErrMsg, BaseEnumClass.SelectedDatabaseKind.MS_SQL) == false)
-                    {
-                        this.BaseClass.MsgError(strErrCode, BaseEnumClass.CodeMessage.MESSAGE);
-                        isRtnValue = false;
-                    }
-                }
-                else
-                {
-                    BaseClass.MsgError("ERR_SAVE");
-                    isRtnValue = false;
-                }
+                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, dicOutPutParam, ref dicRtnValue);
+            }).ConfigureAwait(true);
+            #endregion
+
+            if (dicRtnValue["RTN_VAL"].ToString().Equals("0") == false)
+            {
+                //var strMessage = dicRtnValue["RTN_MSG"].ToString();
+                //this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
+                isRtnValue = false;
             }
+
 
             return isRtnValue;
         }
@@ -520,17 +517,21 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         /// <param name="_da">DataAccess 객체</param>
         /// <param name="_item">저장 대상 아이템 (Row 데이터)</param>
         /// <returns></returns>
-        private bool UpdateSP_COM_HDR_UPD(BaseDataAccess _da, HeaderCommonCodeMgmt _item)
+        private async Task<bool> UpdateSP_COM_HDR_UPD(BaseDataAccess _da, HeaderCommonCodeMgmt _item)
         {
             bool isRtnValue = true;
 
             #region 파라메터 변수 선언 및 값 할당
             DataTable dtRtnValue                        = null;
-            var strProcedureName                        = "CSP_C1010_SP_COM_HDR_UPD";
+            var strProcedureName                        = "UI_CODE_MST_HEAD_UPD";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
+            Dictionary<object, BaseEnumClass.MSSqlOutputDataType> dicOutPutParam = new Dictionary<object, BaseEnumClass.MSSqlOutputDataType>();
+            Dictionary<object, object> dicRtnValue = new Dictionary<object, object>();
 
-            var strHdrCd    = _item.COM_HDR_CD;                             // CODE 대분류
-            var strHdrNm    = _item.COM_HDR_NM;                             // CODE 대분류 이름
+            var strHdrCd    = _item.COM_HDL_CD;                             // CODE 대분류
+            var strHdrNm    = _item.COM_HDL_NM;                             // CODE 대분류 이름
+            var strDtlCd    = string.Empty;                                 // CODE 대분류
+            var strDtlNm    = string.Empty;                                 // CODE 대분류 이름
             var strUseYN    = _item.Checked == true ? "Y" : "N";            // 사용 여부
             var strSortSeq  = _item.SORT_SEQ;                               // 정렬순서
             var strAttr01   = _item.ATTR01;                                 // 문자속성 01
@@ -547,88 +548,46 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             #endregion
 
             #region Input 파라메터
-            dicInputParam.Add("P_COM_HDR_CD",   strHdrCd);          // CODE 대분류
-            dicInputParam.Add("P_COM_HDR_NM",   strHdrNm);          // CODE 대분류 이름
-            dicInputParam.Add("P_USE_YN",       strUseYN);          // 사용 여부
-            dicInputParam.Add("P_SORT_SEQ",     strSortSeq);        // 정렬순서
-            dicInputParam.Add("P_ATTR01",       strAttr01);         // 문자속성 01
-            dicInputParam.Add("P_ATTR02",       strAttr02);         // 문자속성 02
-            dicInputParam.Add("P_ATTR03",       strAttr03);         // 문자속성 03
-            dicInputParam.Add("P_ATTR04",       strAttr04);         // 문자속성 04
-            dicInputParam.Add("P_ATTR05",       strAttr05);         // 문자속성 05
-            dicInputParam.Add("P_ATTR06",       strAttr06);         // 문자속성 06
-            dicInputParam.Add("P_ATTR07",       strAttr07);         // 문자속성 07
-            dicInputParam.Add("P_ATTR08",       strAttr08);         // 문자속성 08
-            dicInputParam.Add("P_ATTR09",       strAttr09);         // 문자속성 09
-            dicInputParam.Add("P_ATTR10",       strAttr10);         // 문자속성 10
-            dicInputParam.Add("P_USER_ID",      strUserID);         // 사용자 ID
+            dicInputParam.Add("HEADER_CD",      strHdrCd);                  // CODE 대분류
+            dicInputParam.Add("HEADER_NM",      strHdrNm);                  // CODE 대분류 이름
+            dicInputParam.Add("DETAIL_CD",      strDtlCd);                  // CODE 중분류
+            dicInputParam.Add("DETAIL_NM",      strDtlNm);                  // CODE 중분류 이름
+            dicInputParam.Add("USE_YN",         strUseYN);                  // 사용 여부
+            dicInputParam.Add("SORT_SEQ",       strSortSeq);                // 정렬순서
+            dicInputParam.Add("ATTR01",         strAttr01);                 // 문자속성 01
+            dicInputParam.Add("ATTR02",         strAttr02);                 // 문자속성 02
+            dicInputParam.Add("ATTR03",         strAttr03);                 // 문자속성 03
+            dicInputParam.Add("ATTR04",         strAttr04);                 // 문자속성 04
+            dicInputParam.Add("ATTR05",         strAttr05);                 // 문자속성 05
+            dicInputParam.Add("ATTR06",         strAttr06);                 // 문자속성 06
+            dicInputParam.Add("ATTR07",         strAttr07);                 // 문자속성 07
+            dicInputParam.Add("ATTR08",         strAttr08);                 // 문자속성 08
+            dicInputParam.Add("ATTR09",         strAttr09);                 // 문자속성 09
+            dicInputParam.Add("ATTR10",         strAttr10);                 // 문자속성 10
+            dicInputParam.Add("USER_ID",        strUserID);                 // 사용자 ID
             #endregion
 
-            dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
+            #region + Output 파라메터
+            dicOutPutParam.Add("RTN_VAL", BaseEnumClass.MSSqlOutputDataType.VARCHAR);
+            #endregion
 
-            if (dtRtnValue != null)
+            #region + 데이터 조회
+            await System.Threading.Tasks.Task.Run(() =>
             {
-                var strErrCode      = string.Empty;
-                var strErrMsg       = string.Empty;
+                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, dicOutPutParam, ref dicRtnValue);
+            }).ConfigureAwait(true);
+            #endregion
 
-                if (dtRtnValue.Rows.Count > 0)
-                {
-                    if (this.BaseClass.CheckResultDataProcess(dtRtnValue, ref strErrCode, ref strErrMsg, BaseEnumClass.SelectedDatabaseKind.MS_SQL) == false)
-                    {
-                        this.BaseClass.MsgError(strErrCode, BaseEnumClass.CodeMessage.MESSAGE);
-                        isRtnValue = false;
-                    }
-                }
-                else
-                {
-                    BaseClass.MsgError("ERR_SAVE");
-                    isRtnValue = false;
-                }
+            if (dicRtnValue["RTN_VAL"].ToString().Equals("0") == false)
+            {
+                //var strMessage = dicRtnValue["RTN_MSG"].ToString();
+                //this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
+                isRtnValue = false;
             }
 
             return isRtnValue;
         }
         #endregion
-
-        //#region >>GetSP_COM_DTL_LIST_INQ_BTN - Common Code Detail List 조회 SP (조회 버튼 클릭 시)
-        //private DataSet GetSP_COM_DTL_LIST_INQ_BTN()
-        //{
-        //    #region 파라메터 변수 선언 및 값 할당
-        //    DataSet dsRtnValue = null;
-        //    var strProcedureName = "PK_C1010.SP_COM_DTL_LIST_INQ_BTN";
-        //    Dictionary<string, object> dicInputParam = new Dictionary<string, object>();
-        //    string[] arrOutputParam = { "O_COM_DTL_LIST", "O_RSLT" };
-
-        //    var strHdrCd = this.txtComHdrCd_First.Text.Trim();                                       // CODE 대분류
-        //    var strHdrNm = this.txtComHdrNm_First.Text.Trim();                                       // CODE 대분류 이름
-        //    var strUseYn2 = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN_First);            // 사용 여부 - 헤더
-        //    var strDtlCd = this.txtComDtlCd_First.Text.Trim();                                       // 상세분류 코드
-        //    var strDtlNm = this.txtComDtlNm_First.Text.Trim();                                       // 상세분류 명
-        //    var strUseYn = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN_Second);            // 사용 여부 - 디테일
-
-        //    var strErrCode = string.Empty;                                                          // 오류 코드
-        //    var strErrMsg = string.Empty;                                                           // 오류 메세지
-        //    #endregion
-
-        //    #region Input 파라메터
-        //    dicInputParam.Add("P_COM_HDR_CD", strHdrCd);                                            // CODE 대분류
-        //    dicInputParam.Add("P_COM_HDR_NM", strHdrNm);                                            // CODE 대분류 이름
-        //    dicInputParam.Add("P_HDR_USE_YN", strUseYn2);                                           // 사용 여부 - 헤더
-        //    dicInputParam.Add("P_COM_DTL_CD", strDtlCd);                                            // 상세분류 코드
-        //    dicInputParam.Add("P_COM_DTL_NM", strDtlNm);                                            // 상세분류 명
-        //    dicInputParam.Add("P_USE_YN", strUseYn);                                                // 사용 여부 - 디테일
-        //    #endregion
-
-        //    #region 데이터 조회
-        //    using (BaseDataAccess dataAccess = new BaseDataAccess())
-        //    {
-        //        dsRtnValue = dataAccess.GetSpDataSet(strProcedureName, dicInputParam, arrOutputParam);
-        //    }
-        //    #endregion
-
-        //    return dsRtnValue;
-        //}
-        //#endregion
 
         #region >> GetSP_COM_DTL_LIST_INQ - Common Code Detail List 조회 SP (Header 더블 클릭 시)
         /// <summary>
@@ -637,20 +596,29 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         /// <param name="_da"></param>
         /// <param name="_item"></param>
         /// <returns></returns>
-        private DataSet GetSP_COM_DTL_LIST_INQ(string headerCD)
+        private DataSet GetSP_COM_DTL_LIST_INQ(List<string> header)
         {
             try
             {
                 #region 파라메터 변수 선언 및 값 할당
                 DataSet dsRtnValue                          = null;
-                var strProcedureName                        = "CSP_C1010_SP_COM_DTL_LIST_INQ";
+                var strProcedureName                        = "UI_CODE_MST_DETAIL_INQ";
                 Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
 
-                var strHdrCd = headerCD;                        //CODE 대분류
+                string strHdrCd = header[0];                                                        // 대분류 CODE
+                string strHdrNm = header[1];                                                        // 대분류 NAME
+                var strUseYn = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN_First);        // 사용 여부
+                var strDtlCd = this.txtComDtlCd_First.Text.Trim();                                  // 상세코드
+                var strDtlNm = this.txtComDtlNm_First.Text.Trim();                                  // 상세코드 명
+
                 #endregion
 
                 #region Input 파라메터
-                dicInputParam.Add("P_COM_HDR_CD", strHdrCd);    // CODE 대분류
+                dicInputParam.Add("HEADER_CD",  strHdrCd);                                          // 대분류 코드
+                dicInputParam.Add("HEADER_NM",  strHdrNm);                                          // 대분류 코드 명
+                dicInputParam.Add("DETAIL_CD",  strDtlCd);                                          // 상세 코드
+                dicInputParam.Add("DETAIL_NM",  strDtlNm);                                          // 상세 코드 명
+                dicInputParam.Add("USE_YN",     strUseYn);                                          // 사용 여부
                 #endregion
 
                 #region 데이터 조회
@@ -673,17 +641,19 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         /// <param name="_da">DataAccess 객체</param>
         /// <param name="_item">저장 대상 아이템 (Row 데이터)</param>
         /// <returns></returns>
-        private bool InsertSP_COM_DTL_INS(BaseDataAccess _da, DetailCommonCodeMgmt _item)
+        private async Task<bool> InsertSP_COM_DTL_INS(BaseDataAccess _da, DetailCommonCodeMgmt _item)
         {
             bool isRtnValue = true;
 
             #region 파라메터 변수 선언 및 값 할당
             DataTable dtRtnValue                        = null;
-            var strProcedureName                        = "CSP_C1010_SP_COM_DTL_INS";
+            var strProcedureName                        = "UI_CODE_MST_DETAIL_INS";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
-            
-            var strHdrCd    = headerSource[0];                      // CODE 대분류
-            var strHdrNm    = headerSource[1];                      // CODE 대분류 이름
+            Dictionary<object, BaseEnumClass.MSSqlOutputDataType> dicOutPutParam = new Dictionary<object, BaseEnumClass.MSSqlOutputDataType>();
+            Dictionary<object, object> dicRtnValue = new Dictionary<object, object>();
+
+            var strHdrCd    = _item.COM_HDL_CD;                     // CODE 대분류
+            var strHdrNm    = _item.COM_HDL_NM;                     // CODE 대분류 이름
             var strDtlCd    = _item.COM_DTL_CD;                     // 상세 분류
             var strDtlNm    = _item.COM_DTL_NM;                     // 상세 분류 이름
             var strUseYN    = _item.Checked == true ? "Y" : "N";    // 사용 여부
@@ -702,45 +672,41 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             #endregion
 
             #region Input 파라메터
-            dicInputParam.Add("P_COM_HDR_CD",   strHdrCd);          // CODE 대분류
-            dicInputParam.Add("P_COM_HDR_NM",   strHdrNm);          // CODE 대분류 이름
-            dicInputParam.Add("P_COM_DTL_CD",   strDtlCd);          // 상세 분류
-            dicInputParam.Add("P_COM_DTL_NM",   strDtlNm);          // 상세 분류 이름
-            dicInputParam.Add("P_USE_YN",       strUseYN);          // 사용 여부
-            dicInputParam.Add("P_ATTR01",       strAttr01);         // 문자속성 01
-            dicInputParam.Add("P_ATTR02",       strAttr02);         // 문자속성 02
-            dicInputParam.Add("P_ATTR03",       strAttr03);         // 문자속성 03
-            dicInputParam.Add("P_ATTR04",       strAttr04);         // 문자속성 04
-            dicInputParam.Add("P_ATTR05",       strAttr05);         // 문자속성 05
-            dicInputParam.Add("P_ATTR06",       strAttr06);         // 문자속성 06
-            dicInputParam.Add("P_ATTR07",       strAttr07);         // 문자속성 07
-            dicInputParam.Add("P_ATTR08",       strAttr08);         // 문자속성 08
-            dicInputParam.Add("P_ATTR09",       strAttr09);         // 문자속성 09
-            dicInputParam.Add("P_ATTR10",       strAttr10);         // 문자속성 10
-            dicInputParam.Add("P_SORT_SEQ",     strSortSeq);        // 정렬순서
-            dicInputParam.Add("P_USER_ID",      strUserID);         // 사용자 ID
+            dicInputParam.Add("HEADER_CD",    strHdrCd);          // CODE 대분류
+            dicInputParam.Add("HEADER_NM",    strHdrNm);          // CODE 대분류 이름
+            dicInputParam.Add("DETAIL_CD",    strDtlCd);          // 상세 분류
+            dicInputParam.Add("DETAIL_NM",    strDtlNm);          // 상세 분류 이름
+            dicInputParam.Add("USE_YN",       strUseYN);          // 사용 여부
+            dicInputParam.Add("SORT_SEQ",     strSortSeq);        // 정렬순서
+            dicInputParam.Add("ATTR01",       strAttr01);         // 문자속성 01
+            dicInputParam.Add("ATTR02",       strAttr02);         // 문자속성 02
+            dicInputParam.Add("ATTR03",       strAttr03);         // 문자속성 03
+            dicInputParam.Add("ATTR04",       strAttr04);         // 문자속성 04
+            dicInputParam.Add("ATTR05",       strAttr05);         // 문자속성 05
+            dicInputParam.Add("ATTR06",       strAttr06);         // 문자속성 06
+            dicInputParam.Add("ATTR07",       strAttr07);         // 문자속성 07
+            dicInputParam.Add("ATTR08",       strAttr08);         // 문자속성 08
+            dicInputParam.Add("ATTR09",       strAttr09);         // 문자속성 09
+            dicInputParam.Add("ATTR10",       strAttr10);         // 문자속성 10
+            dicInputParam.Add("USER_ID",      strUserID);         // 사용자 ID
             #endregion
 
-            dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
+            #region + Output 파라메터
+            dicOutPutParam.Add("RTN_VAL", BaseEnumClass.MSSqlOutputDataType.VARCHAR);
+            #endregion
 
-            if (dtRtnValue != null)
+            #region + 데이터 조회
+            await System.Threading.Tasks.Task.Run(() =>
             {
-                var strErrCode      = string.Empty;
-                var strErrMsg       = string.Empty;
+                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, dicOutPutParam, ref dicRtnValue);
+            }).ConfigureAwait(true);
+            #endregion
 
-                if (dtRtnValue.Rows.Count > 0)
-                {
-                    if (this.BaseClass.CheckResultDataProcess(dtRtnValue, ref strErrCode, ref strErrMsg, BaseEnumClass.SelectedDatabaseKind.MS_SQL) == false)
-                    {
-                        this.BaseClass.MsgError(strErrCode, BaseEnumClass.CodeMessage.MESSAGE);
-                        isRtnValue = false;
-                    }
-                }
-                else
-                {
-                    BaseClass.MsgError("ERR_SAVE");
-                    isRtnValue = false;
-                }
+            if (dicRtnValue["RTN_VAL"].ToString().Equals("0") == false)
+            {
+                var strMessage = dicRtnValue["RTN_MSG"].ToString();
+                this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
+                isRtnValue = false;
             }
 
             return isRtnValue;
@@ -754,7 +720,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         /// <param name="_da">DataAccess 객체</param>
         /// <param name="_item">저장 대상 아이템 (Row 데이터)</param>
         /// <returns></returns>
-        private bool UpdateSP_COM_DTL_UPD(BaseDataAccess _da, DetailCommonCodeMgmt _item)
+        private async Task<bool> UpdateSP_COM_DTL_UPD(BaseDataAccess _da, DetailCommonCodeMgmt _item)
         {
             bool isRtnValue = true;
             
@@ -768,10 +734,13 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 
             #region 파라메터 변수 선언 및 값 할당
             DataTable dtRtnValue                        = null;
-            var strProcedureName                        = "CSP_C1010_SP_COM_DTL_UPD";
+            var strProcedureName                        = "UI_CODE_MST_DETAIL_UPD";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
+            Dictionary<object, BaseEnumClass.MSSqlOutputDataType> dicOutPutParam = new Dictionary<object, BaseEnumClass.MSSqlOutputDataType>();
+            Dictionary<object, object> dicRtnValue = new Dictionary<object, object>();
 
             var strHdrCd        = headerSource[0];                          // CODE 대분류
+            var strHdrNm        = headerSource[1];                          // NAME 대분류
             var strDtlCd        = _item.COM_DTL_CD;                         // 상세 분류
             var strDtlNm        = _item.COM_DTL_NM;                         // 상세 분류 이름
             var strUseYN        = _item.Checked == true ? "Y" : "N";        // 사용 여부
@@ -790,44 +759,41 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
             #endregion
 
             #region Input 파라메터
-            dicInputParam.Add("P_COM_HDR_CD",   strHdrCd);          // CODE 대분류
-            dicInputParam.Add("P_COM_DTL_CD",   strDtlCd);          // 상세 분류
-            dicInputParam.Add("P_COM_DTL_NM",   strDtlNm);          // 상세 분류 이름
-            dicInputParam.Add("P_USE_YN",       strUseYN);          // 사용 여부
-            dicInputParam.Add("P_ATTR01",       strAttr01);         // 문자속성 01
-            dicInputParam.Add("P_ATTR02",       strAttr02);         // 문자속성 02
-            dicInputParam.Add("P_ATTR03",       strAttr03);         // 문자속성 03
-            dicInputParam.Add("P_ATTR04",       strAttr04);         // 문자속성 04
-            dicInputParam.Add("P_ATTR05",       strAttr05);         // 문자속성 05
-            dicInputParam.Add("P_ATTR06",       strAttr06);         // 문자속성 06
-            dicInputParam.Add("P_ATTR07",       strAttr07);         // 문자속성 07
-            dicInputParam.Add("P_ATTR08",       strAttr08);         // 문자속성 08
-            dicInputParam.Add("P_ATTR09",       strAttr09);         // 문자속성 09
-            dicInputParam.Add("P_ATTR10",       strAttr10);         // 문자속성 10
-            dicInputParam.Add("P_SORT_SEQ",     strSortSeq);        // 정렬순서
-            dicInputParam.Add("P_USER_ID",      strUserID);         // 사용자 ID
+            dicInputParam.Add("HEADER_CD",      strHdrCd);          // CODE 대분류
+            dicInputParam.Add("HEADER_NM",      strHdrNm);          // CODE 대분류
+            dicInputParam.Add("DETAIL_CD",      strDtlCd);          // 상세 분류
+            dicInputParam.Add("DETAIL_NM",      strDtlNm);          // 상세 분류 이름
+            dicInputParam.Add("USE_YN",         strUseYN);          // 사용 여부
+            dicInputParam.Add("SORT_SEQ",       strSortSeq);        // 정렬순서
+            dicInputParam.Add("ATTR01",         strAttr01);         // 문자속성 01
+            dicInputParam.Add("ATTR02",         strAttr02);         // 문자속성 02
+            dicInputParam.Add("ATTR03",         strAttr03);         // 문자속성 03
+            dicInputParam.Add("ATTR04",         strAttr04);         // 문자속성 04
+            dicInputParam.Add("ATTR05",         strAttr05);         // 문자속성 05
+            dicInputParam.Add("ATTR06",         strAttr06);         // 문자속성 06
+            dicInputParam.Add("ATTR07",         strAttr07);         // 문자속성 07
+            dicInputParam.Add("ATTR08",         strAttr08);         // 문자속성 08
+            dicInputParam.Add("ATTR09",         strAttr09);         // 문자속성 09
+            dicInputParam.Add("ATTR10",         strAttr10);         // 문자속성 10
+            dicInputParam.Add("USER_ID",        strUserID);         // 사용자 ID
             #endregion
 
-            dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
+            #region + Output 파라메터
+            dicOutPutParam.Add("RTN_VAL", BaseEnumClass.MSSqlOutputDataType.VARCHAR);
+            #endregion
 
-            if (dtRtnValue != null)
+            #region + 데이터 조회
+            await System.Threading.Tasks.Task.Run(() =>
             {
-                var strErrCode      = string.Empty;
-                var strErrMsg       = string.Empty;
+                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, dicOutPutParam, ref dicRtnValue);
+            }).ConfigureAwait(true);
+            #endregion
 
-                if (dtRtnValue.Rows.Count > 0)
-                {
-                    if (this.BaseClass.CheckResultDataProcess(dtRtnValue, ref strErrCode, ref strErrMsg, BaseEnumClass.SelectedDatabaseKind.MS_SQL) == false)
-                    {
-                        this.BaseClass.MsgError(strErrCode, BaseEnumClass.CodeMessage.MESSAGE);
-                        isRtnValue = false;
-                    }
-                }
-                else
-                {
-                    BaseClass.MsgError("ERR_SAVE");
-                    isRtnValue = false;
-                }
+            if (dicRtnValue["RTN_VAL"].ToString().Equals("0") == false)
+            {
+                var strMessage = dicRtnValue["RTN_MSG"].ToString();
+                this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
+                isRtnValue = false;
             }
 
             return isRtnValue;
@@ -839,7 +805,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 
         #region ▩ 이벤트
         #region > Loaded 이벤트
-        private void C1010_Loaded(object sender, RoutedEventArgs e)
+        private void M1001_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -925,13 +891,14 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                     }
                     else
                     {
-                        // Header의 첫 번째 행의 공통 헤더 코드 가져오기
-                        var obj_cd = this.HeaderCommonCodeMgmtList[0].COM_HDR_CD;
-                        string headerCD = Convert.ToString(obj_cd);
+                        //// Header의 첫 번째 행의 공통 헤더 코드 가져오기
+                        string headerCD = this.HeaderCommonCodeMgmtList[0].COM_HDL_CD;
+                        string headerNM = this.HeaderCommonCodeMgmtList[0].COM_HDL_NM;
                         headerSource.Add(headerCD);
+                        headerSource.Add(headerNM);
 
                         // 공통 코드 관리 디테일 리스트 조회
-                        DataSet dsRtnDetailValue = this.GetSP_COM_DTL_LIST_INQ(headerSource[0]);
+                        DataSet dsRtnDetailValue = this.GetSP_COM_DTL_LIST_INQ(headerSource);
 
                         if (dsRtnDetailValue == null) { return; }
 
@@ -1002,13 +969,13 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                 {
                     if (item.IsNew || item.IsUpdate)
                     {
-                        if (string.IsNullOrWhiteSpace(item.COM_HDR_CD) == true)
+                        if (string.IsNullOrWhiteSpace(item.COM_HDL_CD) == true)
                         {
                             item.CellError("COM_HDR_CD", string.Format(strMessage, this.GetLabelDesc("COM_HDR_CD")));
                             return;
                         }
 
-                        if (string.IsNullOrWhiteSpace(item.COM_HDR_NM) == true)
+                        if (string.IsNullOrWhiteSpace(item.COM_HDL_NM) == true)
                         {
                             item.CellError("COM_HDR_NM", string.Format(strMessage, this.GetLabelDesc("COM_HDR_NM")));
                             return;
@@ -1044,11 +1011,11 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                         {
                             if (item.IsNew == true)
                             {
-                                isRtnValue = this.InsertSP_COM_HDR_INS(da, item);
+                                isRtnValue = this.InsertSP_COM_HDR_INS(da, item).Result;
                             }
                             else
                             {
-                                isRtnValue = this.UpdateSP_COM_HDR_UPD(da, item);
+                                isRtnValue = this.UpdateSP_COM_HDR_UPD(da, item).Result;
                             }
 
                             if (isRtnValue == false)
@@ -1061,11 +1028,11 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                         {
                             if (item.IsNew == true)
                             {
-                                isRtnValue = this.InsertSP_COM_DTL_INS(da, item);
+                                isRtnValue = this.InsertSP_COM_DTL_INS(da, item).Result;
                             }
                             else
                             {
-                                isRtnValue = this.UpdateSP_COM_DTL_UPD(da, item);
+                                isRtnValue = this.UpdateSP_COM_DTL_UPD(da, item).Result;
                             }
 
                             if (isRtnValue == false)
@@ -1099,7 +1066,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                             this.gridMasterHeader.ItemsSource = this.HeaderCommonCodeMgmtList;
 
                             // 저장 후 저장내용 List에 출력 : Detail
-                            DataSet dsRtnValue2 = this.GetSP_COM_DTL_LIST_INQ(headerSource[0]);
+                            DataSet dsRtnValue2 = this.GetSP_COM_DTL_LIST_INQ(headerSource);
 
                             this.DetailCommonCodeMgmtList = new ObservableCollection<DetailCommonCodeMgmt>();
                             this.DetailCommonCodeMgmtList.ToObservableCollection(dsRtnValue2.Tables[0]);
@@ -1189,9 +1156,9 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         {
             var newItem = new HeaderCommonCodeMgmt
             {
-                COM_HDR_CD = string.Empty
+                COM_HDL_CD = string.Empty
                 ,
-                COM_HDR_NM = string.Empty
+                COM_HDL_NM = string.Empty
                 ,
                 USE_YN = "Y"
                 ,
@@ -1251,9 +1218,9 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                 ,
                 COM_DTL_NM = string.Empty
                 ,
-                COM_HDR_CD = headerSource[0]
+                COM_HDL_CD = headerSource[0]
                 ,
-                COM_HDR_NM = headerSource[1]
+                COM_HDL_NM = headerSource[1]
                 ,
                 USE_YN = "Y"
                 ,
@@ -1376,7 +1343,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                     this.loadingScreen.IsSplashScreenShown = true;
 
                     // Detail 목록 조회
-                    DataSet dsRtnValue = this.GetSP_COM_DTL_LIST_INQ(headerCD);
+                    DataSet dsRtnValue = this.GetSP_COM_DTL_LIST_INQ(headerSource);
 
                     if (dsRtnValue == null) { return; }
 

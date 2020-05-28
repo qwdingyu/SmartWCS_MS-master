@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace SMART.WCS.UI.COMMON.DataMembers.C1010
+namespace SMART.WCS.UI.COMMON.DataMembers.M1001
 {
     class DetailCommonCodeMgmt : PropertyNotifyExtensions, IDXDataErrorInfo
     {
@@ -84,32 +84,32 @@ namespace SMART.WCS.UI.COMMON.DataMembers.C1010
         }
         #endregion
 
-        #region + 대분류 CODE
-        private string _COM_HDR_CD;
-        public string COM_HDR_CD
+        #region + COM_HDL_CD - CODE 대분류
+        private string _COM_HDL_CD;
+        public string COM_HDL_CD
         {
-            get { return this._COM_HDR_CD; }
+            get { return this._COM_HDL_CD; }
             set
             {
-                if (this._COM_HDR_CD != value)
+                if (this._COM_HDL_CD != value)
                 {
-                    this._COM_HDR_CD = value;
+                    this._COM_HDL_CD = value;
                     RaisePropertyChanged();
                 }
             }
         }
         #endregion
 
-        #region + 대분류 CODE 이름
-        private string _COM_HDR_NM;
-        public string COM_HDR_NM
+        #region + COM_HDL_NM - CODE 대분류 이름
+        private string _COM_HDL_NM;
+        public string COM_HDL_NM
         {
-            get { return this._COM_HDR_NM; }
+            get { return this._COM_HDL_NM; }
             set
             {
-                if (this._COM_HDR_NM != value)
+                if (this._COM_HDL_NM != value)
                 {
-                    this._COM_HDR_NM = value;
+                    this._COM_HDL_NM = value;
                     RaisePropertyChanged();
                 }
             }
