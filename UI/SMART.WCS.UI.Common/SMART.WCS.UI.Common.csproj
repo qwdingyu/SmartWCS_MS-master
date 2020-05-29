@@ -119,6 +119,7 @@
     <Compile Include="DataMembers\C1003\MenuMgmt.cs" />
     <Compile Include="DataMembers\C1002\MenuListByRole.cs" />
     <Compile Include="DataMembers\C1002\RoleMgnt.cs" />
+    <Compile Include="DataMembers\M1002\EquipmentMgnt.cs" />
     <Compile Include="DataMembers\M1001\HeaderCommonCodeMgmt.cs" />
     <Compile Include="DataMembers\M1001\DetailCommonCodeMgmt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -136,6 +137,9 @@
     </Compile>
     <Compile Include="Utility\ColorTypeToBGConverter.cs" />
     <Compile Include="Utility\HelperClass.cs" />
+    <Compile Include="Views\BASE_INFO_MGMT\M1002.xaml.cs">
+      <DependentUpon>M1002.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\USER_MGMT\C1001.xaml.cs">
       <DependentUpon>C1001.xaml</DependentUpon>
     </Compile>
@@ -217,6 +221,10 @@
     <Folder Include="Views\SORTER\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\BASE_INFO_MGMT\M1002.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\USER_MGMT\C1001.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

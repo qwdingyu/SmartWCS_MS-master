@@ -113,7 +113,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock      Grid.Row="0"    Grid.Column="0"    berhaviors:CommonProperties.LabelCd="COM_HDR_CD"   
+                        <TextBlock      Grid.Row="0"    Grid.Column="0"    berhaviors:CommonProperties.LabelCd="COM_HDL_CD"   
                                                     HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         <dxe:TextEdit   x:Name="txtComHdrCd_First"     Grid.Row="0"   Grid.Column="2" 
                                                     HorizontalAlignment="Right"    VerticalAlignment="Center" 
@@ -129,7 +129,7 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock      Grid.Row="0"    Grid.Column="0"    berhaviors:CommonProperties.LabelCd="COM_HDR_NM"   
+                        <TextBlock      Grid.Row="0"    Grid.Column="0"    berhaviors:CommonProperties.LabelCd="COM_HDL_NM"   
                                                     HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         <dxe:TextEdit   x:Name="txtComHdrNm_First"     Grid.Row="0"   Grid.Column="2" 
                                                     HorizontalAlignment="Right"    VerticalAlignment="Center" 
@@ -144,11 +144,11 @@
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  berhaviors:CommonProperties.LabelCd="USE_YN_HDR"
+                        <TextBlock  berhaviors:CommonProperties.LabelCd="USE_YN"
                                                 HorizontalAlignment="Right"
                                                 VerticalAlignment="Center"/>
                         <dxe:ComboBoxEdit Grid.Column="2" 
-                                          x:Name="cboUseYN_First" 
+                                          x:Name="cboUseYN" 
                                           NullText="SELECT" 
                                           ValueMember="CODE" 
                                           DisplayMember="NAME" 

@@ -76,9 +76,9 @@ namespace SMART.WCS.StatusBoard
         {
             try
             {
-                DataTable dtRtnValue                = null;
-                var strProcedureName                = "CSP_C1001_SP_CNTR_LIST_INQ";
-                var dicInputParam                   = new Dictionary<string, object>();
+                DataTable dtRtnValue = null;
+                var strProcedureName = "UI_CNTR_LIST_INQ";
+                var dicInputParam = new Dictionary<string, object>();
 
                 using (FirstDataAccess dataAccess = new FirstDataAccess())
                 {
@@ -104,5 +104,6 @@ namespace SMART.WCS.StatusBoard
             catch { throw; }
         }
         #endregion
+
     }
 }

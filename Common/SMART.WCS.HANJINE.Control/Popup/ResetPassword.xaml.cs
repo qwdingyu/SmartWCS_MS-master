@@ -205,11 +205,12 @@ namespace SMART.WCS.HANJINE.Common.Popup
 
                 #region 파라메터 변수 선언 및 값 할당
                 DataTable dtRtnValue                        = null;
-                var strProcedureName                        = "CSP_C1001_SP_LOGIN_PWD_UPD";
+                var strProcedureName                        = "UI_USER_PASS_INT";
                 Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
                 string[] arrOutputParam                     = { "O_RTN_RSLT" };
 
-                var strPwd              = this.BaseClass.EncryptSHA256(this.txtPassword.Text.Trim());       // 단방향 암호화 데이터
+                //var strPwd              = this.BaseClass.EncryptSHA256(this.txtPassword.Text.Trim());       // 단방향 암호화 데이터
+                var strPwd = string.Empty; ;       // 단방향 암호화 데이터
                 #endregion
 
                 #region Input 파라메터

@@ -2376,4 +2376,7 @@
   <data name="PWD_SET_DATE" xml:space="preserve">
     <value>비밀번호 설정일</value>
   </data>
+  <data name="IS_RUN_YN" xml:space="preserve">
+    <value>운영상태</value>
+  </data>
 </root>

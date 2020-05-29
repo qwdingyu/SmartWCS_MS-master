@@ -349,7 +349,7 @@ namespace SMART.WCS.StatusBoard
             {
                 #region 파라메터 변수 선언 및 값 할당
                 DataSet dsRtnValue                          = null;
-                var strProcedureName                        = "CSP_D1001_SP_CHUTE_RSLT_LIST_INQ";
+                var strProcedureName                        = "";
                 Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
                 dicInputParam.Add("@P_CENTER_CD",           this.BaseClass.CenterCD);
                 dicInputParam.Add("@P_EQP_ID",              "ST01");

@@ -42,6 +42,7 @@
             <RowDefinition  Height="5" />
             <RowDefinition  Height="*" />
         </Grid.RowDefinitions>
+        
         <uButton:NavigationBar x:Name="NavigationBar"   Grid.Row="0" />
 
         <Grid HorizontalAlignment="Left"    Grid.Row="2">

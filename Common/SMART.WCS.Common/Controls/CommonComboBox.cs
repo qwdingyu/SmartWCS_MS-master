@@ -105,7 +105,7 @@ namespace SMART.WCS.Common.Control
         public static DataTable GetFirstCommonData(string _strCommonCode)
         {
             DataTable dtCommonData                      = null;
-            var strProcedureName                        = "CSP_COMMON_SP_COM_UI_CMB";
+            var strProcedureName                        = "UI_SP_COM_UI_CMB";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
 
             dicInputParam.Add("P_TYPE_CD",          _strCommonCode);            // 공통코드
@@ -140,7 +140,7 @@ namespace SMART.WCS.Common.Control
         {
             DataTable dtCommonData                      = null;
 
-            var strProcedureName                        = "CSP_COMMON_SP_COM_UI_CMB";
+            var strProcedureName                        = "UI_SP_COM_UI_CMB";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
             string[] arrOutputParam                     = { "O_CMB_LIST", "O_RSLT" };
 

@@ -1021,17 +1021,15 @@ namespace SMART.WCS.Main
             try
             {
                 #region 파라메터 변수 선언 및 값 할당
-                var strProcedureName                        = "CSP_C1000_SP_MENU_LIST_INQ";
+                var strProcedureName                        = "UI_MENU_LIST_INQ";
                 Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
                 #endregion
 
                 #region Input 파라메터
-                var strCenterCD         = this.BaseClass.CenterCD;      // 센터 코드
                 var strUserID           = this.BaseClass.UserID;        // 사용자 ID
                 #endregion
 
-                dicInputParam.Add("P_CNTR_CD",      strCenterCD);       // 센터 코드
-                dicInputParam.Add("P_USER_ID",      strUserID);         // 사용자 ID
+                dicInputParam.Add("USER_ID",      strUserID);         // 사용자 ID
 
                 using (BaseDataAccess dataAccess = new BaseDataAccess())
                 {
@@ -1044,41 +1042,6 @@ namespace SMART.WCS.Main
                 }
 
                 return this.g_dsMenuInfo;
-            }
-            catch { throw; }
-        }
-        #endregion
-
-        #region >> [조회] GetNoticeList - 공지사항 정보를 조회한다.
-        /// <summary>
-        /// 공지사항 정보를 조회한다.
-        /// </summary>
-        /// <returns></returns>
-        private DataSet GetNoticeList()
-        {
-            try
-            {
-                #region 파라메터 변수 선언 및 값 할당
-                DataSet dsRtnValue                          = null;
-                var strProcedureName                        = "CSP_C1000_SP_MENU_FVRT_INQ";
-                Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
-                #endregion
-
-                #region Input 파라메터
-                var strCenterCD         = this.BaseClass.CenterCD;      // 센터코드
-                var strUserID           = this.BaseClass.UserID;        // 사용자 ID
-                var strDateTime         = DateTime.Now.ToString("yyyyMMdd");
-                #endregion
-
-                dicInputParam.Add("P_CNTR_CD", strCenterCD);       // 센터 코드
-                dicInputParam.Add("P_USER_ID", strUserID);         // 사용자 ID
-                dicInputParam.Add("P_DATE", strDateTime);          // 오늘날짜 (yyyymmdd)
-
-                using (BaseDataAccess dataAccess = new BaseDataAccess())
-                {
-                    dsRtnValue = dataAccess.GetSpDataSet(strProcedureName, dicInputParam);
-                }
-                return dsRtnValue;
             }
             catch { throw; }
         }
@@ -1356,8 +1319,6 @@ namespace SMART.WCS.Main
         {
             try
             {
-                bool isFvrtClickYN  = false;
-
                 if (sender != null)
                 {
                     var view = (sender as TreeListControl).View as TreeListView;
@@ -1514,13 +1475,6 @@ namespace SMART.WCS.Main
 
                     strMenuID               = this.GetTreeListControlSelectedValue("MENU_ID").ToString().ToUpper();
                     strSelectedTreeID       = this.GetTreeListControlSelectedValue("TREE_ID").ToString().ToUpper();
-
-                    if (strSelectedTreeID.Substring(0, 4).Equals("FVRT") == true)
-                    {
-                        // 좌측 메뉴 리스트 중 즐겨찾기의 메뉴를 선택한 경우
-                        strSelectedTreeID   = strSelectedTreeID.Substring(4, strSelectedTreeID.Length - 4);
-                        isFvrtClickYN       = true;
-                    }
 
                     strSelectedMenuName     = this.GetTreeListControlSelectedValue("MENU_NM").ToString();
                     strSelectedMenuType     = this.GetTreeListControlSelectedValue("MENU_TYPE").ToString().ToUpper();
@@ -1694,13 +1648,6 @@ namespace SMART.WCS.Main
                     // 레벨에 따른 메뉴 정보를 저장한다.
                     this.SetMenuAttributeValue(strSelectedTreeID, iMenuLevel, true);
 
-                    if (isFvrtClickYN == true)
-                    {
-                        this.g_strSelectedTopMenuName = arrSelectedMenuURL[3];
-
-                        this.SettingTopMenuColor(this.g_strTopMenuCtrlTagName);
-                    }
-
                     // CHOO - CHECK (2020-02-11)
                     if (this.MainWinParam != null)
                     {
@@ -1850,13 +1797,13 @@ namespace SMART.WCS.Main
                             }
                             else
                             {
-                                if (isFvrtClickYN == true)
-                                {
-                                    //this.BindingLeftTreeControlList(this.g_strSelectedTopMenuID);
-                                    this.BindingLeftTreeControlList(this.g_strUpperMenuID);
-                                    this.SettingTopMenuColor(this.g_strUpperMenuID);
-                                    this.MainWinParam.MENU_ID = null;
-                                }
+                                //if (isFvrtClickYN == true)
+                                //{
+                                //    //this.BindingLeftTreeControlList(this.g_strSelectedTopMenuID);
+                                //    this.BindingLeftTreeControlList(this.g_strUpperMenuID);
+                                //    this.SettingTopMenuColor(this.g_strUpperMenuID);
+                                //    this.MainWinParam.MENU_ID = null;
+                                //}
                             }
 
                             int iCount = this.tabControl.Items.Count;

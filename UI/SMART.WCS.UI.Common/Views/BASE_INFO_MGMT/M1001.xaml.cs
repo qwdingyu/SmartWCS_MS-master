@@ -1,4 +1,5 @@
-﻿using DevExpress.Mvvm.Native;
+﻿using DevExpress.Data.Extensions;
+using DevExpress.Mvvm.Native;
 using DevExpress.Xpf.Grid;
 using SMART.WCS.Common;
 using SMART.WCS.Common.Data;
@@ -203,7 +204,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         private void InitControl()
         {
             // 콤보박스 - 조회 (사용여부)
-            this.BaseClass.BindingCommonComboBox(this.cboUseYN_First, "USE_YN", null, false);
+            this.BaseClass.BindingCommonComboBox(this.cboUseYN, "USE_YN", null, false);
 
             // 버튼(행추가/행삭제) 툴팁 처리
             this.btnRowAdd_First.ToolTip = this.BaseClass.GetResourceValue("ROW_ADD");
@@ -319,18 +320,38 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         }
         #endregion
 
-        #region >> DeleteHeaderGridRowItem - 선택한 Header 그리드의 Row를 삭제한다. (행추가된 항목만 삭제 가능)
-        /// <summary>
+        #region >> DeleteHeaderGridRowItem - 선택한 Header 그리드의 Row를 삭제한다.         /// <summary>
         /// 선택한 Header 그리드의 Row를 삭제한다. (행추가된 항목만 삭제 가능)
         /// </summary>
         private void DeleteHeaderGridRowItem()
         {
-            var liHeaderCommonCodeMgmt = this.HeaderCommonCodeMgmtList.Where(p => p.IsSelected == true && p.IsNew == true && p.IsSaved == false).ToList();
-            if (liHeaderCommonCodeMgmt.Count() <= 0)
+            //var liHeaderCommonCodeMgmt = this.HeaderCommonCodeMgmtList.Where(p => p.IsSelected == true && p.IsNew == true && p.IsSaved == false).ToList();
+            //if (liHeaderCommonCodeMgmt.Count() <= 0)
+            //{
+            //    BaseClass.MsgError("ERR_DELETE");
+            //}
+            //liHeaderCommonCodeMgmt.ForEach(p => HeaderCommonCodeMgmtList.Remove(p));
+
+            if (this.HeaderCommonCodeMgmtList.Where(p => p.IsSelected == true && p.IsNew == false).Count() > 0)
             {
-                BaseClass.MsgError("ERR_DELETE");
+                this.BaseClass.MsgQuestion("ASK_DEL_DB");
+                if (this.BaseClass.BUTTON_CONFIRM_YN == false) { return; }
             }
-            liHeaderCommonCodeMgmt.ForEach(p => HeaderCommonCodeMgmtList.Remove(p));
+
+            this.HeaderCommonCodeMgmtList.Where(p => p.IsSelected == true).ToList().ForEach(p =>
+            {
+                if (p.IsNew != true)
+                {
+                    p.Checked = false;
+
+                    using (BaseDataAccess da = new BaseDataAccess())
+                    {
+                        this.UpdateSP_COM_HDR_UPD(da, p).Wait();
+                    }
+                }
+
+                this.HeaderCommonCodeMgmtList.Remove(p);
+            });
         }
 
         #endregion
@@ -341,12 +362,34 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
         /// </summary>
         private void DeleteDetailGridRowItem()
         {
-            var liDetailCommonCodeMgmt = this.DetailCommonCodeMgmtList.Where(p => p.IsSelected == true && p.IsNew == true && p.IsSaved == false).ToList();
-            if (liDetailCommonCodeMgmt.Count() <= 0)
+            //var liDetailCommonCodeMgmt = this.DetailCommonCodeMgmtList.Where(p => p.IsSelected == true && p.IsNew == true && p.IsSaved == false).ToList();
+            //if (liDetailCommonCodeMgmt.Count() <= 0)
+            //{
+            //    BaseClass.MsgError("ERR_DELETE");
+            //}
+            //liDetailCommonCodeMgmt.ForEach(p => DetailCommonCodeMgmtList.Remove(p));
+
+            if (this.DetailCommonCodeMgmtList.Where(p => p.IsSelected == true && p.IsNew == false).Count() > 0)
             {
-                BaseClass.MsgError("ERR_DELETE");
+                this.BaseClass.MsgQuestion("ASK_DEL_DB");
+                if (this.BaseClass.BUTTON_CONFIRM_YN == false) { return; }
             }
-            liDetailCommonCodeMgmt.ForEach(p => DetailCommonCodeMgmtList.Remove(p));
+
+            this.DetailCommonCodeMgmtList.Where(p => p.IsSelected == true).ToList().ForEach(p =>
+            {
+                if (p.IsNew != true)
+                {
+                    p.Checked = false;
+
+                    using (BaseDataAccess da = new BaseDataAccess())
+                    {
+                         this.UpdateSP_COM_DTL_UPD(da, p).Wait();
+                    }
+
+                }
+
+                this.DetailCommonCodeMgmtList.Remove(p);
+            });
         }
 
         #endregion
@@ -407,7 +450,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 
             var strHdrCd    = this.txtComHdrCd_First.Text.Trim();                               // CODE 대분류
             var strHdrNm    = this.txtComHdrNm_First.Text.Trim();                               // CODE 대분류 이름
-            var strUseYn    = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN_First);     // 사용 여부
+            var strUseYn    = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN);     // 사용 여부
             var strDtlCd    = this.txtComDtlCd_First.Text.Trim();                               // 상세코드
             var strDtlNm    = this.txtComDtlNm_First.Text.Trim();                               // 상세코드 명
 
@@ -607,7 +650,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 
                 string strHdrCd = header[0];                                                        // 대분류 CODE
                 string strHdrNm = header[1];                                                        // 대분류 NAME
-                var strUseYn = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN_First);        // 사용 여부
+                var strUseYn = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN);              // 사용 여부
                 var strDtlCd = this.txtComDtlCd_First.Text.Trim();                                  // 상세코드
                 var strDtlNm = this.txtComDtlNm_First.Text.Trim();                                  // 상세코드 명
 
@@ -900,7 +943,7 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                         // 공통 코드 관리 디테일 리스트 조회
                         DataSet dsRtnDetailValue = this.GetSP_COM_DTL_LIST_INQ(headerSource);
 
-                        if (dsRtnDetailValue == null) { return; }
+                        if (dsRtnDetailValue.Tables[0] == null) { return; }
 
                         if (this.BaseClass.CheckResultDataProcess(dsRtnDetailValue, ref strErrCode, ref strErrMsg, BaseEnumClass.SelectedDatabaseKind.MS_SQL) == true)
                         {
@@ -1321,13 +1364,13 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                 var obj_cd = gridMasterHeader.GetCellValue(clicked, gridMasterHeader.Columns[1]);
                 string headerCD = Convert.ToString(obj_cd);
 
-                //// 마스터 헤더코드가 공백인 경우 (Row 추가한 경우) 상세 조회 구문을 수행하지 않는다.
-                //if (headerCD.Length == 0)
-                //{
-                //    // 조회 데이터를 그리드에 바인딩
-                //    this.gridMasterDetail.ItemsSource = null;
-                //    return;
-                //}
+                // 마스터 헤더코드가 공백인 경우 (Row 추가한 경우) 상세 조회 구문을 수행하지 않는다.
+                if (headerCD.Length == 0)
+                {
+                    // 조회 데이터를 그리드에 바인딩
+                    this.gridMasterDetail.ItemsSource = null;
+                    return;
+                }
 
                 // 클릭한 행의 COM_HDR_NM 가져오기
                 var obj_nm = gridMasterHeader.GetCellValue(clicked, gridMasterHeader.Columns[2]);

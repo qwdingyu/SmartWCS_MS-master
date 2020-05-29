@@ -89,18 +89,13 @@ namespace SMART.WCS.Control
         {
             #region + 파라메터 변수 선언 및 값 할당
             DataSet dsRtnValue                          = null;
-            //var strProcedureName                        = "PK_C1000.SP_MENU_DESC_INQ";
-            var strProcedureName                        = "CSP_C1000_SP_MENU_DESC_INQ";
+            var strProcedureName                        = "UI_SP_MENU_DESC_INQ";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
 
-            var strCompanyCD    = this.BaseClass.CompanyCode;   // 회사코드
-            var strCenterCD     = this.BaseClass.CenterCD;      // 센터코드
-            
             #endregion
 
             #region + Input 파라메터
-            dicInputParam.Add("@P_CNTR_CD",         strCenterCD);           // 센터코드
-            dicInputParam.Add("@P_MENU_ID",         this.ScreenID);         // 메뉴 ID
+            dicInputParam.Add("MENU_ID",         this.ScreenID);         // 메뉴 ID
             #endregion
 
             #region + 데이터 조회

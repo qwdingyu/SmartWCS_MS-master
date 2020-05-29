@@ -2,7 +2,6 @@
 using SMART.WCS.Common.Data;
 using SMART.WCS.Common.DataBase;
 using SMART.WCS.Control.Views;
-using SMART.WCS.HANJINE.Common.Popup;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -334,43 +333,6 @@ namespace SMART.WCS.Main
         }
         #endregion
 
-        #region >> [조회] GetNoticeList - 공지사항 정보를 조회한다.
-        /// <summary>
-        /// 공지사항 정보를 조회한다.
-        /// </summary>
-        /// <returns></returns>
-        /// 
-        private DataSet GetNoticeList()
-        {
-            try
-            {
-                #region 파라메터 변수 선언 및 값 할당
-                DataSet dsRtnValue                          = null;
-                var strProcedureName                        = "CSP_C1000_SP_NOTICE_TALLY_INQ";
-                Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
-                #endregion
-
-                #region Input 파라메터
-                var strCenterCD         = this.BaseClass.ComboBoxSelectedKeyValue(this.cboCenter);
-                var strUserID           = this.txtUserID.Text.Trim();
-                var strDateTime         = DateTime.Now.ToString("yyyyMMdd");
-                #endregion
-
-                dicInputParam.Add("P_CNTR_CD",  strCenterCD);       // 센터 코드
-                dicInputParam.Add("P_USER_ID",  strUserID);         // 사용자 ID
-                dicInputParam.Add("P_DATE",     strDateTime);       // 오늘날짜 (yyyymmdd)
-
-                using (BaseDataAccess dataAccess = new BaseDataAccess())
-                {
-                    dsRtnValue = dataAccess.GetSpDataSet(strProcedureName, dicInputParam);
-                }
-                return dsRtnValue;
-            }
-            catch { throw; }
-
-        }
-        #endregion
-
         #region >> [조회] GetSP_LOGIN_LIST_INQ - 로그인
         /// <summary>
         /// 로그인
@@ -523,27 +485,6 @@ namespace SMART.WCS.Main
                 if (iResult == 0)
                 {
                     this.LoginProcess(strUserID);
-                }
-                else if (iResult == 1)
-                {
-                    #region + 비밀번호 재설정
-                    var strCenterCD = this.BaseClass.ComboBoxSelectedKeyValue(this.cboCenter);
-
-                    using (ResetPassword frmPopup = new ResetPassword(strUserID, strCenterCD))
-                    {
-                        frmPopup.PasswordChangeResult += FrmPopup_PasswordChangeResult;
-                        frmPopup.ShowDialog();
-                    }
-
-                    if (this.g_bInitPasswordSaveYN == true)
-                    {
-                        this.LoginProcess(strUserID);
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
-                    #endregion
                 }
             }
             catch (Exception err)
