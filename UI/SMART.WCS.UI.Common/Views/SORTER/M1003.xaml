@@ -311,6 +311,11 @@
                         <dxg:GridColumn     Header="CHUTE_NM"     FieldName="CHUTE_NM"  Width="150"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
                                             AllowEditing="True">
+                            <dxg:GridColumn.CellStyle>
+                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
+                                </Style>
+                            </dxg:GridColumn.CellStyle>
                         </dxg:GridColumn>
                         <!--#endregion-->
 
@@ -318,6 +323,26 @@
                         <dxg:GridColumn     Header="FINAL_CHUTE_ID"     FieldName="FINAL_CHUTE_ID"  Width="100"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
                                             AllowEditing="True">
+                            <dxg:GridColumn.CellStyle>
+                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
+                                </Style>
+                            </dxg:GridColumn.CellStyle>
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region CHUTE_TYPE_CD-->
+                        <dxg:GridColumn     Header="CHUTE_TYPE_CD"     FieldName="CHUTE_TYPE_CD"  Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            AllowEditing="True">
+                            <dxg:GridColumn.CellStyle>
+                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
+                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
+                                </Style>
+                            </dxg:GridColumn.CellStyle>
+                            <dxg:GridColumn.EditSettings>
+                                <localCtrl:CommonCodeEditSetting CommonCode="CHUTE_TYPE_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center"   DisplayMember="NAME"/>
+                            </dxg:GridColumn.EditSettings>
                         </dxg:GridColumn>
                         <!--#endregion-->
 
