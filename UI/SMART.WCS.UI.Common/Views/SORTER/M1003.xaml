@@ -102,6 +102,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -136,24 +137,39 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock      Grid.Row="1"    Grid.Column="0"    berhaviors:CommonProperties.LabelCd="CHUTE_ID"   
                                                     HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                        <dxe:TextEdit   x:Name="txtChuteId_First"     Grid.Row="1"   Grid.Column="2" 
+                        <dxe:TextEdit   x:Name="txtChuteId"     Grid.Row="1"   Grid.Column="2" 
                                                     HorizontalAlignment="Right"    VerticalAlignment="Center" 
                                                     Width="100"     HorizontalContentAlignment="Left" />
                     </Grid>
                     <!--#endregion-->
 
-                    <!--#region 3. 슈트용도코드-->
-                    <Grid Grid.Row="0"    Grid.Column="2" Style="{StaticResource SearchItemStyle}"   >
+                    <!--#region 3. 슈트 NAME-->
+                    <Grid Grid.Column="2" Style="{StaticResource SearchItemStyle}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock  berhaviors:CommonProperties.LabelCd="CHUTE_USE_CD"
+                        <TextBlock      Grid.Row="1"    Grid.Column="0"    berhaviors:CommonProperties.LabelCd="CHUTE_NM"   
+                                                    HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <dxe:TextEdit   x:Name="txtChuteNm"     Grid.Row="1"   Grid.Column="2" 
+                                                    HorizontalAlignment="Right"    VerticalAlignment="Center" 
+                                                    Width="100"     HorizontalContentAlignment="Left" />
+                    </Grid>
+                    <!--#endregion-->
+
+                    <!--#region 4. 슈트종류코드-->
+                    <Grid Grid.Row="0"    Grid.Column="3" Style="{StaticResource SearchItemStyle}"   >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  berhaviors:CommonProperties.LabelCd="CHUTE_TYPE_CD"
                                                 HorizontalAlignment="Right"
                                                 VerticalAlignment="Center"/>
                         <dxe:ComboBoxEdit Grid.Column="2" 
-                                          x:Name="cboChuteUseCd" 
+                                          x:Name="cboChuteTypeCd" 
                                           NullText="SELECT" 
                                           ValueMember="CODE" 
                                           DisplayMember="NAME" 
@@ -162,8 +178,8 @@
                     </Grid>
                     <!--#endregion-->
 
-                    <!--#region 4. 사용 여부-->
-                    <Grid Grid.Row="0"    Grid.Column="3" Style="{StaticResource SearchItemStyle}"  >
+                    <!--#region 5. 사용 여부-->
+                    <Grid Grid.Row="0"    Grid.Column="4" Style="{StaticResource SearchItemStyle}"  >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="10"/>
@@ -179,6 +195,21 @@
                                           DisplayMember="NAME" 
                                           HorizontalAlignment="Left"
                                           Width="70"/>
+                    </Grid>
+                    <!--#endregion-->
+
+                    <!--#region 6. 최종 합류 슈트-->
+                    <Grid Grid.Column="6" Style="{StaticResource SearchItemStyle}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock      Grid.Row="1"    Grid.Column="0"    berhaviors:CommonProperties.LabelCd="FINAL_CHUTE_ID"   
+                                                    HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        <dxe:TextEdit   x:Name="txtFinalChuteId"     Grid.Row="1"   Grid.Column="2" 
+                                                    HorizontalAlignment="Right"    VerticalAlignment="Center" 
+                                                    Width="100"     HorizontalContentAlignment="Left" />
                     </Grid>
                     <!--#endregion-->
 
@@ -284,13 +315,8 @@
                         <dxg:GridColumn     Header="EQP_ID_REQ"     FieldName="EQP_ID"   Width="100"     Tag="A"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
                                             AllowEditing="True">
-                            <dxg:GridColumn.CellStyle>
-                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
-                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
-                                </Style>
-                            </dxg:GridColumn.CellStyle>
                             <dxg:GridColumn.EditSettings>
-                                <localCtrl:CommonCodeEditSetting CommonCode="EQP_ID"    IsTextEditable="False"  HorizontalContentAlignment="Center"   DisplayMember="NAME"/>
+                                <localCtrl:CommonCodeEditSetting CommonCode="EQP_ID" Attr2_InputParam="WSR"     IsTextEditable="False"  HorizontalContentAlignment="Center"   DisplayMember="NAME"/>
                             </dxg:GridColumn.EditSettings>
                         </dxg:GridColumn>
                         <!--#endregion-->
@@ -299,11 +325,6 @@
                         <dxg:GridColumn     Header="CHUTE_ID_REQ"     FieldName="CHUTE_ID"   Width="100"     Tag="A"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
                                             AllowEditing="True">
-                            <dxg:GridColumn.CellStyle>
-                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
-                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
-                                </Style>
-                            </dxg:GridColumn.CellStyle>
                         </dxg:GridColumn>
                         <!--#endregion-->
 
@@ -311,23 +332,13 @@
                         <dxg:GridColumn     Header="CHUTE_NM"     FieldName="CHUTE_NM"  Width="150"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
                                             AllowEditing="True">
-                            <dxg:GridColumn.CellStyle>
-                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
-                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
-                                </Style>
-                            </dxg:GridColumn.CellStyle>
                         </dxg:GridColumn>
                         <!--#endregion-->
 
                         <!--#region FINAL_CHUTE_ID-->
                         <dxg:GridColumn     Header="FINAL_CHUTE_ID"     FieldName="FINAL_CHUTE_ID"  Width="100"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
-                                            AllowEditing="True">
-                            <dxg:GridColumn.CellStyle>
-                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
-                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
-                                </Style>
-                            </dxg:GridColumn.CellStyle>
+                                            AllowEditing="False">
                         </dxg:GridColumn>
                         <!--#endregion-->
 
@@ -335,11 +346,6 @@
                         <dxg:GridColumn     Header="CHUTE_TYPE_CD"     FieldName="CHUTE_TYPE_CD"  Width="100"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
                                             AllowEditing="True">
-                            <dxg:GridColumn.CellStyle>
-                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
-                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
-                                </Style>
-                            </dxg:GridColumn.CellStyle>
                             <dxg:GridColumn.EditSettings>
                                 <localCtrl:CommonCodeEditSetting CommonCode="CHUTE_TYPE_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center"   DisplayMember="NAME"/>
                             </dxg:GridColumn.EditSettings>
@@ -350,23 +356,8 @@
                         <dxg:GridColumn     Header="CHUTE_USE_CD_REQ"   FieldName="CHUTE_USE_CD"    Width="100"    Tag="A"
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
                                             AllowEditing="True">
-                            <dxg:GridColumn.CellStyle>
-                                <Style TargetType="{x:Type dxg:LightweightCellEditor}" BasedOn="{StaticResource {dxgt:GridRowThemeKey ResourceKey=LightweightCellStyle}}">
-                                    <Setter Property="Background" Value="{Binding RowData.Row.BackgroundBrush}"/>
-                                </Style>
-                            </dxg:GridColumn.CellStyle>
                             <dxg:GridColumn.EditSettings>
                                 <localCtrl:CommonCodeEditSetting CommonCode="CHUTE_USE_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center"   DisplayMember="NAME"/>
-                            </dxg:GridColumn.EditSettings>
-                        </dxg:GridColumn>
-                        <!--#endregion-->
-
-                        <!--#region CHUTE_DTL_USE_CD-->
-                        <dxg:GridColumn     Header="CHUTE_DTL_USE_CD"       FieldName="CHUTE_DTL_USE_CD"        Width="100"       Tag="A"
-											HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
-											AllowEditing="True">
-                            <dxg:GridColumn.EditSettings>
-                                <localCtrl:CommonCodeEditSetting CommonCode="CHUTE_DTL_USE_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center" />
                             </dxg:GridColumn.EditSettings>
                         </dxg:GridColumn>
                         <!--#endregion-->
@@ -378,6 +369,13 @@
                             <dxg:GridColumn.EditSettings>
                                 <localCtrl:CommonCodeEditSetting CommonCode="ZONE_ID"    IsTextEditable="False"  HorizontalContentAlignment="Center" />
                             </dxg:GridColumn.EditSettings>
+                        </dxg:GridColumn>
+                        <!--#endregion-->
+
+                        <!--#region CHUTE_ALLOC_PRTY-->
+                        <dxg:GridColumn     Header="CHUTE_ALLOC_PRTY"             FieldName="CHUTE_ALLOC_PRTY"              Width="100"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
+                                            AllowEditing="True">
                         </dxg:GridColumn>
                         <!--#endregion-->
 

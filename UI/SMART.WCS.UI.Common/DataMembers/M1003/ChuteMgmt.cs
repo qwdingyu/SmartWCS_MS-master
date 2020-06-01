@@ -130,7 +130,39 @@ namespace SMART.WCS.UI.COMMON.DataMembers.M1003
             }
         }
         #endregion
-        
+
+        #region + FINAL_CHUTE_ID - 최종합류슈트
+        private string _FINAL_CHUTE_ID;
+        public string FINAL_CHUTE_ID
+        {
+            get { return this._FINAL_CHUTE_ID; }
+            set
+            {
+                if (this._FINAL_CHUTE_ID != value)
+                {
+                    this._FINAL_CHUTE_ID = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + CHUTE_TYPE_CD - 슈트 종류 코드
+        private string _CHUTE_TYPE_CD;
+        public string CHUTE_TYPE_CD
+        {
+            get { return this._CHUTE_TYPE_CD; }
+            set
+            {
+                if (this._CHUTE_TYPE_CD != value)
+                {
+                    this._CHUTE_TYPE_CD = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
         #region + CHUTE_USE_CD - 슈트용도코드
         private string _CHUTE_USE_CD;
         public string CHUTE_USE_CD
@@ -141,6 +173,54 @@ namespace SMART.WCS.UI.COMMON.DataMembers.M1003
                 if (this._CHUTE_USE_CD != value)
                 {
                     this._CHUTE_USE_CD = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + ZONE_ID - ZONE_ID
+        private string _ZONE_ID;
+        public string ZONE_ID
+        {
+            get { return this._ZONE_ID; }
+            set
+            {
+                if (this._ZONE_ID != value)
+                {
+                    this._ZONE_ID = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + CHUTE_ALLOC_PRTY - 슈트 우선순위
+        private int _CHUTE_ALLOC_PRTY;
+        public int CHUTE_ALLOC_PRTY
+        {
+            get { return this._CHUTE_ALLOC_PRTY; }
+            set
+            {
+                if (this._CHUTE_ALLOC_PRTY != value)
+                {
+                    this._CHUTE_ALLOC_PRTY = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+        #endregion
+
+        #region + PLC_CHUTE_ID - PLC슈트ID
+        private string _PLC_CHUTE_ID;
+        public string PLC_CHUTE_ID
+        {
+            get { return this._PLC_CHUTE_ID; }
+            set
+            {
+                if (this._PLC_CHUTE_ID != value)
+                {
+                    this._PLC_CHUTE_ID = value;
                     RaisePropertyChanged();
                 }
             }
@@ -174,54 +254,6 @@ namespace SMART.WCS.UI.COMMON.DataMembers.M1003
                 if (this._Checked != value)
                 {
                     this._Checked = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + CHUTE_DTL_USE_CD - 슈트상세용도코드
-        private string _CHUTE_DTL_USE_CD;
-        public string CHUTE_DTL_USE_CD
-        {
-            get { return this._CHUTE_DTL_USE_CD; }
-            set
-            {
-                if (this._CHUTE_DTL_USE_CD != value)
-                {
-                    this._CHUTE_DTL_USE_CD = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-
-        #region + ZONE_ID - ZONE_ID
-        private string _ZONE_ID;
-        public string ZONE_ID
-        {
-            get { return this._ZONE_ID; }
-            set
-            {
-                if (this._ZONE_ID != value)
-                {
-                    this._ZONE_ID = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-        #endregion
-        
-        #region + PLC_CHUTE_ID - PLC슈트ID
-        private string _PLC_CHUTE_ID;
-        public string PLC_CHUTE_ID
-        {
-            get { return this._PLC_CHUTE_ID; }
-            set
-            {
-                if (this._PLC_CHUTE_ID != value)
-                {
-                    this._PLC_CHUTE_ID = value;
                     RaisePropertyChanged();
                 }
             }

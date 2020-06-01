@@ -1,4 +1,5 @@
-﻿using DevExpress.Mvvm.Native;
+﻿using DevExpress.ClipboardSource.SpreadsheetML;
+using DevExpress.Mvvm.Native;
 using DevExpress.Xpf.Grid;
 using LGCNS.ezControl.Core;
 using SMART.WCS.Common;
@@ -199,12 +200,10 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
         private void InitControl()
         {
             // 공통코드 조회 파라메터 string[]
-            string[] commonParam_EQP_ID = { BaseClass.CenterCD, "SRT", BaseClass.UserID, string.Empty };
-
+            string[] commonParam_EQP_ID = { BaseClass.CenterCD, "WSR", BaseClass.UserID, string.Empty };
             // 콤보박스 - 조회 (사용여부, 슈트 종류 코드, 위치 코드)
-            this.BaseClass.BindingCommonComboBox(this.cboEqpId, "EQP_ID", commonParam_EQP_ID, false);   // 설비
-            //this.BaseClass.BindingCommonComboBox(this.cboZoneID, "ZONE_ID", null, true);                // ZONE ID
-            this.BaseClass.BindingCommonComboBox(this.cboChuteUseCd, "CHUTE_USE_CD", null, true);       // 
+            this.BaseClass.BindingCommonComboBox(this.cboEqpId, "EQP_ID", commonParam_EQP_ID, true);   // 설비
+            this.BaseClass.BindingCommonComboBox(this.cboChuteTypeCd, "CHUTE_TYPE_CD", null, true);       // 
             this.BaseClass.BindingCommonComboBox(this.cboUseYN, "USE_YN", null, false);
 
             // 버튼(행추가/행삭제) 툴팁 처리
@@ -294,14 +293,37 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
         /// </summary>
         private void DeleteGridRowItem()
         {
-            var liChuteMgmt = this.ChuteMgmtList.Where(p => p.IsSelected == true && p.IsNew == true && p.IsSaved == false).ToList();
+            //var liChuteMgmt = this.ChuteMgmtList.Where(p => p.IsSelected == true && p.IsNew == true && p.IsSaved == false).ToList();
 
-            if (liChuteMgmt.Count() <= 0)
+            //if (liChuteMgmt.Count() <= 0)
+            //{
+            //    BaseClass.MsgError("ERR_DELETE");
+            //}
+
+            //liChuteMgmt.ForEach(p => ChuteMgmtList.Remove(p));
+
+
+            if (this.ChuteMgmtList.Where(p => p.IsSelected == true && p.IsNew == false).Count() > 0)
             {
-                BaseClass.MsgError("ERR_DELETE");
+                this.BaseClass.MsgQuestion("ASK_DEL_DB");
+                if (this.BaseClass.BUTTON_CONFIRM_YN == false) { return; }
             }
 
-            liChuteMgmt.ForEach(p => ChuteMgmtList.Remove(p));
+            this.ChuteMgmtList.Where(p => p.IsSelected == true).ToList().ForEach(p =>
+            {
+                if (p.IsNew != true)
+                {
+                    p.Checked = false;
+
+                    using (BaseDataAccess da = new BaseDataAccess())
+                    {
+                        this.UpdateSP_CHUTE_UPD(da, p).Wait();
+                    }
+
+                }
+
+                this.ChuteMgmtList.Remove(p);
+            });
         }
 
         #endregion
@@ -353,25 +375,24 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
         {
             #region 파라메터 변수 선언 및 값 할당
             DataSet dsRtnValue = null;
-            //bool isRtnValue = true;
-            var strProcedureName = "CSP_C1019_SRT_SP_CHUTE_LIST_INQ";
+            var strProcedureName = "UI_CHUTE_MST_INQ";
             Dictionary<string, object> dicInputParam = new Dictionary<string, object>();
 
-            var strCntrCd           = this.BaseClass.CenterCD;                                      // 센터 코드
-            var strChuteId          = this.txtChuteId_First.Text.Trim();                            // 슈트 ID
-            var strChuteUseCd       = this.BaseClass.ComboBoxSelectedKeyValue(this.cboChuteUseCd);  // 슈트용도코드
-            var strUseYn            = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN);       // 사용 여부
-
-            var strErrCode = string.Empty;          // 오류 코드
-            var strErrMsg = string.Empty;           // 오류 메세지
+            string strEqpId             = this.BaseClass.ComboBoxSelectedKeyValue(this.cboEqpId);               // 설비 ID
+            string strChuteId           = this.txtChuteId.Text.Trim();                                          // 슈트 ID
+            string strChuteNm           = this.txtChuteNm.Text.Trim();                                          // 슈트 NAME
+            string strChuteTypeCd       = this.BaseClass.ComboBoxSelectedKeyValue(this.cboChuteTypeCd);         // 슈트용도코드
+            string strUseYn             = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN);               // 사용 여부
+            string strFinalChuteId      = this.txtFinalChuteId.Text.Trim();                                     // 최종 합류 슈트
             #endregion
 
             #region Input 파라메터
-            dicInputParam.Add("P_CNTR_CD",          strCntrCd);         // 센터 코드
-            dicInputParam.Add("P_EQP_ID",           searchedEQPId);     // 설비 ID
-            dicInputParam.Add("P_CHUTE_ID",         strChuteId);        // 슈트 ID
-            dicInputParam.Add("P_CHUTE_USE_CD",     strChuteUseCd);     // 슈트용도코드
-            dicInputParam.Add("P_USE_YN",           strUseYn);          // 사용 여부
+            dicInputParam.Add("EQP_ID",             strEqpId);          // 설비 ID
+            dicInputParam.Add("CHUTE_ID",           strChuteId);        // 슈트 ID
+            dicInputParam.Add("CHUTE_NM",           strChuteNm);        // 슈트 NAME
+            dicInputParam.Add("CHUTE_TYPE_CD",      strChuteTypeCd);    // 슈트용도코드
+            dicInputParam.Add("USE_YN",             strUseYn);          // 사용 여부
+            dicInputParam.Add("FINAL_CHUTE_ID",     strFinalChuteId);   // 최종 합류 슈트
             #endregion
 
             #region 데이터 조회
@@ -392,63 +413,63 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
         /// <param name="_da">DataAccess 객체</param>
         /// <param name="_item">저장 대상 아이템 (Row 데이터)</param>
         /// <returns></returns>
-        private bool InsertSP_CHUTE_INS(BaseDataAccess _da, ChuteMgmt _item)
+        private async Task<bool> InsertSP_CHUTE_INS(BaseDataAccess _da, ChuteMgmt _item)
         {
             bool isRtnValue = true;
-            int dtRtnValueCnt = 0;
             try
             {
                 #region 파라메터 변수 선언 및 값 할당
                 DataTable dtRtnValue = null;
-                var strProcedureName = "CSP_C1019_SRT_SP_CHUTE_INS";
+                var strProcedureName = "UI_CHUTE_MST_INS";
                 Dictionary<string, object> dicInputParam = new Dictionary<string, object>();
-                //string[] arrOutputParam = { "O_RSLT" };
+                Dictionary<object, BaseEnumClass.MSSqlOutputDataType> dicOutPutParam = new Dictionary<object, BaseEnumClass.MSSqlOutputDataType>();
+                Dictionary<object, object> dicRtnValue = new Dictionary<object, object>();
 
-                var strCntrCd = BaseClass.CenterCD;                     // 센터 코드
-                var strEqpID = SearchedEQPId;                           // 설비 ID
-                var strChuteId = _item.CHUTE_ID;                        // 슈트 ID
-                var strChuteNm = _item.CHUTE_NM;                        // CHUTE_NM
-                var strChuteUseCd = _item.CHUTE_USE_CD;                 // CHUTE_USE_CD
-                var strChuteDtlUseCd = _item.CHUTE_DTL_USE_CD;          // CHUTE_DTL_USE_CD
-                var strZONE_ID = _item.ZONE_ID;                         // ZONE_ID
-                var strPlcChuteId = _item.PLC_CHUTE_ID;                 // PLC_CHUTE_ID
-                var strUseYN = _item.Checked == true ? "Y" : "N";       // 사용 여부
-                var strUserID = this.BaseClass.UserID;                  // 사용자 ID
-
-                var strErrCode = string.Empty;                          // 오류 코드
-                var strErrMsg = string.Empty;                           // 오류 메세지
+                string strEqpID = _item.EQP_ID;                            // 설비 ID
+                string strChuteId = _item.CHUTE_ID;                        // 슈트 ID
+                string strChuteNm = _item.CHUTE_NM;                        // CHUTE_NM
+                string strFinalChuteId = _item.FINAL_CHUTE_ID;             // 최종 합류 슈트
+                int intChuteAllocPrty = _item.CHUTE_ALLOC_PRTY;         // 슈트 우선순위
+                string strPlcChuteId = _item.PLC_CHUTE_ID;                 // PLC_CHUTE_ID
+                string strChuteTypeCd = _item.CHUTE_TYPE_CD;               // 슈트 종류 코드
+                string strChuteUseCd = _item.CHUTE_USE_CD;                 // 슈트 사용 형태
+                string strZONE_ID = _item.ZONE_ID;                         // ZONE_ID
+                string strUseYN = _item.Checked == true ? "Y" : "N";       // 사용 여부
+                string strUserID = this.BaseClass.UserID;                  // 사용자 ID
                 #endregion
 
                 #region Input 파라메터     
-                dicInputParam.Add("P_CNTR_CD", strCntrCd);                      // 센터 코드
-                dicInputParam.Add("P_EQP_ID", strEqpID);                        // 설비 ID
-                dicInputParam.Add("P_CHUTE_ID", strChuteId);                    // 슈트 ID
-                dicInputParam.Add("P_CHUTE_NM", strChuteNm);                    // CHUTE_NM
-                dicInputParam.Add("P_CHUTE_USE_CD", strChuteUseCd);             // CHUTE_USE_CD
-                dicInputParam.Add("P_CHUTE_DTL_USE_CD", strChuteDtlUseCd);      // CHUTE_DTL_USE_CD
+                dicInputParam.Add("EQP_ID", strEqpID);                          // 설비 ID
+                dicInputParam.Add("CHUTE_ID", strChuteId);                      // 슈트 ID
+                dicInputParam.Add("CHUTE_NM", strChuteNm);                      // CHUTE_NM
+                dicInputParam.Add("FINAL_CHUTE_ID", strChuteUseCd);             // 최종 합류 슈트
+                dicInputParam.Add("CHUTE_ALLOC_PRTY", intChuteAllocPrty);       // 슈트 우선순위
+                dicInputParam.Add("PLC_CHUTE_ID", strPlcChuteId);               // PLC_CHUTE_ID
+                dicInputParam.Add("CHUTE_TYPE_CD", strChuteTypeCd);             // 슈트 종류 코드
+                dicInputParam.Add("CHUTE_USE_CD", strChuteUseCd);               // 슈트 사용 형태
                 dicInputParam.Add("P_ZONE_ID", strZONE_ID);                     // ZONE_ID
-                dicInputParam.Add("P_PLC_CHUTE_ID", strPlcChuteId);             // PLC_CHUTE_ID
-                dicInputParam.Add("P_USE_YN", strUseYN);                        // 사용 여부
-                dicInputParam.Add("P_USER_ID", strUserID);                      // 사용자 ID
+                dicInputParam.Add("USE_YN", strUseYN);                          // 사용 여부
+                dicInputParam.Add("USER_ID", strUserID);                        // 사용자 ID
                 #endregion
 
-                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
-                dtRtnValueCnt = dtRtnValue.Rows.Count;
+                #region + Output 파라메터
+                dicOutPutParam.Add("RTN_VAL", BaseEnumClass.MSSqlOutputDataType.INT32);
+                dicOutPutParam.Add("RTN_MSG", BaseEnumClass.MSSqlOutputDataType.VARCHAR);
+                #endregion
 
-                if (dtRtnValueCnt > 0)
+                #region + 데이터 조회
+                await System.Threading.Tasks.Task.Run(() =>
                 {
-                    if (dtRtnValue.Rows[0]["CODE"].ToString().Equals("0") == false)
-                    {
-                        BaseClass.MsgInfo(dtRtnValue.Rows[0]["MSG"].ToString(), BaseEnumClass.CodeMessage.MESSAGE);
-                        isRtnValue = false;
-                    }
-                }
-                else
+                    dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, dicOutPutParam, ref dicRtnValue);
+                }).ConfigureAwait(true);
+                #endregion
+
+                if (dicRtnValue["RTN_VAL"].ToString().Equals("0") == false)
                 {
-                    BaseClass.MsgError("ERR_SAVE");
+                    var strMessage = dicRtnValue["RTN_MSG"].ToString();
+                    this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
                     isRtnValue = false;
                 }
-
             }
             catch { throw; }
 
@@ -463,98 +484,63 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
         /// <param name="_da">DataAccess 객체</param>
         /// <param name="_item">저장 대상 아이템 (Row 데이터)</param>
         /// <returns></returns>
-        private bool UpdateSP_CHUTE_UPD(BaseDataAccess _da, ChuteMgmt _item)
+        private async Task<bool> UpdateSP_CHUTE_UPD(BaseDataAccess _da, ChuteMgmt _item)
         {
             bool isRtnValue = true;
-            int dtRtnValueCnt = 0;
             #region 파라메터 변수 선언 및 값 할당
             DataTable dtRtnValue = null;
-            var strProcedureName = "CSP_C1019_SRT_SP_CHUTE_UPD";
+            var strProcedureName = "UI_CHUTE_MST_UPD";
             Dictionary<string, object> dicInputParam = new Dictionary<string, object>();
-            //string[] arrOutputParam = { "O_RSLT" };
+            Dictionary<object, BaseEnumClass.MSSqlOutputDataType> dicOutPutParam = new Dictionary<object, BaseEnumClass.MSSqlOutputDataType>();
+            Dictionary<object, object> dicRtnValue = new Dictionary<object, object>();
 
-            var strCntrCd = BaseClass.CenterCD;                     // 센터 코드
-            var strEqpID = _item.EQP_ID;                            // 설비 ID
-            var strChuteId = _item.CHUTE_ID;                        // 슈트 ID
-            var strChuteNm = _item.CHUTE_NM;                        // CHUTE_NM
-            var strChuteUseCd = _item.CHUTE_USE_CD;                 // CHUTE_USE_CD
-            var strChuteDtlUseCd = _item.CHUTE_DTL_USE_CD;          // CHUTE_DTL_USE_CD
-            var strZONE_ID = _item.ZONE_ID;                         // ZONE_ID
-            var strPlcChuteId = _item.PLC_CHUTE_ID;                 // PLC_CHUTE_ID
-            var strUseYN = _item.Checked == true ? "Y" : "N";       // 사용 여부
-            var strUserID = this.BaseClass.UserID;                  // 사용자 ID
-
-            var strErrCode = string.Empty;                          // 오류 코드
-            var strErrMsg = string.Empty;                           // 오류 메세지
+            string strEqpID             = _item.EQP_ID;                             // 설비 ID
+            string strChuteId           = _item.CHUTE_ID;                           // 슈트 ID
+            string strChuteNm           = _item.CHUTE_NM;                           // CHUTE_NM
+            string strFinalChuteId      = _item.FINAL_CHUTE_ID;                     // 최종 합류 슈트
+            int    intChuteAllocPrty    = _item.CHUTE_ALLOC_PRTY;                   // 슈트 우선 순위
+            string strPlcChuteId        = _item.PLC_CHUTE_ID;                       // PLC_CHUTE_ID
+            string strChuteTypeCd       = _item.CHUTE_TYPE_CD;                      // 슈트 종류 코드
+            string strChuteUseCd        = _item.CHUTE_USE_CD;                       // 슈트 사용 형태
+            string strZONE_ID           = _item.ZONE_ID;                            // ZONE_ID
+            string strUseYN             = _item.Checked == true ? "Y" : "N";        // 사용 여부
+            string strUserID            = this.BaseClass.UserID;                    // 사용자 ID
             #endregion
 
             #region Input 파라메터
-            dicInputParam.Add("P_CNTR_CD", strCntrCd);                      // 센터 코드
-            dicInputParam.Add("P_EQP_ID", strEqpID);                        // 설비 ID
-            dicInputParam.Add("P_CHUTE_ID", strChuteId);                    // 슈트 ID
-            dicInputParam.Add("P_CHUTE_NM", strChuteNm);                    // CHUTE_NM
-            dicInputParam.Add("P_CHUTE_USE_CD", strChuteUseCd);             // CHUTE_USE_CD
-            dicInputParam.Add("P_CHUTE_DTL_USE_CD", strChuteDtlUseCd);      // CHUTE_DTL_USE_CD
-            dicInputParam.Add("P_ZONE_ID", strZONE_ID);                     // ZONE_ID
-            dicInputParam.Add("P_PLC_CHUTE_ID", strPlcChuteId);             // PLC_CHUTE_ID
-            dicInputParam.Add("P_USE_YN", strUseYN);                        // 사용 여부
-            dicInputParam.Add("P_USER_ID", strUserID);                      // 사용자 ID
+            dicInputParam.Add("EQP_ID", strEqpID);                        // 설비 ID
+            dicInputParam.Add("CHUTE_ID", strChuteId);                    // 슈트 ID
+            dicInputParam.Add("CHUTE_NM", strChuteNm);                    // CHUTE_NM
+            dicInputParam.Add("FINAL_CHUTE_ID", strFinalChuteId);                    // CHUTE_NM
+            dicInputParam.Add("CHUTE_ALLOC_PRTY", intChuteAllocPrty);                    // CHUTE_NM
+            dicInputParam.Add("PLC_CHUTE_ID", strPlcChuteId);             // PLC_CHUTE_ID
+            dicInputParam.Add("CHUTE_TYPE_CD", strChuteTypeCd);                    // CHUTE_NM
+            dicInputParam.Add("CHUTE_USE_CD", strChuteUseCd);             // CHUTE_USE_CD
+            dicInputParam.Add("ZONE_ID", strZONE_ID);                     // ZONE_ID
+            dicInputParam.Add("USE_YN", strUseYN);                        // 사용 여부
+            dicInputParam.Add("USER_ID", strUserID);                      // 사용자 ID
             #endregion
 
-            dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
-            dtRtnValueCnt = dtRtnValue.Rows.Count;
+            #region + Output 파라메터
+            dicOutPutParam.Add("RTN_VAL", BaseEnumClass.MSSqlOutputDataType.INT32);
+            dicOutPutParam.Add("RTN_MSG", BaseEnumClass.MSSqlOutputDataType.VARCHAR);
+            #endregion
 
-            if (dtRtnValueCnt > 0)
+            #region + 데이터 조회
+            await System.Threading.Tasks.Task.Run(() =>
             {
-                if (dtRtnValue.Rows[0]["CODE"].ToString().Equals("0") == false)
-                {
-                    BaseClass.MsgInfo(dtRtnValue.Rows[0]["MSG"].ToString(), BaseEnumClass.CodeMessage.MESSAGE);
-                    isRtnValue = false;
-                }
-            }
-            else
+                dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam, dicOutPutParam, ref dicRtnValue);
+            }).ConfigureAwait(true);
+            #endregion
+
+            if (dicRtnValue["RTN_VAL"].ToString().Equals("0") == false)
             {
-                BaseClass.MsgError("ERR_SAVE");
+                var strMessage = dicRtnValue["RTN_MSG"].ToString();
+                this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
                 isRtnValue = false;
             }
 
-
             return isRtnValue;
-        }
-        #endregion
-
-        #region >> GetSP_COM_SET_CONFIG - 소터 설정 정보 조회
-        /// <summary>
-        /// 설비 관리 데이터조회
-        /// </summary>
-        private DataSet GetSP_COM_SET_CONFIG(string _eqpId)
-        {
-            #region 파라메터 변수 선언 및 값 할당
-            DataSet dsRtnValue = null;
-            var strProcedureName = "PK_COMMON.SP_COM_SET_CONFIG";
-            Dictionary<string, object> dicInputParam = new Dictionary<string, object>();
-            string[] arrOutputParam = { "O_CONFIG", "O_RSLT" };
-
-            var strCntrCd = this.BaseClass.CenterCD;                                                // 센터 코드
-            var strEqpID = _eqpId;                                       // 설비 ID
-
-            var strErrCode = string.Empty;          // 오류 코드
-            var strErrMsg = string.Empty;           // 오류 메세지
-            #endregion
-
-            #region Input 파라메터
-            dicInputParam.Add("P_CNTR_CD", strCntrCd);                  // 센터 코드
-            dicInputParam.Add("P_EQP_ID", strEqpID);                    // 설비 ID
-            #endregion
-
-            #region 데이터 조회
-            using (BaseDataAccess dataAccess = new BaseDataAccess())
-            {
-                dsRtnValue = dataAccess.GetSpDataSet(strProcedureName, dicInputParam, arrOutputParam);
-            }
-            #endregion
-
-            return dsRtnValue;
         }
         #endregion
         #endregion
@@ -764,11 +750,11 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
                         {
                             if (item.IsNew == true)
                             {
-                                isRtnValue = this.InsertSP_CHUTE_INS(da, item);
+                                isRtnValue = this.InsertSP_CHUTE_INS(da, item).Result;
                             }
                             else
                             {
-                                isRtnValue = this.UpdateSP_CHUTE_UPD(da, item);
+                                isRtnValue = this.UpdateSP_CHUTE_UPD(da, item).Result;
                             }
 
                             if (isRtnValue == false)
@@ -823,20 +809,6 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
                     {
                         // 상태바 (아이콘) 제거
                         this.loadingScreen.IsSplashScreenShown = false;
-
-                        //// 체크박스 해제
-                        //foreach (var item in liSelectedRowData)
-                        //{
-                        //    item.IsSelected = false;
-                        //}
-
-                        //// 저장 후 저장내용 List에 출력 : Header
-                        //DataSet dsRtnValue = this.GetSP_CHUTE_LIST_INQ(SearchedEQPId);
-
-                        //this.ChuteMgmtList = new ObservableCollection<ChuteMgmt>();
-                        //this.ChuteMgmtList.ToObservableCollection(dsRtnValue.Tables[0]);
-
-                        //this.gridMaster.ItemsSource = this.ChuteMgmtList;
                     }
                 }
             }
@@ -852,26 +824,18 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
         {
             var newItem = new ChuteMgmt
             {
-                EQP_ID = SearchedEQPId
-                ,
-                CHUTE_ID = string.Empty
-                ,
-                CHUTE_NM = string.Empty
-                ,
-                CHUTE_USE_CD = string.Empty
-                ,
-                CHUTE_DTL_USE_CD = string.Empty
-                ,
-                ZONE_ID = string.Empty
-                ,
-                PLC_CHUTE_ID = string.Empty
-                ,
-                USE_YN = "Y"
-                ,
-                IsSelected = true
-                ,
-                IsNew = true
-                ,
+                EQP_ID = string.Empty,
+                CHUTE_ID = string.Empty,
+                CHUTE_NM = string.Empty,
+                FINAL_CHUTE_ID = string.Empty,
+                CHUTE_TYPE_CD = "NML",
+                CHUTE_USE_CD = "F",
+                ZONE_ID = string.Empty,
+                CHUTE_ALLOC_PRTY = 0,
+                PLC_CHUTE_ID = string.Empty,
+                USE_YN = "Y",
+                IsSelected = true,
+                IsNew = true,
                 IsSaved = false
             };
 
@@ -943,21 +907,19 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
 
                 switch (e.Column.FieldName)
                 {
-                    // 컬럼이 행추가 상태 (신규 Row 추가)가 아닌 경우
-                    // 슈트 ID 컬럼은 수정이 되지 않도록 처리한다.
+                    case "EQP_ID":
+                        if (dataMember.IsNew == false)
+                        {
+                            e.Cancel = true;
+                        }
+                        break;
                     case "CHUTE_ID":
                         if (dataMember.IsNew == false)
                         {
                             e.Cancel = true;
                         }
                         break;
-                    case "CHUTE_DTL_USE_CD":
-                        // 슈트용도코드 (CHUTE_USE_CD)가 REJECT인 경우만 슈트상세용도코드를 활성화한다.
-                        if (dataMember.CHUTE_USE_CD.Equals("RJT") == false)
-                        {
-                            e.Cancel = true;
-                        }
-                        break;
+
                     default: break;
                 }
             }
@@ -977,9 +939,12 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
                 TableView tv = sender as TableView;
                 ChuteMgmt dataMember = tv.Grid.CurrentItem as ChuteMgmt;
 
-                if (e.Column.FieldName.Equals("CHUTE_USE_CD"))
+                if (e.Column.FieldName.Equals("CHUTE_ID"))
                 {
-                    if (dataMember.CHUTE_USE_CD.Equals("NML")) { dataMember.CHUTE_DTL_USE_CD = string.Empty; }
+                    if(dataMember.CHUTE_ID.Length > 2) 
+                    {
+                        dataMember.FINAL_CHUTE_ID = dataMember.CHUTE_ID.Substring(0, 2);
+                    }
                 }
 
             }
@@ -998,7 +963,7 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
         /// </summary>
         private void NavigationBar_UserControlCallEvent()
         {
-            this.TreeControlRefreshEvent();
+            //this.TreeControlRefreshEvent();
         }
         #endregion
         #endregion

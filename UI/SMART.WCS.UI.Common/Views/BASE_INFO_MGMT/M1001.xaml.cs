@@ -450,12 +450,9 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 
             var strHdrCd    = this.txtComHdrCd_First.Text.Trim();                               // CODE 대분류
             var strHdrNm    = this.txtComHdrNm_First.Text.Trim();                               // CODE 대분류 이름
-            var strUseYn    = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN);     // 사용 여부
+            var strUseYn    = this.BaseClass.ComboBoxSelectedKeyValue(this.cboUseYN);           // 사용 여부
             var strDtlCd    = this.txtComDtlCd_First.Text.Trim();                               // 상세코드
             var strDtlNm    = this.txtComDtlNm_First.Text.Trim();                               // 상세코드 명
-
-            var strErrCode  = string.Empty;          // 오류 코드
-            var strErrMsg   = string.Empty;           // 오류 메세지
             #endregion
 
             #region Input 파라메터
@@ -547,7 +544,6 @@ namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
                 //this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
                 isRtnValue = false;
             }
-
 
             return isRtnValue;
         }

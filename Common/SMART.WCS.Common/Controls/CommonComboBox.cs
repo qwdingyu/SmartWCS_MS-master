@@ -207,7 +207,7 @@ namespace SMART.WCS.Common.Control
         {
             DataTable dtCommonData                      = null;
 
-            var strProcedureName                        = "PK_COMMON.SP_COM_UI_CMB";
+            var strProcedureName                        = "UI_SP_COM_UI_CMB";
             Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
             string[] arrOutputParam                     = { "O_CMB_LIST", "O_RSLT" };
 
