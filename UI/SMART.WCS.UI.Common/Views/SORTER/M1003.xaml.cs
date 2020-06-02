@@ -17,6 +17,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -199,10 +200,8 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
         /// </summary>
         private void InitControl()
         {
-            // 공통코드 조회 파라메터 string[]
-            string[] commonParam_EQP_ID = { BaseClass.CenterCD, "WSR", BaseClass.UserID, string.Empty };
             // 콤보박스 - 조회 (사용여부, 슈트 종류 코드, 위치 코드)
-            this.BaseClass.BindingCommonComboBox(this.cboEqpId, "EQP_ID", commonParam_EQP_ID, true);   // 설비
+            this.BaseClass.BindingCommonComboBox(this.cboEqpId, "EQP_ID_CHUTE", null, true);   // 설비
             this.BaseClass.BindingCommonComboBox(this.cboChuteTypeCd, "CHUTE_TYPE_CD", null, true);       // 
             this.BaseClass.BindingCommonComboBox(this.cboUseYN, "USE_YN", null, false);
 
@@ -361,6 +360,15 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
 
             return bRtnValue;
         }
+        #endregion
+
+        #region >> IsNumericCheck - 숫자 입력 체크
+        private bool isNumericCheck(string data)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            bool flag = regex.IsMatch(data);
+            return flag;
+        } 
         #endregion
 
         #endregion
@@ -549,7 +557,7 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
 
         #region ▩ 이벤트
 
-        #region > Loaded 이벤트
+        #region > Loaded/Unload 이벤트
         private void M1003_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -561,7 +569,6 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
                 this.BaseClass.Error(err);
             }
         }
-        #endregion
 
         private void M1003_Unloaded(object sender, RoutedEventArgs e)
         {
@@ -574,6 +581,7 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
                 this.BaseClass.Error(err);
             }
         }
+        #endregion
 
         #region > 슈트 관리
         #region >> 버튼 클릭 이벤트
@@ -941,6 +949,11 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
 
                 if (e.Column.FieldName.Equals("CHUTE_ID"))
                 {
+                    //if(this.isNumericCheck(dataMember.CHUTE_ID) == false)
+                    //{
+                    //    dataMember.CHUTE_ID = string.Empty;
+                    //}
+
                     if(dataMember.CHUTE_ID.Length > 2) 
                     {
                         dataMember.FINAL_CHUTE_ID = dataMember.CHUTE_ID.Substring(0, 2);

@@ -2379,4 +2379,10 @@
   <data name="IS_RUN_YN" xml:space="preserve">
     <value>운영상태</value>
   </data>
+  <data name="CHUTE_TYPE_CD" xml:space="preserve">
+    <value>슈트 종류 </value>
+  </data>
+  <data name="FINAL_CHUTE_ID" xml:space="preserve">
+    <value>최종 합류 슈트</value>
+  </data>
 </root>

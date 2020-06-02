@@ -316,7 +316,7 @@
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
                                             AllowEditing="True">
                             <dxg:GridColumn.EditSettings>
-                                <localCtrl:CommonCodeEditSetting CommonCode="EQP_ID" Attr2_InputParam="WSR"     IsTextEditable="False"  HorizontalContentAlignment="Center"   DisplayMember="NAME"/>
+                                <localCtrl:CommonCodeEditSetting CommonCode="EQP_ID_CHUTE" Attr2_InputParam="WSR"     IsTextEditable="False"  HorizontalContentAlignment="Center"   DisplayMember="NAME"/>
                             </dxg:GridColumn.EditSettings>
                         </dxg:GridColumn>
                         <!--#endregion-->
