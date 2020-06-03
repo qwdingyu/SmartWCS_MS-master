@@ -2385,4 +2385,22 @@
   <data name="FINAL_CHUTE_ID" xml:space="preserve">
     <value>최종 합류 슈트</value>
   </data>
+  <data name="END_TIME" xml:space="preserve">
+    <value>종료시간</value>
+  </data>
+  <data name="FINAL_SEND_TIME" xml:space="preserve">
+    <value>최종 전송 시간</value>
+  </data>
+  <data name="IF_CNT" xml:space="preserve">
+    <value>전송건수</value>
+  </data>
+  <data name="IF_YMD" xml:space="preserve">
+    <value>I/F일</value>
+  </data>
+  <data name="START_TIME" xml:space="preserve">
+    <value>시작시간</value>
+  </data>
+  <data name="TODAY_SEND_QTY" xml:space="preserve">
+    <value>금일 전송 수</value>
+  </data>
 </root>

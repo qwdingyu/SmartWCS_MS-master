@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="SMART.WCS.UI.COMMON.Views.SORTER.M1003"
+﻿<UserControl x:Class="SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT.M1003"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:SMART.WCS.UI.COMMON.Views.SORTER"
+             xmlns:local="clr-namespace:SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT"
              xmlns:e="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
@@ -316,7 +316,7 @@
                                             HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
                                             AllowEditing="True">
                             <dxg:GridColumn.EditSettings>
-                                <localCtrl:CommonCodeEditSetting CommonCode="EQP_ID_CHUTE" Attr2_InputParam="WSR"     IsTextEditable="False"  HorizontalContentAlignment="Center"   DisplayMember="NAME"/>
+                                <localCtrl:CommonCodeEditSetting CommonCode="EQP_ID_CHUTE"  IsTextEditable="False"  HorizontalContentAlignment="Center"   DisplayMember="NAME"/>
                             </dxg:GridColumn.EditSettings>
                         </dxg:GridColumn>
                         <!--#endregion-->
@@ -337,14 +337,14 @@
 
                         <!--#region FINAL_CHUTE_ID-->
                         <dxg:GridColumn     Header="FINAL_CHUTE_ID"     FieldName="FINAL_CHUTE_ID"  Width="100"
-                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
                                             AllowEditing="False">
                         </dxg:GridColumn>
                         <!--#endregion-->
 
                         <!--#region CHUTE_TYPE_CD-->
                         <dxg:GridColumn     Header="CHUTE_TYPE_CD"     FieldName="CHUTE_TYPE_CD"  Width="100"
-                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringLeft}"
+                                            HorizontalHeaderContentAlignment="Center"   Style="{StaticResource GridColumnStringCenter}"
                                             AllowEditing="True">
                             <dxg:GridColumn.EditSettings>
                                 <localCtrl:CommonCodeEditSetting CommonCode="CHUTE_TYPE_CD"    IsTextEditable="False"  HorizontalContentAlignment="Center"   DisplayMember="NAME"/>

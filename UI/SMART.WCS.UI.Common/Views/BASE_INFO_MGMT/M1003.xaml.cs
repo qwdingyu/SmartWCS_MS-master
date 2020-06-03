@@ -29,7 +29,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace SMART.WCS.UI.COMMON.Views.SORTER
+namespace SMART.WCS.UI.COMMON.Views.BASE_INFO_MGMT
 {
     /// <summary>
     /// M1003.xaml에 대한 상호 작용 논리
@@ -379,7 +379,7 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
         /// <summary>
         /// 슈트 관리 데이터 조회
         /// </summary>
-        private DataSet GetSP_CHUTE_LIST_INQ(string searchedEQPId)
+        private DataSet GetSP_CHUTE_LIST_INQ()
         {
             #region 파라메터 변수 선언 및 값 할당
             DataSet dsRtnValue = null;
@@ -620,16 +620,13 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
         /// </summary>
         private void ChuteSearch()
         {
-            SearchedEQPId = null;
-            SearchedEQPId = this.BaseClass.ComboBoxSelectedKeyValue(this.cboEqpId);
-
             try
             {
                 // 상태바 (아이콘) 실행
                 this.loadingScreen.IsSplashScreenShown = true;
 
                 // 셀 유형관리 데이터 조회
-                DataSet dsRtnValue = this.GetSP_CHUTE_LIST_INQ(SearchedEQPId);
+                DataSet dsRtnValue = this.GetSP_CHUTE_LIST_INQ();
 
                 if (dsRtnValue == null) { return; }
 
@@ -790,7 +787,7 @@ namespace SMART.WCS.UI.COMMON.Views.SORTER
                             }
 
                             // 저장 후 저장내용 List에 출력 : Header
-                            DataSet dsRtnValue = this.GetSP_CHUTE_LIST_INQ(SearchedEQPId);
+                            DataSet dsRtnValue = this.GetSP_CHUTE_LIST_INQ();
 
                             this.ChuteMgmtList = new ObservableCollection<ChuteMgmt>();
                             this.ChuteMgmtList.ToObservableCollection(dsRtnValue.Tables[0]);

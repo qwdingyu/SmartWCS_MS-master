@@ -122,6 +122,8 @@
     <Compile Include="DataMembers\M1002\EquipmentMgnt.cs" />
     <Compile Include="DataMembers\M1001\HeaderCommonCodeMgmt.cs" />
     <Compile Include="DataMembers\M1001\DetailCommonCodeMgmt.cs" />
+    <Compile Include="DataMembers\M1005\IfHeadMgmt.cs" />
+    <Compile Include="DataMembers\M1005\IfMgmt.cs" />
     <Compile Include="DataMembers\M1003\ChuteMgmt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -141,7 +143,10 @@
     <Compile Include="Views\BASE_INFO_MGMT\M1002.xaml.cs">
       <DependentUpon>M1002.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SORTER\M1003.xaml.cs">
+    <Compile Include="Views\BASE_INFO_MGMT\M1005.xaml.cs">
+      <DependentUpon>M1005.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BASE_INFO_MGMT\M1003.xaml.cs">
       <DependentUpon>M1003.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\USER_MGMT\C1001.xaml.cs">
@@ -220,15 +225,17 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\GANTRY\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\BASE_INFO_MGMT\M1002.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SORTER\M1003.xaml">
+    <Page Include="Views\BASE_INFO_MGMT\M1005.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BASE_INFO_MGMT\M1003.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
