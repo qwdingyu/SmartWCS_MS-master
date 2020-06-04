@@ -2403,4 +2403,25 @@
   <data name="TODAY_SEND_QTY" xml:space="preserve">
     <value>금일 전송 수</value>
   </data>
+  <data name="DLV_CD" xml:space="preserve">
+    <value>집배점 코드</value>
+  </data>
+  <data name="DLV_NM" xml:space="preserve">
+    <value>집배점 명</value>
+  </data>
+  <data name="ES_CD" xml:space="preserve">
+    <value>ES 코드</value>
+  </data>
+  <data name="ES_NM" xml:space="preserve">
+    <value>ES 명</value>
+  </data>
+  <data name="TML_CD" xml:space="preserve">
+    <value>터미널 코드</value>
+  </data>
+  <data name="TML_NM" xml:space="preserve">
+    <value>터미널 명</value>
+  </data>
+  <data name="APPLY_YMD" xml:space="preserve">
+    <value>적용일</value>
+  </data>
 </root>

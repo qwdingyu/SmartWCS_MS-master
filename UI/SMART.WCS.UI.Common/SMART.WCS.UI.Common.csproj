@@ -122,6 +122,8 @@
     <Compile Include="DataMembers\M1002\EquipmentMgnt.cs" />
     <Compile Include="DataMembers\M1001\HeaderCommonCodeMgmt.cs" />
     <Compile Include="DataMembers\M1001\DetailCommonCodeMgmt.cs" />
+    <Compile Include="DataMembers\M1004\OrgEsMgmt.cs" />
+    <Compile Include="DataMembers\M1004\OrgMgmt.cs" />
     <Compile Include="DataMembers\M1005\IfHeadMgmt.cs" />
     <Compile Include="DataMembers\M1005\IfMgmt.cs" />
     <Compile Include="DataMembers\M1003\ChuteMgmt.cs" />
@@ -142,6 +144,9 @@
     <Compile Include="Utility\HelperClass.cs" />
     <Compile Include="Views\BASE_INFO_MGMT\M1002.xaml.cs">
       <DependentUpon>M1002.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BASE_INFO_MGMT\M1004.xaml.cs">
+      <DependentUpon>M1004.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BASE_INFO_MGMT\M1005.xaml.cs">
       <DependentUpon>M1005.xaml</DependentUpon>
@@ -228,6 +233,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Views\BASE_INFO_MGMT\M1002.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BASE_INFO_MGMT\M1004.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
