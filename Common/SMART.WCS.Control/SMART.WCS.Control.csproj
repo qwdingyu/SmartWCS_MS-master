@@ -191,9 +191,6 @@
     <Compile Include="Views\SWCS103_01P.xaml.cs">
       <DependentUpon>SWCS103_01P.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SWCS201_01P.xaml.cs">
-      <DependentUpon>SWCS201_01P.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\SWCS201_02P.xaml.cs">
       <DependentUpon>SWCS201_02P.xaml</DependentUpon>
     </Compile>
@@ -286,10 +283,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SWCS103_01P.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SWCS201_01P.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

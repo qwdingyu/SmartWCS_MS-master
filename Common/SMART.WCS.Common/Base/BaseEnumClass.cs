@@ -413,26 +413,6 @@ namespace SMART.WCS.Common
         }
         #endregion
 
-        #region ExcelUploadKind - 엑셀 업로드 종류
-        /// <summary>
-        /// 엑셀 업로드 종류
-        /// </summary>
-        public enum ExcelUploadKind : int
-        {
-            OPT_ORD_UPLOAD      = 0,    // 최적화 오더 업로드
-            RGN_MGT_UPLOAD      = 1     // 권역관리 업로드
-
-            //CST_MST         = 1,    // 고객사 마스터
-            //BIZPTNR_MST     = 2,    // 거래처 마스터
-            //SKU_MST         = 3,    // SKU 마스터
-            //GI_ORD_MPNG     = 4,    // 출고 오더 매핑
-            //GI_ORD          = 5,    // 출고 오더 업로드
-            //CLAS_MST        = 6,    // 분류코드 마스터
-            //CHUTE_CLAS      = 7,    // 슈트 분류코드 별 차수
-            //TRAIL_INFO      = 8     // 차량정보 (동탄)
-        }
-        #endregion
-
         #region LabelPrintKind - 라벨 출력 종류
         /// <summary>
         /// 라벨 출력 종류

@@ -4,6 +4,7 @@ using SMART.WCS.Common;
 using SMART.WCS.Common.Data;
 using SMART.WCS.Common.DataBase;
 using SMART.WCS.Control.Modules.Interface;
+using SMART.WCS.HANJINE.Common.Popup;
 using SMART.WCS.UI.COMMON.DataMembers.C1001;
 using System;
 using System.Collections;
@@ -507,6 +508,11 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
         {
             try
             {
+                using (ExcelUpload popup = new ExcelUpload(SMART.WCS.HANJINE.Common.Enum.EnumClass.ExcelUploadKind.ORD_INFO))
+                {
+                    popup.ShowDialog();
+                }
+
                 // 상태바 (아이콘) 실행
                 this.loadingScreen.IsSplashScreenShown = true;
 

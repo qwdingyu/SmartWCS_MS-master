@@ -269,6 +269,10 @@
       <Project>{9bc0f5af-053d-4891-915b-252067182433}</Project>
       <Name>SMART.WCS.Control</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\SMART.WCS.HANJINE.Control\SMART.WCS.HANJINE.Common.csproj">
+      <Project>{12add14b-adfb-4631-be76-73d1a0da9a0f}</Project>
+      <Name>SMART.WCS.HANJINE.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\SMART.WCS.MsgBox\SMART.WCS.MsgBox.csproj">
       <Project>{64249752-b59f-4e81-87f3-0b493f5af326}</Project>
       <Name>SMART.WCS.MsgBox</Name>

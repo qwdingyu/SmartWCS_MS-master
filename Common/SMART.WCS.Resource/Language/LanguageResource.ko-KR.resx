@@ -2424,4 +2424,7 @@
   <data name="APPLY_YMD" xml:space="preserve">
     <value>적용일</value>
   </data>
+  <data name="(MSG)ASK_EXCEL_CACL" xml:space="preserve">
+    <value>엑셀 업로드를 취소하시겠습니까?</value>
+  </data>
 </root>

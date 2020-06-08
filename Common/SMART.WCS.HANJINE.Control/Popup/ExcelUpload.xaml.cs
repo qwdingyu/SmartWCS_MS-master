@@ -3,7 +3,6 @@ using SMART.WCS.Common.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,27 +14,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using static SMART.WCS.Common.BaseEnumClass;
+using static SMART.WCS.HANJINE.Common.Enum.EnumClass;
 
-namespace SMART.WCS.Control.Views
+namespace SMART.WCS.HANJINE.Common.Popup
 {
     /// <summary>
-    /// 엑셀 업로드 클래스
+    /// ExcelUpload.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class SWCS201_01P : Window, IDisposable
+    public partial class ExcelUpload : Window, IDisposable
     {
-        #region ▩ Delegate
-        //// 일반 엑셀 업로드 결과를 화면으로 전송
-        //public delegate void ExcelUploadDataResult(DataTable _dtResult, string _strFileName, CJFC.Common.EnumClass.ExcelUploadKind _excelUploadKind);
-        //public event ExcelUploadDataResult UploadResult;
-
-        //// 오더 정보 업로드 데이터 저장 후 저장 결과 화면으로 전송
-        //public delegate void ExcelUploadResultOrd(DataTable _dtResult, string _strGrSprCD, string _strFileName, CJFC.Common.EnumClass.ExcelUploadKind _excelUploadKind);
-        //public event ExcelUploadResultOrd UploadResultOrd;
-        public delegate void ExcelUploadResult(string _strExcelFileName);
-        public event ExcelUploadResult ExcelUploadNo;
-        #endregion
-
         #region ▩ 전역변수
         /// <summary>
         /// BaseClass 선언
@@ -45,17 +32,12 @@ namespace SMART.WCS.Control.Views
         /// <summary>
         /// 엑셀 업로드 종류 (업무별)
         /// </summary>
-        private SMART.WCS.Common.BaseEnumClass.ExcelUploadKind g_enumExcelUploadKind;
+        private Enum.EnumClass.ExcelUploadKind g_enumExcelUploadKind;
 
         /// <summary>
         /// 엑셀 업로드 데이터 저장 데이터테이블
         /// </summary>
         private DataTable g_dtExcelUploadData;
-
-        /// <summary>
-        /// 엑셀 업로드 번호
-        /// </summary>
-        private string g_strExcelUploadNo;
 
         /// <summary>
         /// 엑셀 업로드 파일명
@@ -67,12 +49,12 @@ namespace SMART.WCS.Control.Views
         /// <summary>
         /// 생성자
         /// </summary>
-        public SWCS201_01P()
+        public ExcelUpload()
         {
             InitializeComponent();
         }
 
-        public SWCS201_01P(SMART.WCS.Common.BaseEnumClass.ExcelUploadKind _enumExcelUploadKind)
+        public ExcelUpload(Enum.EnumClass.ExcelUploadKind _enumExcelUploadKind)
         {
             InitializeComponent();
 
@@ -82,13 +64,12 @@ namespace SMART.WCS.Control.Views
             // 이벤트 초기화
             this.InitEvent();
         }
-
         #endregion
 
         #region ▩ 데이터 바인딩 용 객체 선언 및 속성 정의
         #region > FilePath - 파일 경로
         public static readonly DependencyProperty FilePathProperty =
-        DependencyProperty.Register("FilePath", typeof(string), typeof(SWCS201_01P));
+        DependencyProperty.Register("FilePath", typeof(string), typeof(ExcelUpload));
 
         /// <summary>
         /// FilePath
@@ -100,9 +81,9 @@ namespace SMART.WCS.Control.Views
         }
         #endregion
 
-        #region FileFullPath - 파일 전체경로
+        #region > FileFullPath - 파일 전체경로
         public static readonly DependencyProperty FileFullPathProperty =
-        DependencyProperty.Register("FileFullPath", typeof(string), typeof(SWCS201_01P));
+        DependencyProperty.Register("FileFullPath", typeof(string), typeof(ExcelUpload));
 
         /// <summary>
         /// FilePath
@@ -124,6 +105,12 @@ namespace SMART.WCS.Control.Views
         {
             // 파일 열기 버튼 클릭 이벤트
             this.btnFileOpen.PreviewMouseLeftButtonUp += BtnFileOpen_PreviewMouseLeftButtonUp;
+
+            // 확정 버튼 클릭 이벤트
+            this.btnConfirm.PreviewMouseLeftButtonUp += BtnConfirm_PreviewMouseLeftButtonUp;
+
+            // 취소 버튼 클릭 이벤트
+            this.btnCancel.PreviewMouseLeftButtonUp += BtnCancel_PreviewMouseLeftButtonUp;
         }
         #endregion
 
@@ -136,32 +123,10 @@ namespace SMART.WCS.Control.Views
             switch (this.g_enumExcelUploadKind)
             {
                 #region + 오더 생성
-                case ExcelUploadKind.OPT_ORD_UPLOAD:
-                    this.g_dtExcelUploadData.TableName  = "TB_XML_DATA";
-
-                    this.g_dtExcelUploadData.Columns[0].ColumnName  = "CST_CD";         // [0] 고객사 코드
-                    this.g_dtExcelUploadData.Columns[1].ColumnName  = "WAV_NO";         // [1] Wave 번호
+                case ExcelUploadKind.ORD_INFO:
+                    this.g_dtExcelUploadData.Columns[0].ColumnName  = "CO_CD";          // [0] 회사 코드
+                    this.g_dtExcelUploadData.Columns[1].ColumnName  = "CNTR_CD";        // [1] 센터 코드
                     this.g_dtExcelUploadData.Columns[2].ColumnName  = "ORD_NO";         // [2] 오더 번호
-                    this.g_dtExcelUploadData.Columns[3].ColumnName  = "ORD_LINE_NO";    // [3] 오더 라인번호
-                    this.g_dtExcelUploadData.Columns[4].ColumnName  = "WRK_PLAN_YMD";   // [4] 출고일자
-                    this.g_dtExcelUploadData.Columns[5].ColumnName  = "SHIP_TO_CD";     // [5] 거래처 코드
-                    this.g_dtExcelUploadData.Columns[6].ColumnName  = "SKU_CD";         // [6] SKU 코드
-                    this.g_dtExcelUploadData.Columns[7].ColumnName  = "SKU_CBM";        // [7] SKU CBM
-                    this.g_dtExcelUploadData.Columns[8].ColumnName  = "SKU_WTH_LEN";    // [8] SKU 가로
-                    this.g_dtExcelUploadData.Columns[9].ColumnName  = "SKU_VERT_LEN";   // [9] SKU 세로
-                    this.g_dtExcelUploadData.Columns[10].ColumnName = "SKU_HGT_LEN";    // [10] SKU 높이
-                    this.g_dtExcelUploadData.Columns[11].ColumnName = "SKU_WGT";        // [11] SKU 중량
-                    this.g_dtExcelUploadData.Columns[12].ColumnName = "LOC_CD";         // [12] Location 코드
-                    this.g_dtExcelUploadData.Columns[13].ColumnName = "PLAN_QTY";       // [13] 계획 수량
-                    break;
-                #endregion
-
-                #region + 권역관리 
-                case ExcelUploadKind.RGN_MGT_UPLOAD:
-                    this.g_dtExcelUploadData.TableName  = "TB_XML_DATA";
-
-                    this.g_dtExcelUploadData.Columns[0].ColumnName  = "RGN_CD";     // [0] 권역코드
-                    this.g_dtExcelUploadData.Columns[1].ColumnName  = "RGN_NM";     // [1] 권역명
                     break;
                 #endregion
             }
@@ -181,32 +146,30 @@ namespace SMART.WCS.Control.Views
         {
             try
             {
-                bool isRtnValue             = true;
-                StringWriter sWriter        = this.BaseClass.ConvertDataTableToStringWriter(this.g_dtExcelUploadData);
-                var strUploadNo             = $"ORD_{DateTime.Now.ToString("yyyyMMddHHmmss")}";         // 업로드 번호
+                bool isRtnValue         = true;
+                var strUploadNo         = $"ORD_{DateTime.Now.ToString("yyyyMMddHHmmss")}";         // 업로드 번호
 
                 #region 파라메터 변수 선언 및 값 할당
                 DataTable dtRtnValue                        = null;
-                var strProcedureName                        = "PK_XLS_UPLD.SP_ORD_UPLD";
+                var strProcedureName                        = "CSP_SP_COM_EXCEL_UPLOAD_SAMPLE";
                 Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
-                string[] arrOutputParam                     = { "O_RTN_RSLT" };
 
-                var strCenterCD         = this.BaseClass.CenterCD;
-                var strUserID           = this.BaseClass.UserID;
+                var strCenterCD     = this.BaseClass.CenterCD;
+                var strUserID       = this.BaseClass.UserID;
 
                 #endregion
 
                 #region Input 파라메터
-                //dicInputParam.Add("P_XML_DATA",         sWriter);                   // XML 형식의 엑셀 업로드 데이터
-                dicInputParam.Add("P_CNTR_CD",          strCenterCD);               // 센터코드
-                dicInputParam.Add("P_UPLD_NO",          strUploadNo);               // 업로드 번호
+                dicInputParam.Add("P_UPLOAD_NO",        strUploadNo);               // 업로드 번호
                 dicInputParam.Add("P_USER_ID",          strUserID);                 // 사용자 ID
                 dicInputParam.Add("P_FILE_NM",          this.g_strFileName);        // 엑셀 업로드 파일명
+                dicInputParam.Add("P_UPLOAD_TABLE",     this.g_dtExcelUploadData);  // 오더 데이터
+
                 #endregion
 
                 await System.Threading.Tasks.Task.Run(() =>
                 {
-                    dtRtnValue = _da.GetSpDataTableCLOB(strProcedureName, dicInputParam, sWriter, arrOutputParam);
+                    dtRtnValue = _da.GetSpDataTable(strProcedureName, dicInputParam);
                 }).ConfigureAwait(true);
 
                 if (dtRtnValue != null)
@@ -227,75 +190,12 @@ namespace SMART.WCS.Control.Views
                         isRtnValue = false;
                     }
                 }
-
-                // 저장이 된 경우 업로드 번호를 전역 변수에 저장한다.
-                this.g_strExcelUploadNo = strUploadNo;
 
                 return isRtnValue;
             }
             catch { return false; }
         }
         #endregion
-
-        private async Task<bool> Save_SP_RGN_LIST_UPLD(BaseDataAccess _da)
-        {
-            try
-            {
-                bool isRtnValue             = true;
-                StringWriter sWriter        = this.BaseClass.ConvertDataTableToStringWriter(this.g_dtExcelUploadData);
-                var strUploadNo             = $"ORD_{DateTime.Now.ToString("yyyyMMddHHmmss")}";         // 업로드 번호
-
-                #region 파라메터 변수 선언 및 값 할당
-                DataTable dtRtnValue                        = null;
-                var strProcedureName                        = "PK_C1018.SP_RGN_LIST_UPLD";
-                Dictionary<string, object> dicInputParam    = new Dictionary<string, object>();
-                string[] arrOutputParam                     = { "O_RSLT" };
-
-                var strCenterCD         = this.BaseClass.CenterCD;
-                var strUserID           = this.BaseClass.UserID;
-
-                #endregion
-
-                #region Input 파라메터
-                //dicInputParam.Add("P_XML_DATA",         sWriter);                   // XML 형식의 엑셀 업로드 데이터
-                dicInputParam.Add("P_CNTR_CD",          strCenterCD);               // 센터코드
-                dicInputParam.Add("P_UPLD_NO",          strUploadNo);               // 업로드 번호
-                dicInputParam.Add("P_USER_ID",          strUserID);                 // 사용자 ID
-                dicInputParam.Add("P_FILE_NM",          this.g_strFileName);        // 엑셀 업로드 파일명
-                #endregion
-
-                await System.Threading.Tasks.Task.Run(() =>
-                {
-                    dtRtnValue = _da.GetSpDataTableCLOB(strProcedureName, dicInputParam, sWriter, arrOutputParam);
-                }).ConfigureAwait(true);
-
-                if (dtRtnValue != null)
-                {
-                    if (dtRtnValue.Rows.Count > 0)
-                    {
-                        if (dtRtnValue.Rows[0]["CODE"].ToString().Equals("0") == false)
-                        {
-                            var strMessage = dtRtnValue.Rows[0]["MSG"].ToString();
-                            this.BaseClass.MsgError(strMessage, BaseEnumClass.CodeMessage.MESSAGE);
-                            isRtnValue = false;
-                        }
-                    }
-                    else
-                    {
-                        // ERR_SAVE - 저장 중 오류가 발생했습니다.
-                        this.BaseClass.MsgError("ERR_SAVE");
-                        isRtnValue = false;
-                    }
-                }
-
-                // 저장이 된 경우 업로드 번호를 전역 변수에 저장한다.
-                this.g_strExcelUploadNo = strUploadNo;
-
-                return isRtnValue;
-            }
-            catch { return false; }
-        }
-
         #endregion
         #endregion
 
@@ -318,8 +218,8 @@ namespace SMART.WCS.Control.Views
 
                 if (g_strFileName == null) { return; }
 
-                this.FilePath           = (this.g_strFileName.Length > 40) ? this.g_strFileName.Substring(0, 40) + "..." : this.g_strFileName;
-                this.FileFullPath       = this.g_strFileName;
+                this.FilePath = (this.g_strFileName.Length > 40) ? this.g_strFileName.Substring(0, 40) + "..." : this.g_strFileName;
+                this.FileFullPath = this.g_strFileName;
 
                 if (this.FileFullPath.Trim().Length == 0) { return; }
 
@@ -351,7 +251,7 @@ namespace SMART.WCS.Control.Views
 
             try
             {
-                bool isRtnValue         = true;
+                bool isRtnValue = true;
 
                 using (BaseDataAccess da = new BaseDataAccess())
                 {
@@ -360,40 +260,24 @@ namespace SMART.WCS.Control.Views
                         // 상태바 (아이콘) 실행
                         this.loadingScreen.IsSplashScreenShown = true;
 
-                        // 트랜잭션 시작
-                        //da.BeginTransaction();
-
                         switch (this.g_enumExcelUploadKind)
                         {
                             #region 최적화 오더 생성
-                            case SMART.WCS.Common.BaseEnumClass.ExcelUploadKind.OPT_ORD_UPLOAD:
+                            case ExcelUploadKind.ORD_INFO:
                                 isRtnValue = await this.Save_SP_ORD_UPLOAD(da);
-                                break;
-                            #endregion
-
-                            #region 권역관리 (코드, 명) 생성
-                            case ExcelUploadKind.RGN_MGT_UPLOAD:
-                                isRtnValue = await this.Save_SP_RGN_LIST_UPLD(da);
                                 break;
                             #endregion
                         }
 
-                        // 상태바 (아이콘) 실행
-                        this.loadingScreen.IsSplashScreenShown = false;
-                        this.ExcelUploadNo(this.g_strExcelUploadNo);
-                        this.Close();
+                        //this.Close();
                     }
                     catch
                     {
-                        //if (da.TransactionState_Oracle == TransactionState_ORACLE.TransactionStarted)
-                        //{
-                        //    da.RollbackTransaction();
-                        //}
-
-                        // 상태바 (아이콘) 실행
-                        this.loadingScreen.IsSplashScreenShown = false;
-
                         throw;
+                    }
+                    finally
+                    {
+                        this.loadingScreen.IsSplashScreenShown = false;
                     }
                 }
             }
@@ -405,11 +289,19 @@ namespace SMART.WCS.Control.Views
         #endregion
 
         #region >> 취소 버튼 이벤트
+        /// <summary>
+        /// 취소 버튼 클릭 이벤트
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnCancel_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            //this.ExcelUploadNo(this.g_strExcelUploadNo);
-
-            this.Close();
+            // ASK_EXCEL_CACL - 엑셀 업로드를 취소하시겠습니까?
+            this.BaseClass.MsgQuestion("ASK_EXCEL_CACL");
+            if (this.BaseClass.BUTTON_CONFIRM_YN)
+            {
+                this.Close();
+            }
         }
         #endregion
         #endregion
@@ -432,6 +324,7 @@ namespace SMART.WCS.Control.Views
         #endregion
         #endregion
 
+
         #region IDisposable Support
         private bool disposedValue = false; // 중복 호출을 검색하려면
 
@@ -452,7 +345,7 @@ namespace SMART.WCS.Control.Views
         }
 
         // TODO: 위의 Dispose(bool disposing)에 관리되지 않는 리소스를 해제하는 코드가 포함되어 있는 경우에만 종료자를 재정의합니다.
-        // ~SWCS201_01P()
+        // ~ExcelUpload()
         // {
         //   // 이 코드를 변경하지 마세요. 위의 Dispose(bool disposing)에 정리 코드를 입력하세요.
         //   Dispose(false);

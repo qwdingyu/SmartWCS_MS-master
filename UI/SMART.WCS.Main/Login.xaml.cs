@@ -2,6 +2,8 @@
 using SMART.WCS.Common.Data;
 using SMART.WCS.Common.DataBase;
 using SMART.WCS.Control.Views;
+using SMART.WCS.HANJINE.Common.Enum;
+using SMART.WCS.HANJINE.Common.Popup;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -447,6 +449,11 @@ namespace SMART.WCS.Main
 
             try
             {
+                using (ExcelUpload popup = new ExcelUpload(EnumClass.ExcelUploadKind.ORD_INFO))
+                {
+                    popup.ShowDialog();
+                }
+
                 var strUserID           = this.txtUserID.Text.Trim();   // 사용자 ID
                 var strPwd              = this.txtPwd.Text.Trim();      // 비밀번호
 
