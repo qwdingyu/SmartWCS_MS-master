@@ -508,10 +508,10 @@ namespace SMART.WCS.UI.Common.Views.SYS_MGMT
         {
             try
             {
-                using (ExcelUpload popup = new ExcelUpload(SMART.WCS.HANJINE.Common.Enum.EnumClass.ExcelUploadKind.ORD_INFO))
-                {
-                    popup.ShowDialog();
-                }
+                //using (ExcelUpload popup = new ExcelUpload(SMART.WCS.HANJINE.Common.Enum.EnumClass.ExcelUploadKind.ORD_INFO))
+                //{
+                //    popup.ShowDialog();
+                //}
 
                 // 상태바 (아이콘) 실행
                 this.loadingScreen.IsSplashScreenShown = true;
